@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    tools:context=".budget_creating">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:paddingTop="20sp">
+
+        <EditText
+            android:id="@+id/etTenV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:hint="Ten vi"
+            android:textSize="25sp"/>
+
+        <Spinner
+            android:id="@+id/cbbLoaiT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etTenV"
+            android:layout_marginTop="25sp"
+            android:prompt="@string/currency_promt"
+            android:entries="@array/currency">
+
+        </Spinner>
+
+        <EditText
+            android:id="@+id/etSoT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbbLoaiT"
+            android:layout_marginTop="25sp"
+            android:hint="Nhap so tien"
+            android:textSize="23sp"/>
+
+        <EditText
+            android:id="@+id/mtGhichu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:layout_below="@id/etSoT"
+            android:hint="Ghi chu"
+            android:layout_marginTop="25sp"
+            android:textSize="25sp"/>
+        <Button
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mtGhichu"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20sp"
+            android:textSize="25sp"
+            android:text="Tao Vi"/>
+    </RelativeLayout>
+
+</LinearLayout>

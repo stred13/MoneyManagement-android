@@ -13,4 +13,17 @@
         <item>Yen</item>
         <item>USD</item>
     </string-array>
+    <string name="title_activity_test">test</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_budget_creating">budget_creating</string>
+
+    <string name="category_promt">Loai Chi Tieu</string>
+    <string-array name="category">
+        <item>An Hang</item>
+        <item>Lam dep</item>
+        <item>Suc khoe</item>
+        <item>Hoc phi</item>
+        <item>Di lai</item>
+    </string-array>
+    <string name="title_activity_expense_creating">expense_creating</string>
 </resources>

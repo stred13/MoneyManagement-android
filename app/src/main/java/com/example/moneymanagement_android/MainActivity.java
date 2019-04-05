@@ -2,8 +2,12 @@ package com.example.moneymanagement_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,9 +17,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private BottomNavigationView btNavView;
+    private FrameLayout mainFrame;
+    private ExpenseFragment expenseFragment;
+    private IncomeFragment incomeFragment;
+    private StatisticFragment statisticFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +35,38 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //fragment
+        btNavView = (BottomNavigationView) findViewById(R.id.btNavView);
+        mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
+
+        expenseFragment = new ExpenseFragment();
+        incomeFragment = new IncomeFragment();
+        statisticFragment = new StatisticFragment();
+        setFragment(expenseFragment);
+
+        btNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_expense:
+                        setFragment(expenseFragment);
+                       // btNavView.setItemBackgroundResource(R.color.colorAccent);
+                        return true;
+                    case R.id.nav_income:
+                        setFragment(incomeFragment);
+                       // btNavView.setItemBackgroundResource(R.color.design_default_color_primary);
+                        return true;
+                    case  R.id.nav_sta:
+                        setFragment(statisticFragment);
+                       // btNavView.setItemBackgroundResource(R.color.colorPrimary);
+                        return true;
+                        default:
+                            return false;
+
+                }
+            }
+        });
 
         getSupportActionBar().setTitle("Money Management");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -103,5 +147,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    public void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainFrame,fragment);
+        fragmentTransaction.commit();
+    }
 
 }

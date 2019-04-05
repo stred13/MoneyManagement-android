@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_expense"
+        android:icon="@drawable/hand_card_50"
+        android:title="@string/nav_expense" />
+    <item
+        android:id="@+id/nav_income"
+        android:icon="@drawable/paycheque_48"
+        android:title="@string/nav_income" />
+    <item
+        android:id="@+id/nav_sta"
+        android:icon="@drawable/chart_filled"
+        android:title="@string/nav_stas" />
+</menu>

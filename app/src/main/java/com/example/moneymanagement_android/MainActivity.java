@@ -6,8 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,11 +24,13 @@ import android.widget.FrameLayout;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private BottomNavigationView btNavView;
     private FrameLayout mainFrame;
     private ExpenseFragment expenseFragment;
     private IncomeFragment incomeFragment;
     private StatisticFragment statisticFragment;
+    private BudgetFragment budgetFragment;
+    private ViewPager mainView;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -35,38 +39,25 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mainView = findViewById(R.id.mainView);
+        tabLayout = findViewById(R.id.tabLayout);
 
         //fragment
-        btNavView = (BottomNavigationView) findViewById(R.id.btNavView);
-        mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
 
+        budgetFragment = new BudgetFragment();
         expenseFragment = new ExpenseFragment();
         incomeFragment = new IncomeFragment();
         statisticFragment = new StatisticFragment();
-        setFragment(expenseFragment);
+        //view paper
+        ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
+        viewPaperAdapter.addFragment(budgetFragment,"Vi");
+        viewPaperAdapter.addFragment(statisticFragment,"Tong Quang");
 
-        btNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.nav_expense:
-                        setFragment(expenseFragment);
-                       // btNavView.setItemBackgroundResource(R.color.colorAccent);
-                        return true;
-                    case R.id.nav_income:
-                        setFragment(incomeFragment);
-                       // btNavView.setItemBackgroundResource(R.color.design_default_color_primary);
-                        return true;
-                    case  R.id.nav_sta:
-                        setFragment(statisticFragment);
-                       // btNavView.setItemBackgroundResource(R.color.colorPrimary);
-                        return true;
-                        default:
-                            return false;
 
-                }
-            }
-        });
+        mainView.setAdapter(viewPaperAdapter);
+        tabLayout.setupWithViewPager(mainView);
+
+
 
         getSupportActionBar().setTitle("Money Management");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -74,11 +65,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),expense_creating.class);
-
                 startActivity(intent);
 
             }
         });
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -148,10 +140,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrame,fragment);
-        fragmentTransaction.commit();
-    }
+
 
 }

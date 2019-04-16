@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),budget_creating.class);
-                startActivityForResult(intent,2);
+               // BudgetFragment.startActivityForResult(intent,2);
+                budgetFragment.startActivityForResult(intent,2);
             }
         });
 
@@ -136,6 +137,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        resultCode = 2;
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
    /* @Override

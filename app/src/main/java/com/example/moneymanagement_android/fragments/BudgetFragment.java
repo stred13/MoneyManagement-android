@@ -56,9 +56,21 @@ public class BudgetFragment extends Fragment {
         lstBudget=dp.getListBudget();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity().getApplicationContext(), "vao fragment "+requestCode+": "+resultCode, Toast.LENGTH_SHORT).show();
+        if(requestCode==2 && resultCode== 2){
+            String re = data.getStringExtra("res");
+            budget b =new budget();
+            b.setbName(re);
+             Toast.makeText(getActivity().getApplicationContext(), "data "+re, Toast.LENGTH_SHORT).show();
+             recycleViewAdapter.insertItem(b);
+        }
 
+    }
 
-    public void getdataintent(String dat){
+    /* public void getdataintent(String dat){
         budget b = new budget();
         b.setbName(dat);
         //lstBudget.add(b);
@@ -66,5 +78,5 @@ public class BudgetFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(), "data re: "+dat, Toast.LENGTH_SHORT).show();
         recycleViewAdapter.insertItem(b);
        // myRecyclerView.get
-    }
+    }*/
 }

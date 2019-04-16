@@ -47,7 +47,7 @@ public class budget_creating extends AppCompatActivity {
                 budget b = createBudget();
                 if(b!=null){
                     dbp.addBudget(b);
-                    //sendBudget_created(dbp.getLastBudget());
+                    sendBudget_created(dbp.getLastBudget());
                 }
             }
         });
@@ -56,7 +56,7 @@ public class budget_creating extends AppCompatActivity {
     private void sendBudget_created(budget b){
         Intent i = new Intent();
         i.putExtra("res",b.getbName());
-        setResult(Activity.RESULT_OK,i);
+        setResult(2,i);
        // Toast.makeText(this, "data cre "+b.getbName(), Toast.LENGTH_SHORT).show();
 
         finish();

@@ -1,14 +1,12 @@
 package com.example.moneymanagement_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,6 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import com.example.moneymanagement_android.fragments.BudgetFragment;
+import com.example.moneymanagement_android.fragments.ExpenseFragment;
+import com.example.moneymanagement_android.fragments.IncomeFragment;
+import com.example.moneymanagement_android.fragments.StatisticFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,7 +36,6 @@ public class MainActivity extends AppCompatActivity
     private ViewPager mainView;
     private TabLayout tabLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mainView = findViewById(R.id.mainView);
         tabLayout = findViewById(R.id.tabLayout);
-
         //fragment
 
         budgetFragment = new BudgetFragment();
@@ -64,13 +66,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),expense_creating.class);
-                startActivity(intent);
-
+                Intent intent = new Intent(getApplicationContext(),budget_creating.class);
+                startActivityForResult(intent,2);
             }
         });
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -139,7 +138,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+   /* @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2&&resultCode== Activity.RESULT_OK){
+            String re = data.getStringExtra("res");
+           // Toast.makeText(this, "data "+re, Toast.LENGTH_SHORT).show();
+            BudgetFragment bd = this.budgetFragment;
+            bd.getdataintent(re);
+        }
 
-
+    }*/
 
 }

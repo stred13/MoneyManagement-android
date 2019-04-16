@@ -31,7 +31,7 @@
             android:textSize="25sp"/>
 
         <Spinner
-            android:id="@+id/cbbLoaiT"
+            android:id="@+id/spLoaiT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etTenV"
@@ -45,7 +45,7 @@
             android:id="@+id/etSoT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cbbLoaiT"
+            android:layout_below="@id/spLoaiT"
             android:layout_marginTop="25sp"
             android:hint="Nhap so tien"
             android:textSize="23sp"/>
@@ -60,14 +60,16 @@
             android:hint="Ghi chu"
             android:layout_marginTop="25sp"
             android:textSize="25sp"/>
+
         <Button
+            android:id="@+id/btnTaoV"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_below="@id/mtGhichu"
             android:layout_centerInParent="true"
             android:layout_marginTop="20sp"
-            android:textSize="25sp"
-            android:text="Tao Vi"/>
+            android:text="Tao Vi"
+            android:textSize="25sp" />
     </RelativeLayout>
 
 </LinearLayout>

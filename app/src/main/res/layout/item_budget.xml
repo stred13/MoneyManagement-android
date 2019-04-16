@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/tv_bName"
-        android:text="asdasd"/>
+        android:textSize="40sp"
+        android:id="@+id/tv_bName"/>
 
 
 </LinearLayout>

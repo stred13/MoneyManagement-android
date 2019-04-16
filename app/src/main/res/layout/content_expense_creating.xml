@@ -24,7 +24,7 @@
             android:textSize="25sp"/>
 
         <Spinner
-            android:id="@+id/cbbLoaiT"
+            android:id="@+id/spLoaiT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etTenV"
@@ -38,7 +38,7 @@
             android:id="@+id/grDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cbbLoaiT"
+            android:layout_below="@+id/spLoaiT"
             android:orientation="horizontal"
             android:weightSum="4"
             android:layout_marginTop="25sp">

@@ -1,12 +1,24 @@
 package com.example.moneymanagement_android.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class budget {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private String bName;
-    private String bCurrency;
-    private String bNote;
-    private String bnMoney;
-    private int burlImage;
+
+    private String name;
+
+    private String currency;
+
+    private String note;
+
+    private int nmoney;
+
+    private int urlimage;
 
     public int getId() {
         return id;
@@ -16,64 +28,62 @@ public class budget {
         this.id = id;
     }
 
-    public String getbName() {
-        return bName;
+    public String getName() {
+        return name;
     }
 
-    public void setbName(String bName) {
-        this.bName = bName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getbCurrency() {
-        return bCurrency;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setbCurrency(String bCurrency) {
-        this.bCurrency = bCurrency;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
-    public String getbNote() {
-        return bNote;
+    public String getNote() {
+        return note;
     }
 
-    public void setbNote(String bNote) {
-        this.bNote = bNote;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getBnMoney() {
-        return bnMoney;
+    public int getNmoney() {
+        return nmoney;
     }
 
-    public void setBnMoney(String bnMoney) {
-        this.bnMoney = bnMoney;
+    public void setNmoney(int nmoney) {
+        this.nmoney = nmoney;
     }
 
-    public int getBurlImage() {
-        return burlImage;
+    public int getUrlimage() {
+        return urlimage;
     }
 
-    public void setBurlImage(int burlImage) {
-        this.burlImage = burlImage;
+    public void setUrlimage(int urlimage) {
+        this.urlimage = urlimage;
     }
 
-    public budget(String bName, String bCurrency, String bNote, String bnMoney, int burlImage) {
-        this.bName = bName;
-        this.bCurrency = bCurrency;
-        this.bNote = bNote;
-        this.bnMoney = bnMoney;
-        this.burlImage = burlImage;
-    }
-
-    public budget(int id, String bName, String bCurrency, String bNote, String bnMoney, int burlImage) {
+    @Ignore
+    public budget(int id, String name, String currency, String note, int nmoney, int urlimage) {
         this.id = id;
-        this.bName = bName;
-        this.bCurrency = bCurrency;
-        this.bNote = bNote;
-        this.bnMoney = bnMoney;
-        this.burlImage = burlImage;
+        this.name = name;
+        this.currency = currency;
+        this.note = note;
+        this.nmoney = nmoney;
+        this.urlimage = urlimage;
     }
 
-    public budget() {
-
+    public budget(String name, String currency, String note, int nmoney, int urlimage) {
+        this.name = name;
+        this.currency = currency;
+        this.note = note;
+        this.nmoney = nmoney;
+        this.urlimage = urlimage;
     }
+
 }

@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.moneymanagement_android.datamanagers.dataProvider;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.RecyclerAdapter;
 import com.example.moneymanagement_android.budget_creating;
+import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ import java.util.List;
  */
 public class BudgetFragment extends Fragment {
     View v;
+    budgetViewModel bViewModel;
     private RecyclerView myRecyclerView;
     RecyclerAdapter recycleViewAdapter;
-    private List<budget> lstBudget = new ArrayList<>();
-
+    private List<budget> listBudget = new ArrayList<>();
     public BudgetFragment() {
         // Required empty public constructor
     }
@@ -43,7 +43,7 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_budget, container, false);
         myRecyclerView = (RecyclerView) v.findViewById(R.id.recylerBudget);
-        recycleViewAdapter = new RecyclerAdapter(getContext(), lstBudget);
+        recycleViewAdapter = new RecyclerAdapter(getContext(), listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
         return v;
@@ -52,31 +52,10 @@ public class BudgetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataProvider dp = new dataProvider(getActivity().getApplicationContext());
-        lstBudget=dp.getListBudget();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getActivity().getApplicationContext(), "vao fragment "+requestCode+": "+resultCode, Toast.LENGTH_SHORT).show();
-        if(requestCode==2 && resultCode== 2){
-            String re = data.getStringExtra("res");
-            budget b =new budget();
-            b.setbName(re);
-             Toast.makeText(getActivity().getApplicationContext(), "data "+re, Toast.LENGTH_SHORT).show();
-             recycleViewAdapter.insertItem(b);
-        }
+        bViewModel = new budgetViewModel(getActivity().getApplication());
 
     }
 
-    /* public void getdataintent(String dat){
-        budget b = new budget();
-        b.setbName(dat);
-        //lstBudget.add(b);
 
-        Toast.makeText(getActivity().getApplicationContext(), "data re: "+dat, Toast.LENGTH_SHORT).show();
-        recycleViewAdapter.insertItem(b);
-       // myRecyclerView.get
-    }*/
+
 }

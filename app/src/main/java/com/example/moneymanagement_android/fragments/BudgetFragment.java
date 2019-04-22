@@ -2,6 +2,8 @@ package com.example.moneymanagement_android.fragments;
 
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,6 +55,21 @@ public class BudgetFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bViewModel = new budgetViewModel(getActivity().getApplication());
+        bViewModel = ViewModelProviders.of(getActivity()).get(budgetViewModel.class);
+        budget_creating bd;
+
+        bViewModel.getListBudget().observe(this, new Observer<List<budget>>() {
+            @Override
+            public void onChanged(@Nullable List<budget> budgets) {
+                Toast.makeText(getActivity().getApplication(), "thay doi", Toast.LENGTH_SHORT).show();
+
+                if(budgets!=null){
+                    recycleViewAdapter.setListbudget(budgets);
+                    listBudget = budgets;
+                    Toast.makeText(getActivity().getApplication(), "on change: " + listBudget.size(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

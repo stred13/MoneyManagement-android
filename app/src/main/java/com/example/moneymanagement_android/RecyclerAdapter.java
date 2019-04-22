@@ -38,8 +38,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_bName.setText(bData.get(i).getName());
-        myViewHolder.imgBudget.setImageResource(bData.get(i).getUrlimage());
+//        myViewHolder.imgBudget.setImageResource(bData.get(i).getUrlimage());
 
+    }
+
+    public void setListbudget(List<budget> lst){
+        this.bData = lst;
+        notifyDataSetChanged();
     }
 
     public  void insertItem(budget b){

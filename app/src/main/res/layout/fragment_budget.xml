@@ -5,12 +5,66 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_budget"
-    tools:context=".fragments.BudgetFragment">
+    tools:context=".fragments.BudgetFragment"
+    >
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/total"
+            android:id="@+id/imgTotal"
+            android:paddingTop="10dp"/>
+        <TextView
+            android:id="@+id/tvToTal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgTotal"
+            android:layout_marginTop="-5dp"
+            android:layout_marginLeft="20dp"
+            android:text="Tổng cộng"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgTotal"
+            android:layout_below="@id/tvToTal"
+            android:layout_marginLeft="15dp"
+            android:text="20,700,000 VNĐ"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="TÍNH VÀO TỔNG"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerBudget"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Quản lý tri tiêu" />
 
 </LinearLayout>

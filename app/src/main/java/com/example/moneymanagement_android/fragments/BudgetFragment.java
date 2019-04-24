@@ -14,9 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.moneymanagement_android.infobudget;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.RecyclerAdapter;
@@ -48,8 +50,22 @@ public class BudgetFragment extends Fragment {
         recycleViewAdapter = new RecyclerAdapter(getContext(), listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
+
+        btntest = (Button) v.findViewById(R.id.btnTest);
+
+        btntest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), infobudget.class);
+                // BudgetFragment.startActivityForResult(intent,2);
+                startActivity(intent);
+            }
+        });
+
         return v;
     }
+
+    Button btntest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

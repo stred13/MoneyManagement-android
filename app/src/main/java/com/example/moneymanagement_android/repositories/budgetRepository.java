@@ -20,7 +20,7 @@ public class budgetRepository {
         roomDatabase rdtb = roomDatabase.getInstance(application.getApplicationContext());
         bdDao = rdtb.bdDao();
         lBudget = new MutableLiveData<>();
-        lBudget.setValue(getlistBudget());
+       // lBudget.setValue(getlistBudget());
     }
 
     public List<budget> getlistBudget(){
@@ -59,7 +59,6 @@ public class budgetRepository {
 
         @Override
         protected Void doInBackground(budget... budgets) {
-           Log.d("insert",budgets[0].getName());
             bAsyncTaskDao.insert(budgets[0]);
             return null;
         }
@@ -101,7 +100,6 @@ public class budgetRepository {
         }
         @Override
         protected List<budget> doInBackground(Void... voids) {
-            Log.d("bg", "doInBackground: ");
             return  dao.getListBudget();
         }
         @Override

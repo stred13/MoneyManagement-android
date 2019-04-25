@@ -21,8 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     Context mContent;
     List<budget> bData = new ArrayList<>();
 
-    public RecyclerAdapter(Context mContent, List<budget> bData) {
-        this.mContent = mContent;
+    public RecyclerAdapter(List<budget> bData) {
         this.bData = bData;
     }
 
@@ -30,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v;
-        v= LayoutInflater.from(mContent).inflate(R.layout.item_budget,viewGroup,false);
+        v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_budget,viewGroup,false);
         MyViewHolder vHolder = new MyViewHolder(v);
         return vHolder;
     }
@@ -38,7 +37,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_bName.setText(bData.get(i).getName());
-//        myViewHolder.imgBudget.setImageResource(bData.get(i).getUrlimage());
 
     }
 

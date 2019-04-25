@@ -16,7 +16,7 @@ public class budgetViewModel extends AndroidViewModel {
 
     private budgetRepository bRepository;
     private MutableLiveData<List<budget>> listBudget;
-    private LiveData<List<budget>> l ;
+   // private LiveData<List<budget>> l ;
 
     public budgetViewModel(@NonNull Application application) {
         super(application);
@@ -43,6 +43,7 @@ public class budgetViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<budget>> getListBudget(){
+        this.listBudget.setValue(bRepository.getlistBudget());
         return this.listBudget;
     }
 

@@ -47,7 +47,7 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_budget, container, false);
         myRecyclerView = (RecyclerView) v.findViewById(R.id.recylerBudget);
-        recycleViewAdapter = new RecyclerAdapter(getContext(), listBudget);
+        recycleViewAdapter = new RecyclerAdapter(listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
 
@@ -72,17 +72,12 @@ public class BudgetFragment extends Fragment {
         super.onCreate(savedInstanceState);
         bViewModel = new budgetViewModel(getActivity().getApplication());
         bViewModel = ViewModelProviders.of(getActivity()).get(budgetViewModel.class);
-        budget_creating bd;
-
         bViewModel.getListBudget().observe(this, new Observer<List<budget>>() {
             @Override
             public void onChanged(@Nullable List<budget> budgets) {
-                Toast.makeText(getActivity().getApplication(), "thay doi", Toast.LENGTH_SHORT).show();
-
                 if(budgets!=null){
                     recycleViewAdapter.setListbudget(budgets);
                     listBudget = budgets;
-                    Toast.makeText(getActivity().getApplication(), "on change: " + listBudget.size(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

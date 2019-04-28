@@ -9,7 +9,7 @@ import android.util.Log;
 import com.example.moneymanagement_android.dao.budgetDao;
 import com.example.moneymanagement_android.models.budget;
 
-@Database(entities = {budget.class}, version = 1)
+@Database(entities = {budget.class}, version = 2)
 public abstract class roomDatabase extends RoomDatabase {
 
     public abstract budgetDao bdDao();

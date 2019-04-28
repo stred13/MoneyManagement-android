@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity
         statisticFragment = new StatisticFragment();
         //view paper
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
-        viewPaperAdapter.addFragment(budgetFragment,"Vi");
-        viewPaperAdapter.addFragment(statisticFragment,"Tong Quang");
+        viewPaperAdapter.addFragment(budgetFragment,"Ví");
+        viewPaperAdapter.addFragment(statisticFragment,"Tổng quan");
 
 
         mainView.setAdapter(viewPaperAdapter);

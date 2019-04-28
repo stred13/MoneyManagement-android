@@ -16,6 +16,10 @@ public class budget {
 
     private String note;
 
+    private int nmoney;
+
+    private int urlimage;
+
     public int getId() {
         return id;
     }
@@ -48,13 +52,38 @@ public class budget {
         this.note = note;
     }
 
-    public budget(String name, String currency, String note) {
-        this.name = name;
-        this.currency = currency;
-        this.note = note;
+    public int getNmoney() {
+        return nmoney;
+    }
+
+    public void setNmoney(int nmoney) {
+        this.nmoney = nmoney;
+    }
+
+    public int getUrlimage() {
+        return urlimage;
+    }
+
+    public void setUrlimage(int urlimage) {
+        this.urlimage = urlimage;
     }
 
     @Ignore
-    public budget() {
+    public budget(int id, String name, String currency, String note, int nmoney, int urlimage) {
+        this.id = id;
+        this.name = name;
+        this.currency = currency;
+        this.note = note;
+        this.nmoney = nmoney;
+        this.urlimage = urlimage;
     }
+
+    public budget(String name, String currency, String note, int nmoney, int urlimage) {
+        this.name = name;
+        this.currency = currency;
+        this.note = note;
+        this.nmoney = nmoney;
+        this.urlimage = urlimage;
+    }
+
 }

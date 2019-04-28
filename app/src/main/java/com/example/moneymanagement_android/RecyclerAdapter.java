@@ -18,13 +18,11 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
+    Context mContent;
     List<budget> bData = new ArrayList<>();
 
     public RecyclerAdapter(List<budget> bData) {
         this.bData = bData;
-    }
-
-    public RecyclerAdapter() {
     }
 
     @NonNull

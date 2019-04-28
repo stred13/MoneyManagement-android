@@ -7,11 +7,16 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.moneymanagement_android.dao.budgetDao;
+import com.example.moneymanagement_android.dao.expenseDao;
+import com.example.moneymanagement_android.dao.incomeDao;
 import com.example.moneymanagement_android.models.budget;
+import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.models.income;
 
-@Database(entities = {budget.class}, version = 1)
+@Database(entities = {budget.class}, version = 2)
 public abstract class roomDatabase extends RoomDatabase {
 
+    //public abstract expenseDao exDao();
     public abstract budgetDao bdDao();
     //public abstract incomeDao icDao();
 
@@ -19,9 +24,9 @@ public abstract class roomDatabase extends RoomDatabase {
 
     public static synchronized roomDatabase getInstance(final Context context) {
         if (instance == null) {
-            Log.d("db", "getInstance: ");
+            //Log.d("db", "getInstance: ");
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    roomDatabase.class, "money_database")
+                    roomDatabase.class, "mn_database")
                     .fallbackToDestructiveMigration()
                     .build();
         }

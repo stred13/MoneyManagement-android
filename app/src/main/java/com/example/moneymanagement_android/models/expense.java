@@ -6,20 +6,20 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "income")
-public class income {
+@Entity
+public class expense {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String name;
 
-    private String note;
-
     private long nmoney;
 
-    Date dcreated;
+    private Date dcreated;
 
-    private int idcatin;
+    private String note;
+
+    private int idcatex;
 
     private int idbudget;
 
@@ -39,14 +39,6 @@ public class income {
         this.name = name;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public long getNmoney() {
         return nmoney;
     }
@@ -63,12 +55,20 @@ public class income {
         this.dcreated = dcreated;
     }
 
-    public int getIdcatin() {
-        return idcatin;
+    public String getNote() {
+        return note;
     }
 
-    public void setIdcatin(int idcatin) {
-        this.idcatin = idcatin;
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public int getIdcatex() {
+        return idcatex;
+    }
+
+    public void setIdcatex(int idcatex) {
+        this.idcatex = idcatex;
     }
 
     public int getIdbudget() {
@@ -79,17 +79,17 @@ public class income {
         this.idbudget = idbudget;
     }
 
-    public income(String name, String note, long nmoney, Date dcreated, int idcatin, int idbudget) {
+    public expense(String name, long nmoney, Date dcreated, String note, int idcatex, int idbudget) {
         this.name = name;
-        this.note = note;
         this.nmoney = nmoney;
         this.dcreated = dcreated;
-        this.idcatin = idcatin;
+        this.note = note;
+        this.idcatex = idcatex;
         this.idbudget = idbudget;
     }
 
     @Ignore
-    public income(){
+    public expense(){
 
     }
 }

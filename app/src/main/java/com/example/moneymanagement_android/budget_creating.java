@@ -48,22 +48,17 @@ public class budget_creating extends AppCompatActivity {
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                budget b = createBudget();
+                String namev = etTenV.getText().toString();
+                String note = etNote.getText().toString();
+                String currency = spCurrency.getSelectedItem().toString();
+                Toast.makeText(getApplication().getApplicationContext(), ""+namev, Toast.LENGTH_SHORT).show();
+
+                //insert
+                b = new budget(namev,currency,note);
                 bViewModel.insertBudget(b);
 
             }
         });
-    }
-
-
-    private budget createBudget (){
-        int id = 0;
-        String bName = etTenV.getText().toString();
-        String bcurrency = spCurrency.getSelectedItem().toString();
-        //int bsoT = Integer.parseInt(etSoT.getText().toString());
-        String bnote = etNote.getText().toString();
-        budget b = new budget(bName,"cc","nnn",0,1);
-        return b;
     }
 
 }

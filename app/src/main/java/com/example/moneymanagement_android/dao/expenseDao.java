@@ -7,23 +7,21 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.moneymanagement_android.models.budget;
+import com.example.moneymanagement_android.models.expense;
 
 import java.util.List;
 
 @Dao
-public interface budgetDao {
-
+public interface expenseDao {
     @Insert
-    void insert(budget b);
+    void insert(expense exp);
 
     @Update
-    void update(budget b);
+    void update(expense exp);
 
     @Delete
-    void delete(budget b);
+    void delete(expense exp);
 
-    @Query("SELECT * FROM budget")
-    LiveData<List<budget>> getListBudget();
-
+    @Query("Select * from expense")
+    LiveData<List<expense>> getListExpense();
 }

@@ -27,6 +27,7 @@ import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -47,21 +48,10 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_budget, container, false);
         myRecyclerView = (RecyclerView) v.findViewById(R.id.recylerBudget);
-        recycleViewAdapter = new RecyclerAdapter(listBudget);
+        recycleViewAdapter = new RecyclerAdapter();
+        recycleViewAdapter.setListbudget(listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
-
-        btntest = (Button) v.findViewById(R.id.btnTest);
-
-        btntest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), infobudget.class);
-                // BudgetFragment.startActivityForResult(intent,2);
-                startActivity(intent);
-            }
-        });
-
         return v;
     }
 
@@ -70,17 +60,22 @@ public class BudgetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bViewModel = new budgetViewModel(getActivity().getApplication());
-        bViewModel = ViewModelProviders.of(getActivity()).get(budgetViewModel.class);
-        bViewModel.getListBudget().observe(this, new Observer<List<budget>>() {
-            @Override
-            public void onChanged(@Nullable List<budget> budgets) {
-                if(budgets!=null){
-                    recycleViewAdapter.setListbudget(budgets);
-                    listBudget = budgets;
+        try {
+            bViewModel = new budgetViewModel(getActivity().getApplication());
+            bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
+            bViewModel.getListBudget().observe(this, new Observer<List<budget>>() {
+                @Override
+                public void onChanged(@Nullable List<budget> budgets) {
+                    if(budgets!=null){
+                        listBudget = budgets;
+                        recycleViewAdapter.setListbudget(listBudget);
+                        Toast.makeText(getActivity().getApplication(), "on change: " + budgets.size(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        } catch (ExecutionException |InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

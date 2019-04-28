@@ -18,11 +18,13 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    Context mContent;
     List<budget> bData = new ArrayList<>();
 
     public RecyclerAdapter(List<budget> bData) {
         this.bData = bData;
+    }
+
+    public RecyclerAdapter() {
     }
 
     @NonNull
@@ -45,11 +47,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyDataSetChanged();
     }
 
-    public  void insertItem(budget b){
-        bData.add(b);
-        notifyItemInserted(bData.size()-1);
-    }
-
     @Override
     public int getItemCount() {
         if(bData==null)
@@ -59,12 +56,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public static class  MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_bName;
-        private ImageView imgBudget;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_bName = (TextView)itemView.findViewById(R.id.tv_bName);
-            imgBudget = (ImageView) itemView.findViewById(R.id.imgBudget);
-
         }
     }
 }

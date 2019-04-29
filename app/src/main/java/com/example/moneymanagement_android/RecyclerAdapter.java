@@ -18,7 +18,8 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    List<budget> bData = new ArrayList<>();
+    private List<budget> bData = new ArrayList<>();
+    private View.OnClickListener itemClicklistener;
 
     public RecyclerAdapter(List<budget> bData) {
         this.bData = bData;
@@ -47,6 +48,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         notifyDataSetChanged();
     }
 
+    public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
+    }
+
     @Override
     public int getItemCount() {
         if(bData==null)
@@ -54,11 +59,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return bData.size();
     }
 
-    public static class  MyViewHolder extends RecyclerView.ViewHolder{
+    public class  MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_bName;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_bName = (TextView)itemView.findViewById(R.id.tv_bName);
+            itemView.setTag(this);
+            itemView.setOnClickListener(itemClicklistener);
         }
     }
 }

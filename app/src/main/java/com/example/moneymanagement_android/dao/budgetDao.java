@@ -12,7 +12,7 @@ import com.example.moneymanagement_android.models.budget;
 import java.util.List;
 
 @Dao
-public interface budgetDao {
+public interface budgetDao{
 
     @Insert
     void insert(budget b);

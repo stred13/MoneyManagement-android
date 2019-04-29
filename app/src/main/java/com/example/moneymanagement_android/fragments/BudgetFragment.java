@@ -50,10 +50,17 @@ public class BudgetFragment extends Fragment {
             RecyclerAdapter.MyViewHolder viewHolder = (RecyclerAdapter.MyViewHolder) v.getTag();
             int pos = viewHolder.getAdapterPosition();
             budget b = listBudget.get(pos);
-            Toast.makeText(getContext(), "You Clicked: "+b.getName(), Toast.LENGTH_SHORT).show();
+
+            // send intent budget for update;
+           /* Toast.makeText(getContext(), "You Clicked: "+b.getName(), Toast.LENGTH_SHORT).show();
             Intent inBudget = new Intent(getContext().getApplicationContext(), budget_update.class);
             inBudget.putExtra("budget", b);
-            startActivity(inBudget);
+            startActivity(inBudget);*/
+
+           Intent infoBudget = new Intent(getContext().getApplicationContext(),infobudget.class);
+            infoBudget.putExtra("budget", b);
+            startActivity(infoBudget);
+
         }
     };
 

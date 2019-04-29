@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,11 +19,17 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
+    private Context context;
     private List<budget> bData = new ArrayList<>();
     private View.OnClickListener itemClicklistener;
 
-    public RecyclerAdapter(List<budget> bData) {
+    public RecyclerAdapter(Context context,List<budget> bData) {
+        this.context = context;
         this.bData = bData;
+    }
+
+    public RecyclerAdapter(Context context) {
+        this.context = context;
     }
 
     public RecyclerAdapter() {
@@ -40,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_bName.setText(bData.get(i).getName());
-
+        myViewHolder.tv_bNote.setText(bData.get(i).getNote());
     }
 
     public void setListbudget(List<budget> lst){
@@ -61,9 +68,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     public class  MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_bName;
+        private TextView tv_bNote;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_bName = (TextView)itemView.findViewById(R.id.tv_bName);
+            tv_bNote = (TextView)itemView.findViewById(R.id.tv_bNote);
             itemView.setTag(this);
             itemView.setOnClickListener(itemClicklistener);
         }

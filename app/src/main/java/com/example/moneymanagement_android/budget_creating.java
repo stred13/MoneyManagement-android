@@ -53,11 +53,9 @@ public class budget_creating extends AppCompatActivity {
                 String note = etNote.getText().toString();
                 String currency = spCurrency.getSelectedItem().toString();
                 Toast.makeText(getApplication().getApplicationContext(), ""+namev, Toast.LENGTH_SHORT).show();
-
                 //insert
                 b = new budget(namev,currency,note);
                 bViewModel.insertBudget(b);
-
             }
         });
     }

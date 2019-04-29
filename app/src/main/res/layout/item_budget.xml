@@ -21,28 +21,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textSize="20sp"
             android:id="@+id/tv_bName"
-            android:text="Tiền mặt"
+            android:text="name of budget"
             android:textStyle="bold"
-
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20,500,000 VNĐ"
-
-            />
+            android:text="note"
+            android:id="@+id/tv_bNote"/>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="40sp"
-        android:id="@+id/tv_Tien"
-        />
 
 
 </LinearLayout>

@@ -44,14 +44,12 @@ public class BudgetFragment extends Fragment {
     public BudgetFragment() {
         // Required empty public constructor
     }
-
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             RecyclerAdapter.MyViewHolder viewHolder = (RecyclerAdapter.MyViewHolder) v.getTag();
             int pos = viewHolder.getAdapterPosition();
             budget b = listBudget.get(pos);
-
             Toast.makeText(getContext(), "You Clicked: "+b.getName(), Toast.LENGTH_SHORT).show();
             Intent inBudget = new Intent(getContext().getApplicationContext(), budget_update.class);
             inBudget.putExtra("budget", b);

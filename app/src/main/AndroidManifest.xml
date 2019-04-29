@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".budget_update"></activity>
         <activity
             android:name=".infobudget"
             android:label="@string/title_activity_infobudget"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".expense_creating"
             android:label="@string/title_activity_expense_creating"

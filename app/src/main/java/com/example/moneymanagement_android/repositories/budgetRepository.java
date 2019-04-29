@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class budgetRepository {
-
     private budgetDao bdDao;
     private LiveData<List<budget>> lBudget;
     public budgetRepository(Application application){

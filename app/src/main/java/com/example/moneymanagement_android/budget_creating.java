@@ -45,6 +45,7 @@ public class budget_creating extends AppCompatActivity {
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
 
 
+
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

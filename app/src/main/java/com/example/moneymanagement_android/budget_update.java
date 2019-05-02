@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -24,6 +25,10 @@ public class budget_update extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_update);
+//        Toolbar toolbar = findViewById(R.id.toolbarUpdate);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         tv_namev = findViewById(R.id.etTenV);
         tv_note = findViewById(R.id.mtGhichu);
@@ -32,7 +37,7 @@ public class budget_update extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        final budget b = (budget) i.getSerializableExtra("budget");
+        final budget b = (budget) i.getSerializableExtra("b");
 
         tv_namev.setText(b.getName());
         tv_note.setText(b.getNote());
@@ -46,6 +51,7 @@ public class budget_update extends AppCompatActivity {
                 b.setName(bname);
                 b.setNote(bnote);
                 bViewModel.updateBudget(b);
+                finish();
             }
         });
     }

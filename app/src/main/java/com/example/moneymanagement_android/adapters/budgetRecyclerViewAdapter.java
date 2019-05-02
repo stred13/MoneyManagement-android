@@ -1,14 +1,20 @@
 package com.example.moneymanagement_android.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.budget_update;
 import com.example.moneymanagement_android.models.budget;
 
 import java.util.ArrayList;
@@ -19,6 +25,7 @@ public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecycl
     private Context context;
     private List<budget> bData = new ArrayList<>();
     private View.OnClickListener itemClicklistener;
+    private View.OnLongClickListener iLongClicklistener;
 
     public budgetRecyclerViewAdapter(Context context, List<budget> bData) {
         this.context = context;
@@ -55,6 +62,10 @@ public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecycl
     public void setOnItemClickListener(View.OnClickListener iClicklistener){
         this.itemClicklistener = iClicklistener;
     }
+    public void setOnItemLongClickListener(View.OnLongClickListener iLongClicklistener){
+        this.iLongClicklistener = iLongClicklistener;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -67,12 +78,16 @@ public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecycl
         private TextView tv_bName;
         private TextView tv_bNote;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             tv_bName = (TextView)itemView.findViewById(R.id.tv_bName);
             tv_bNote = (TextView)itemView.findViewById(R.id.tv_bNote);
             itemView.setTag(this);
             itemView.setOnClickListener(itemClicklistener);
+
+            itemView.setOnLongClickListener(iLongClicklistener);
         }
     }
+
+
 }

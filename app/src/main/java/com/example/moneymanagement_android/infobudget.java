@@ -35,7 +35,7 @@ public class infobudget extends AppCompatActivity {
 
         Intent i = getIntent();
         b = (budget) i.getSerializableExtra("budget");
-        Toast.makeText(this, "budget: "+b.getId(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "budget: "+b.getId(), Toast.LENGTH_SHORT).show();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//turn back arrow

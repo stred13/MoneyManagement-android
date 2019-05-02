@@ -89,7 +89,6 @@ public class budgetRepository {
         @Override
         protected LiveData<List<budget>> doInBackground(Void... voids) {
            // Log.d("xyc", "doInBackground: "+Thread.currentThread().getName());
-
             return dao.getListBudget();
         }
 

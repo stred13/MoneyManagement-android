@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "f378b69a8249c5287e4a9cb30b5c1e90",
+    "identityHash": "42d5127310d6441487d0531c4bb4d731",
     "entities": [
       {
         "tableName": "budget",
@@ -100,7 +100,7 @@
       },
       {
         "tableName": "expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -152,12 +152,24 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "budget",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idbudget"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f378b69a8249c5287e4a9cb30b5c1e90\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"42d5127310d6441487d0531c4bb4d731\")"
     ]
   }
 }

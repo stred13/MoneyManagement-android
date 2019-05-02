@@ -50,8 +50,7 @@
         android:text="TÍNH VÀO TỔNG"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        />
+        android:layout_marginBottom="8dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerBudget"

@@ -51,6 +51,8 @@ public class budget_creating extends AppCompatActivity {
                 //insert
                 b = new budget(namev,currency,note);
                 bViewModel.insertBudget(b);
+
+                finish();
             }
         });
     }

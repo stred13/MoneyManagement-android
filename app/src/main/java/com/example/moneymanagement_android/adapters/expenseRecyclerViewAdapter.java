@@ -48,7 +48,6 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
 
     public void setListExpense(List<expense> liste){
         this.listExpense = liste;
-        Log.d("size ex", "setListExpense: "+liste.size());
         notifyDataSetChanged();
     }
 

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.moneymanagement_android.infobudget;
+import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.repositories.expenseRepository;
 
@@ -14,12 +15,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class expenseViewModel extends AndroidViewModel {
+
     private expenseRepository eRepo;
     private LiveData<List<expense>> listLiveEx;
+
     public expenseViewModel(@NonNull Application application) throws ExecutionException, InterruptedException {
         super(application);
         eRepo = new expenseRepository(application);
-        listLiveEx = eRepo.getAllExpensebyBudget(1);
+        //listLiveEx = null;
     }
 
     public void insert(expense e){
@@ -27,10 +30,11 @@ public class expenseViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<expense>> getAllExpense() throws ExecutionException, InterruptedException {
-        return eRepo.getAllExpense();
+        return this.listLiveEx;
     }
 
     public LiveData<List<expense>> getAllExpensebyBudget(int id) throws ExecutionException, InterruptedException {
+        //this.listLiveEx = eRepo.getAllExpensebyBudget(id);
         return eRepo.getAllExpensebyBudget(id);
     }
 }

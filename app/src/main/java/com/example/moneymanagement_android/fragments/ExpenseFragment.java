@@ -51,13 +51,15 @@ public class ExpenseFragment extends Fragment {
         exRVAdapter.setListExpense(listExpense);
         exRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         exRecyclerView.setAdapter(exRVAdapter);
-
         return v;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = this.getActivity().getIntent();
+        budget b = (budget) i.getSerializableExtra("budget");
+        Toast.makeText(getActivity().getApplication(), "b: " + b.getId(), Toast.LENGTH_SHORT).show();
 
         try {
             eViewModel = new expenseViewModel(getActivity().getApplication());
@@ -68,13 +70,12 @@ public class ExpenseFragment extends Fragment {
                     if(expenses!=null){
                         listExpense = expenses;
                         exRVAdapter.setListExpense(listExpense);
-                        Toast.makeText(getActivity().getApplication(), "on change: " + listExpense.size(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplication(), "Expense: " + listExpense.size(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         } catch (ExecutionException |InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

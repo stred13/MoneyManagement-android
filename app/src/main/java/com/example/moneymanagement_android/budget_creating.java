@@ -37,6 +37,7 @@ public class budget_creating extends AppCompatActivity {
         spCurrency = (Spinner) findViewById(R.id.spLoaiT);
         etSoT = (EditText) findViewById(R.id.etSoT);
         btnTaoV = (Button) findViewById(R.id.btnTaoV);
+//doanh
 
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
 

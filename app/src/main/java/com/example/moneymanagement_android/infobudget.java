@@ -10,11 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.moneymanagement_android.fragments.BudgetFragment;
 import com.example.moneymanagement_android.fragments.ExpenseFragment;
 import com.example.moneymanagement_android.fragments.IncomeFragment;
 import com.example.moneymanagement_android.fragments.StatisticFragment;
+import com.example.moneymanagement_android.models.budget;
 
 public class infobudget extends AppCompatActivity {
 
@@ -23,11 +25,17 @@ public class infobudget extends AppCompatActivity {
     private ViewPager mainViewInfo;
     private TabLayout tabLayoutInfo;
 
+    public static budget b = new budget();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infobudget);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        Intent i = getIntent();
+        b = (budget) i.getSerializableExtra("budget");
+        Toast.makeText(this, "budget: "+b.getId(), Toast.LENGTH_SHORT).show();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//turn back arrow
@@ -55,12 +63,15 @@ public class infobudget extends AppCompatActivity {
         tabLayoutInfo.setupWithViewPager(mainViewInfo);
 
 
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+               Intent i = new Intent(getApplication(),expense_creating.class);
+               startActivity(i);
             }
         });
     }

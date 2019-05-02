@@ -37,7 +37,6 @@ public class budget_update extends AppCompatActivity {
         tv_namev.setText(b.getName());
         tv_note.setText(b.getNote());
 
-        b.setName("sdf");
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
         btnupdate.setOnClickListener(new View.OnClickListener() {
             @Override

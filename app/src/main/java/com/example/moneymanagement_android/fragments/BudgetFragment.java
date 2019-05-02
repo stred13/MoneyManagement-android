@@ -1,7 +1,6 @@
 package com.example.moneymanagement_android.fragments;
 
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -10,20 +9,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.moneymanagement_android.budget_update;
 import com.example.moneymanagement_android.infobudget;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.R;
-import com.example.moneymanagement_android.RecyclerAdapter;
-import com.example.moneymanagement_android.budget_creating;
+import com.example.moneymanagement_android.adapters.budgetRecyclerViewAdapter;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 
 import java.util.ArrayList;
@@ -38,7 +33,7 @@ public class BudgetFragment extends Fragment {
     View v;
     private budgetViewModel bViewModel;
     private RecyclerView myRecyclerView;
-    private RecyclerAdapter recycleViewAdapter;
+    private budgetRecyclerViewAdapter recycleViewAdapter;
     private List<budget> listBudget = new ArrayList<>();
 
     public BudgetFragment() {
@@ -47,17 +42,11 @@ public class BudgetFragment extends Fragment {
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RecyclerAdapter.MyViewHolder viewHolder = (RecyclerAdapter.MyViewHolder) v.getTag();
+            budgetRecyclerViewAdapter.MyViewHolder viewHolder = (budgetRecyclerViewAdapter.MyViewHolder) v.getTag();
             int pos = viewHolder.getAdapterPosition();
             budget b = listBudget.get(pos);
 
-            // send intent budget for update;
-           /* Toast.makeText(getContext(), "You Clicked: "+b.getName(), Toast.LENGTH_SHORT).show();
-            Intent inBudget = new Intent(getContext().getApplicationContext(), budget_update.class);
-            inBudget.putExtra("budget", b);
-            startActivity(inBudget);*/
-
-           Intent infoBudget = new Intent(getContext().getApplicationContext(),infobudget.class);
+            Intent infoBudget = new Intent(getContext().getApplicationContext(),infobudget.class);
             infoBudget.putExtra("budget", b);
             startActivity(infoBudget);
 
@@ -69,15 +58,13 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_budget, container, false);
         myRecyclerView = (RecyclerView) v.findViewById(R.id.recylerBudget);
-        recycleViewAdapter = new RecyclerAdapter();
+        recycleViewAdapter = new budgetRecyclerViewAdapter();
         recycleViewAdapter.setListbudget(listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
         recycleViewAdapter.setOnItemClickListener(onItemClickListener);
         return v;
     }
-
-    Button btntest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +85,5 @@ public class BudgetFragment extends Fragment {
         } catch (ExecutionException |InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

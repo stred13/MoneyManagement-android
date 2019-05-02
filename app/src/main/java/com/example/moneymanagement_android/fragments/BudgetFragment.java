@@ -1,7 +1,6 @@
 package com.example.moneymanagement_android.fragments;
 
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -10,11 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.models.budget;
@@ -22,6 +20,8 @@ import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.RecyclerAdapter;
 import com.example.moneymanagement_android.budget_creating;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
+import com.example.moneymanagement_android.infobudger;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +48,22 @@ public class BudgetFragment extends Fragment {
         recycleViewAdapter = new RecyclerAdapter(getContext(), listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         myRecyclerView.setAdapter(recycleViewAdapter);
+
+        btntest = (Button) v.findViewById(R.id.btnTest);
+
+        btntest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), infobudger.class);
+                // BudgetFragment.startActivityForResult(intent,2);
+                startActivity(intent);
+            }
+        });
+
         return v;
     }
 
+    Button btntest;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

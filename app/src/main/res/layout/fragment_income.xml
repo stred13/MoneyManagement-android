@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Thu nhap"
+        android:text="Thu nhap fragment"
         android:textColor="@color/colorAccent"
         android:textSize="50sp"
         android:textStyle="bold" />

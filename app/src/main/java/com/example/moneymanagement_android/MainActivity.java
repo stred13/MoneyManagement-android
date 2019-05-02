@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager mainView;
     private TabLayout tabLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +52,15 @@ public class MainActivity extends AppCompatActivity
         expenseFragment = new ExpenseFragment();
         incomeFragment = new IncomeFragment();
         statisticFragment = new StatisticFragment();
+
         //view paper
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
-        viewPaperAdapter.addFragment(budgetFragment,"Vi");
-        viewPaperAdapter.addFragment(statisticFragment,"Tong Quang");
+        viewPaperAdapter.addFragment(budgetFragment,"Ví");
+        viewPaperAdapter.addFragment(statisticFragment,"Tổng Quan");
 
 
         mainView.setAdapter(viewPaperAdapter);
         tabLayout.setupWithViewPager(mainView);
-
 
 
         getSupportActionBar().setTitle("Money Management");

@@ -33,4 +33,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_budget">budgetActivity</string>
+    <string name="title_activity_activiti_infobudget">activiti_infobudget</string>
+    <string name="title_activity_infobudger">infobudger</string>
 </resources>

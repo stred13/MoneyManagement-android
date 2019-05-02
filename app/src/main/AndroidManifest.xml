@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".infobudger"
+            android:label="@string/title_activity_infobudger"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".expense_creating"
             android:label="@string/title_activity_expense_creating"
             android:theme="@style/AppTheme.NoActionBar" />

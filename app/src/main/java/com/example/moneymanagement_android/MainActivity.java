@@ -25,7 +25,7 @@ import com.example.moneymanagement_android.fragments.BudgetFragment;
 import com.example.moneymanagement_android.fragments.ExpenseFragment;
 import com.example.moneymanagement_android.fragments.IncomeFragment;
 import com.example.moneymanagement_android.fragments.StatisticFragment;
-//Doanh
+//Doanh test
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

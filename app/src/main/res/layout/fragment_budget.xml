@@ -39,8 +39,7 @@
             android:layout_below="@id/tvToTal"
             android:layout_marginLeft="15dp"
             android:text="20,700,000 VNĐ"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 

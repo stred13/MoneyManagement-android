@@ -139,22 +139,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        resultCode = 2;
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2&&resultCode== Activity.RESULT_OK){
-            String re = data.getStringExtra("res");
-           // Toast.makeText(this, "data "+re, Toast.LENGTH_SHORT).show();
-            BudgetFragment bd = this.budgetFragment;
-            bd.getdataintent(re);
-        }
-
-    }*/
-
 }

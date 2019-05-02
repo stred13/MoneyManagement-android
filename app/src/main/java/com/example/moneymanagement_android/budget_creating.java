@@ -1,8 +1,6 @@
 package com.example.moneymanagement_android;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +10,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.moneymanagement_android.fragments.BudgetFragment;
+import com.example.moneymanagement_android.adapters.budgetRecyclerViewAdapter;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
-
-import java.io.Serializable;
 
 public class budget_creating extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
@@ -26,7 +22,7 @@ public class budget_creating extends AppCompatActivity {
     private EditText etSoT;
     private Button btnTaoV;
     budgetViewModel bViewModel;
-    RecyclerAdapter recAdapter;
+    budgetRecyclerViewAdapter recAdapter;
     budget b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +39,6 @@ public class budget_creating extends AppCompatActivity {
         btnTaoV = (Button) findViewById(R.id.btnTaoV);
 
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
-
-
 
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override

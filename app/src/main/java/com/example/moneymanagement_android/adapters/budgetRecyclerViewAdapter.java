@@ -1,38 +1,35 @@
-package com.example.moneymanagement_android;
+package com.example.moneymanagement_android.adapters;
 
-import android.arch.lifecycle.ViewModel;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.models.budget;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
     private List<budget> bData = new ArrayList<>();
     private View.OnClickListener itemClicklistener;
 
-    public RecyclerAdapter(Context context,List<budget> bData) {
+    public budgetRecyclerViewAdapter(Context context, List<budget> bData) {
         this.context = context;
         this.bData = bData;
     }
 
-    public RecyclerAdapter(Context context) {
+    public budgetRecyclerViewAdapter(Context context) {
         this.context = context;
     }
 
-    public RecyclerAdapter() {
+    public budgetRecyclerViewAdapter() {
     }
 
     @NonNull

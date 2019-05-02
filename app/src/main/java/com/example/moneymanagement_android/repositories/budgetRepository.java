@@ -29,7 +29,6 @@ public class budgetRepository {
 
     public void insertBudget(budget b){
         new insertBudgetAsyncTask(bdDao).execute(b);
-
     }
 
     public void deleteBudget(budget b){
@@ -89,7 +88,7 @@ public class budgetRepository {
 
         @Override
         protected LiveData<List<budget>> doInBackground(Void... voids) {
-            Log.d("xyc", "doInBackground: "+Thread.currentThread().getName());
+           // Log.d("xyc", "doInBackground: "+Thread.currentThread().getName());
 
             return dao.getListBudget();
         }

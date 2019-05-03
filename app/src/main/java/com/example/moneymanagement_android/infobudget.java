@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -63,17 +64,38 @@ public class infobudget extends AppCompatActivity {
         tabLayoutInfo.setupWithViewPager(mainViewInfo);
 
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-               Intent i = new Intent(getApplication(),expense_creating.class);
-               startActivity(i);
+                Intent i = new Intent(getApplication(), expense_creating.class);
+                startActivity(i);
             }
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.custom_infbudget_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuThongBao:
+                Toast.makeText(getApplicationContext(),"thong bao",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menuKhoangThoiGian:
+                Toast.makeText(getApplicationContext(),"khoang thoi gian",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menuTuongLai:
+                Toast.makeText(getApplicationContext(),"tuong lai",Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

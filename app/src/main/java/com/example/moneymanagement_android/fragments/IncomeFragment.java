@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.activity_expense;
+import com.example.moneymanagement_android.activity_income;
 import com.example.moneymanagement_android.adapters.budgetRecyclerViewAdapter;
 import com.example.moneymanagement_android.adapters.incomeRecyclerViewAdapter;
 import com.example.moneymanagement_android.infobudget;
@@ -49,7 +51,9 @@ public class IncomeFragment extends Fragment {
     private View.OnClickListener onCardViewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getActivity(), "Click tong quan", Toast.LENGTH_SHORT).show();
+            Intent infoBudget = new Intent(getContext().getApplicationContext(), activity_income.class);
+            //infoBudget.putExtra("budget", b);
+            startActivity(infoBudget);
         }
     };
 

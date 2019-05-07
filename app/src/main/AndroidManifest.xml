@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".budget_update"></activity>
+        <activity android:name=".future_amounts"></activity>
+        <activity android:name=".category_update" />
+        <activity android:name=".activity_income" />
+        <activity android:name=".activity_expense" />
+        <activity android:name=".budget_update" />
         <activity
             android:name=".infobudget"
             android:label="@string/title_activity_infobudget"

@@ -52,7 +52,7 @@ public class budget implements Serializable {
 
     public budget(String name, String currency, String note) {
         this.name = name;
-        this.currency = currency;
+        //this.currency = currency;
         this.note = note;
     }
 

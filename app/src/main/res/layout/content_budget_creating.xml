@@ -4,72 +4,167 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".budget_creating"
     android:orientation="vertical"
     android:weightSum="4"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".budget_creating"
     tools:showIn="@layout/activity_budget_creating">
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:paddingTop="20sp">
-
-        <EditText
-            android:id="@+id/etTenV"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:hint="Ten vi"
-            android:textSize="25sp"/>
+            app:cardElevation="5dp">
 
-        <Spinner
-            android:id="@+id/spLoaiT"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/budget" />
+
+                    <EditText
+                        android:id="@+id/etTenV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tên"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="20dp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"></View>
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal"
+                     android:id="@+id/llCalender">
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:layout_gravity="center_vertical"
+                         android:src="@drawable/baseline_calendar_today_black_24dp" />
+
+                     <EditText
+                         android:id="@+id/eNgayTaoVi"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="20dp"
+                         android:textSize="20sp" />
+                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/total" />
+                    <EditText
+                        android:id="@+id/mtGhichu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:hint="Ghi chú"
+                        android:layout_marginLeft="20dp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etTenV"
-            android:layout_marginTop="25sp"
-            android:prompt="@string/currency_promt"
-            android:entries="@array/currency">
+            app:cardElevation="5dp"
+            android:layout_marginTop="30dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-        </Spinner>
+                    android:padding="20dp">
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="Tạo ví"
+                            android:textColor="@color/blueLight"
+                            android:id="@+id/btnTaoV"/>
 
-        <EditText
-            android:id="@+id/etSoT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spLoaiT"
-            android:layout_marginTop="25sp"
-            android:hint="Nhap so tien"
-            android:textSize="23sp"/>
+                </LinearLayout>
 
-        <EditText
-            android:id="@+id/mtGhichu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:layout_below="@id/etSoT"
-            android:hint="Ghi chu"
-            android:layout_marginTop="25sp"
-            android:textSize="25sp"/>
+        </android.support.v7.widget.CardView>
 
-        <Button
-            android:id="@+id/btnTaoV"
-            android:layout_width="500px"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mtGhichu"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20sp"
-            android:text="Tao Vi"
-            android:textSize="25sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
+
+    <!-- <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="3"
+         android:paddingTop="20sp">
+
+         <EditText
+             android:id="@+id/etTenV"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:hint="Ten vi"
+             android:textSize="25sp"/>
+
+         <EditText
+             android:id="@+id/etSoT"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/spLoaiT"
+             android:layout_marginTop="25sp"
+             android:hint="Nhap so tien"
+             android:textSize="23sp"/>
+
+         <EditText
+             android:id="@+id/mtGhichu"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:inputType="textMultiLine"
+             android:layout_below="@id/etSoT"
+             android:hint="Ghi chu"
+             android:layout_marginTop="25sp"
+             android:textSize="25sp"/>
+
+         <Button
+             android:id="@+id/btnTaoV"
+             android:layout_width="500px"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/mtGhichu"
+             android:layout_centerInParent="true"
+             android:layout_marginTop="20sp"
+             android:text="Tao Vi"
+             android:textSize="25sp" />
+     </RelativeLayout>
+ -->
 </LinearLayout>

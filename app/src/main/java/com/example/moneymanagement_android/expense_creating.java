@@ -40,10 +40,9 @@ public class expense_creating extends AppCompatActivity {
         setContentView(R.layout.activity_expense_creating);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("Tạo chi tiêu");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnChonNgay = (Button) findViewById(R.id.btnChonNgay);
         editTextChonNgay = (EditText) findViewById(R.id.editTextChonNgay);
         et_name = (EditText) findViewById(R.id.etEname);
         et_nMoney = (EditText) findViewById(R.id.etEnmoney);
@@ -73,7 +72,7 @@ public class expense_creating extends AppCompatActivity {
             }
         });
 
-        btnChonNgay.setOnClickListener(new View.OnClickListener() {
+        editTextChonNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChonNgay();
@@ -96,6 +95,11 @@ public class expense_creating extends AppCompatActivity {
             }
         }, nam, thang, ngay);
         datePickerDialog.show();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

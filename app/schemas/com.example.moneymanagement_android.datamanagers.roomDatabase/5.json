@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "b05e98dbb240976ae72a687ad8709d59",
+    "version": 5,
+    "identityHash": "9ab29f406f39ac6dc04f0ede3f1a91be",
     "entities": [
       {
         "tableName": "budget",
@@ -100,7 +100,7 @@
       },
       {
         "tableName": "expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`idcatex`) REFERENCES `catincome`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`idcatex`) REFERENCES `catexpense`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -165,7 +165,7 @@
             ]
           },
           {
-            "table": "catincome",
+            "table": "catexpense",
             "onDelete": "NO ACTION",
             "onUpdate": "CASCADE",
             "columns": [
@@ -178,7 +178,7 @@
         ]
       },
       {
-        "tableName": "catincome",
+        "tableName": "catexpense",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `image` TEXT)",
         "fields": [
           {
@@ -212,7 +212,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b05e98dbb240976ae72a687ad8709d59\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9ab29f406f39ac6dc04f0ede3f1a91be\")"
     ]
   }
 }

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "b05e98dbb240976ae72a687ad8709d59",
+    "version": 6,
+    "identityHash": "54ea54718fadbf2be34d71805678b700",
     "entities": [
       {
         "tableName": "budget",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "income",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `note` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `idcatin` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `note` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `idcatin` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`idcatin`) REFERENCES `catincome`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -96,11 +96,34 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "budget",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idbudget"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "catincome",
+            "onDelete": "NO ACTION",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idcatin"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`idcatex`) REFERENCES `catincome`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION , FOREIGN KEY(`idcatex`) REFERENCES `catexpense`(`id`) ON UPDATE CASCADE ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -165,7 +188,7 @@
             ]
           },
           {
-            "table": "catincome",
+            "table": "catexpense",
             "onDelete": "NO ACTION",
             "onUpdate": "CASCADE",
             "columns": [
@@ -176,6 +199,38 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "catexpense",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `image` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       },
       {
         "tableName": "catincome",
@@ -212,7 +267,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b05e98dbb240976ae72a687ad8709d59\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"54ea54718fadbf2be34d71805678b700\")"
     ]
   }
 }

@@ -11,12 +11,18 @@ import com.example.moneymanagement_android.converters.dateConverters;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(foreignKeys = @ForeignKey(
+@Entity(foreignKeys = {
+        @ForeignKey(
         entity = budget.class,
         parentColumns = "id",
         childColumns = "idbudget",
-        onUpdate = ForeignKey.CASCADE
-))
+        onUpdate = ForeignKey.CASCADE),
+        @ForeignKey(
+        entity = catexpense.class,
+        parentColumns = "id",
+        childColumns = "idcatex",
+        onUpdate = ForeignKey.CASCADE)
+})
 public class expense implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;

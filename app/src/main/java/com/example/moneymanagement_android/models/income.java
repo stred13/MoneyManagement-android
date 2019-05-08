@@ -1,15 +1,26 @@
 package com.example.moneymanagement_android.models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-
 import com.example.moneymanagement_android.converters.dateConverters;
 
 import java.util.Date;
 
-@Entity(tableName = "income")
+@Entity(tableName = "income", foreignKeys = {
+        @ForeignKey(
+                entity = budget.class,
+                parentColumns = "id",
+                childColumns = "idbudget",
+                onUpdate = ForeignKey.CASCADE),
+        @ForeignKey(
+                entity = catincome.class,
+                parentColumns = "id",
+                childColumns = "idcatin",
+                onUpdate = ForeignKey.CASCADE)
+})
 public class income {
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -4,21 +4,26 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.util.Log;
 
+import com.example.moneymanagement_android.dao.CatExpenseDAO;
+import com.example.moneymanagement_android.dao.CatIncomeDAO;
 import com.example.moneymanagement_android.dao.budgetDao;
 import com.example.moneymanagement_android.dao.expenseDao;
 import com.example.moneymanagement_android.dao.incomeDao;
 import com.example.moneymanagement_android.models.budget;
+import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
 
-@Database(entities = {budget.class,income.class,expense.class}, version = 3)
+@Database(entities = {budget.class,income.class,expense.class, catexpense.class, catincome.class}, version = 6)
 public abstract class roomDatabase extends RoomDatabase {
 
     public abstract expenseDao exDao();
     public abstract budgetDao bdDao();
     public abstract incomeDao icDao();
+    public abstract CatExpenseDAO catExpenseDAO();
+    public abstract CatIncomeDAO catIncomeDAO();
 
     private static roomDatabase instance;
 

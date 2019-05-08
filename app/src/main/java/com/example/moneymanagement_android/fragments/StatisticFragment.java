@@ -49,6 +49,7 @@ public class StatisticFragment extends Fragment {
     private Calendar calendar = Calendar.getInstance();
     private List<PieEntry> pieEntries = new ArrayList<>();
     private List<PieEntry> pieIncome = new ArrayList<>();
+
     private expenseViewModel expenseViewModel;
     private IncomeViewModel incomeViewModel;
     private CatExpenseViewModel catExpenseViewModel;

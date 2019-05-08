@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context=".budget_update">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etTenV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ten vi"
+            android:textSize="25sp"/>
+
+        <Spinner
+            android:id="@+id/spLoaiT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="25sp"
+            android:prompt="@string/currency_promt"
+            android:entries="@array/currency">
+
+        </Spinner>
+
+        <EditText
+            android:id="@+id/mtGhichu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="Ghi chu"
+            android:layout_marginTop="25sp"
+            android:textSize="25sp"/>
+
+        <Button
+            android:id="@+id/btnUpdateB"
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:text="Tao Vi"
+            android:textSize="25sp" />
+    </LinearLayout>
+</LinearLayout>

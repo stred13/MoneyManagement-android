@@ -4,97 +4,271 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".expense_creating"
-    android:orientation="vertical"
     tools:showIn="@layout/activity_expense_creating">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="20sp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etTenV"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:hint="Ten vi"
-            android:textSize="25sp"/>
+            app:cardElevation="5dp">
 
-        <Spinner
-            android:id="@+id/spLoaiT"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/expense" />
+
+                    <EditText
+                        android:id="@+id/etEname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:hint="Tên chi tiêu"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"></View>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"></View>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/list" />
+
+                    <Spinner
+                        android:id="@+id/spLoaiT"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/category_promt"
+                        android:entries="@array/category"
+                        android:layout_marginLeft="20dp">
+
+                    </Spinner>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/darker_gray"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/moneyvnd" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Số tiền"/>
+
+                        <EditText
+                            android:id="@+id/etEnmoney"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="0"
+                            android:textSize="20sp"
+                            android:inputType="number"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llCalender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/baseline_calendar_today_black_24dp" />
+
+                    <EditText
+                        android:id="@+id/editTextChonNgay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/total" />
+
+                    <EditText
+                        android:id="@+id/mtEnote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:hint="Ghi chú"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etTenV"
-            android:layout_marginTop="25sp"
-            android:prompt="@string/category_promt"
-            android:entries="@array/category">
+            android:layout_marginTop="30dp"
+            app:cardElevation="5dp">
 
-        </Spinner>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-        <LinearLayout
-            android:id="@+id/grDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spLoaiT"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:layout_marginTop="25sp">
-            <EditText
-                android:id="@+id/editTextChonNgay"
-                android:gravity="center"
-                android:enabled="false"
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:inputType="date"/>
-            <Button
-                android:id="@+id/btnChonNgay"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Chon ngay"/>
-        </LinearLayout>
+                android:padding="20dp">
 
-        <Button
-            android:id="@+id/btnRpDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/grDate"
-            android:layout_marginTop="25sp"
-            android:text="Lap Lai Ngay"
-            android:drawableLeft="@drawable/undo"
-            />
+                <Button
+                    android:id="@+id/btnAccept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tạo chi tiêu"
+                    android:textColor="@color/blueLight"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/etSoT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnRpDate"
-            android:layout_marginTop="25sp"
-            android:hint="Nhap so tien"
-            android:textSize="23sp"/>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/mtGhichu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:layout_below="@id/etSoT"
-            android:hint="Ghi chu"
-            android:layout_marginTop="25sp"
-            android:textSize="25sp"/>
-        <Button
-            android:layout_width="500px"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mtGhichu"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="18sp"
-            android:textSize="20sp"
-            android:text="Chap nhan"/>
-    </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:paddingTop="20sp"
+         android:orientation="vertical">
+
+         <EditText
+             android:id="@+id/etEname"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:hint="Ten Chi tiêu"
+             android:textSize="25sp"/>
+
+         <Spinner
+             android:id="@+id/spLoaiT"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="25sp"
+             android:prompt="@string/category_promt"
+             android:entries="@array/category">
+
+         </Spinner>
+
+         <LinearLayout
+             android:id="@+id/grDate"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/spLoaiT"
+             android:orientation="horizontal"
+             android:weightSum="4"
+             android:layout_marginTop="25sp">
+             <EditText
+                 android:id="@+id/editTextChonNgay"
+                 android:gravity="center"
+                 android:enabled="false"
+                 android:layout_weight="3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:inputType="date"/>
+             <Button
+                 android:id="@+id/btnChonNgay"
+                 android:layout_weight="1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:text="Chon ngay"/>
+         </LinearLayout>
+
+         <Button
+             android:id="@+id/btnRpDate"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/grDate"
+             android:layout_marginTop="25sp"
+             android:text="Lap Lai Ngay"
+             android:drawableLeft="@drawable/undo"
+             />
+
+         <EditText
+             android:id="@+id/etEnmoney"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/btnRpDate"
+             android:layout_marginTop="25sp"
+             android:hint="Nhap so tien"
+             android:textSize="23sp"/>
+
+         <EditText
+             android:id="@+id/mtEnote"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:inputType="textMultiLine"
+             android:hint="Ghi chu"
+             android:layout_marginTop="25sp"
+             android:textSize="25sp"/>
+         <Button
+             android:id="@+id/btnAccept"
+             android:layout_width="500px"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/mtGhichu"
+             android:layout_marginTop="18sp"
+             android:textSize="20sp"
+             android:text="Chap nhan"/>
+     </LinearLayout>-->
 
 </LinearLayout>

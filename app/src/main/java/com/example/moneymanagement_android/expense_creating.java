@@ -1,6 +1,8 @@
 package com.example.moneymanagement_android;
 
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,13 +14,25 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.moneymanagement_android.fragments.ExpenseFragment;
+import com.example.moneymanagement_android.models.budget;
+import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.viewmodels.expenseViewModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class expense_creating extends AppCompatActivity {
 
     Button btnChonNgay;
     EditText editTextChonNgay;
+    EditText et_nMoney;
+    EditText et_note;
+    EditText et_name;
+    Button btnAcc;
+    expenseViewModel eViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +40,44 @@ public class expense_creating extends AppCompatActivity {
         setContentView(R.layout.activity_expense_creating);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("Tạo chi tiêu");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnChonNgay = (Button) findViewById(R.id.btnChonNgay);
         editTextChonNgay = (EditText) findViewById(R.id.editTextChonNgay);
+        et_name = (EditText) findViewById(R.id.etEname);
+        et_nMoney = (EditText) findViewById(R.id.etEnmoney);
+        et_note = (EditText) findViewById(R.id.mtEnote);
+        btnAcc = (Button) findViewById(R.id.btnAccept);
 
-        btnChonNgay.setOnClickListener(new View.OnClickListener() {
+        eViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
+
+        final expense e = new expense();
+
+        btnAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = et_name.getText().toString();
+                int nmoney = Integer.parseInt(et_nMoney.getText().toString());
+                String note = et_note.getText().toString();
+                int loai = 1;
+
+                e.setIdbudget(infobudget.b.getId());
+                e.setDcreated(new Date());
+                e.setName(name);
+                e.setIdcatex(loai);
+                e.setNmoney(nmoney);
+                e.setNote(note);
+
+                eViewModel.insert(e);
+            }
+        });
+
+        editTextChonNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChonNgay();
             }
         });
-
-
     }
 
     private void ChonNgay() {
@@ -57,8 +95,11 @@ public class expense_creating extends AppCompatActivity {
             }
         }, nam, thang, ngay);
         datePickerDialog.show();
-
-
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

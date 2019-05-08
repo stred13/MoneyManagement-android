@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Thông báo"
+        android:id="@+id/menuThongBao"
+        app:showAsAction="always"
+        android:icon="@drawable/bell"
+        ></item>
+    <item android:title="Khoảng thời gian"
+        android:id="@+id/menuKhoangThoiGian"></item>
+    <item android:title="Các khoản tương lai"
+        android:id="@+id/menuTuongLai"></item>
+
+</menu>

@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity
         statisticFragment = new StatisticFragment();
         //view paper
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
-        viewPaperAdapter.addFragment(budgetFragment,"Vi");
-        viewPaperAdapter.addFragment(statisticFragment,"Tong Quang");
+        viewPaperAdapter.addFragment(budgetFragment,"Ví");
+        viewPaperAdapter.addFragment(statisticFragment,"Tổng quan");
 
 
         mainView.setAdapter(viewPaperAdapter);
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(),budget_creating.class);
                // BudgetFragment.startActivityForResult(intent,2);
                 budgetFragment.startActivity(intent);
+
             }
         });
 
@@ -138,23 +139,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        resultCode = 2;
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2&&resultCode== Activity.RESULT_OK){
-            String re = data.getStringExtra("res");
-           // Toast.makeText(this, "data "+re, Toast.LENGTH_SHORT).show();
-            BudgetFragment bd = this.budgetFragment;
-            bd.getdataintent(re);
-        }
-
-    }*/
 
 }

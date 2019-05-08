@@ -39,8 +39,7 @@
             android:layout_below="@id/tvToTal"
             android:layout_marginLeft="15dp"
             android:text="20,700,000 VNĐ"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 
@@ -51,20 +50,12 @@
         android:text="TÍNH VÀO TỔNG"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        />
+        android:layout_marginBottom="8dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerBudget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Quản lý chi tiêu" />
 
 </LinearLayout>

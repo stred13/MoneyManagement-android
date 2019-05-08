@@ -10,24 +10,23 @@
     tools:showIn="@layout/activity_expense_creating">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20sp">
+        android:paddingTop="20sp"
+        android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etTenV"
+            android:id="@+id/etEname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:hint="Ten vi"
+            android:hint="Ten Chi tiêu"
             android:textSize="25sp"/>
 
         <Spinner
             android:id="@+id/spLoaiT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etTenV"
             android:layout_marginTop="25sp"
             android:prompt="@string/category_promt"
             android:entries="@array/category">
@@ -69,7 +68,7 @@
             />
 
         <EditText
-            android:id="@+id/etSoT"
+            android:id="@+id/etEnmoney"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btnRpDate"
@@ -78,23 +77,22 @@
             android:textSize="23sp"/>
 
         <EditText
-            android:id="@+id/mtGhichu"
+            android:id="@+id/mtEnote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:layout_below="@id/etSoT"
             android:hint="Ghi chu"
             android:layout_marginTop="25sp"
             android:textSize="25sp"/>
         <Button
+            android:id="@+id/btnAccept"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_below="@id/mtGhichu"
-            android:layout_centerInParent="true"
             android:layout_marginTop="18sp"
             android:textSize="20sp"
             android:text="Chap nhan"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

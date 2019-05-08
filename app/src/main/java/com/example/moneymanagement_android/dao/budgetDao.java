@@ -1,5 +1,6 @@
 package com.example.moneymanagement_android.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -11,7 +12,7 @@ import com.example.moneymanagement_android.models.budget;
 import java.util.List;
 
 @Dao
-public interface budgetDao {
+public interface budgetDao{
 
     @Insert
     void insert(budget b);
@@ -23,6 +24,6 @@ public interface budgetDao {
     void delete(budget b);
 
     @Query("SELECT * FROM budget")
-    List<budget> getListBudget();
+    LiveData<List<budget>> getListBudget();
 
 }

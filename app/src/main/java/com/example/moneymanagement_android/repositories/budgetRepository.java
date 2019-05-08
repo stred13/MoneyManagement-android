@@ -1,6 +1,7 @@
 package com.example.moneymanagement_android.repositories;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,31 +16,19 @@ import java.util.concurrent.ExecutionException;
 
 public class budgetRepository {
     private budgetDao bdDao;
-    public MutableLiveData<List<budget>> lBudget;
+    private LiveData<List<budget>> lBudget;
     public budgetRepository(Application application){
         roomDatabase rdtb = roomDatabase.getInstance(application.getApplicationContext());
         bdDao = rdtb.bdDao();
-        lBudget = new MutableLiveData<>();
-       // lBudget.setValue(getlistBudget());
+        this.lBudget = bdDao.getListBudget();
     }
 
-    public List<budget> getlistBudget(){
-        List<budget> listb = new ArrayList<>();
-        try {
-            listb = new getListBudgetAsyncTask(bdDao).execute().get();
-            Log.d("sd", "getlistBudget: "+listb.size());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return listb;
+    public LiveData<List<budget>> getAllbudget() throws ExecutionException, InterruptedException {
+        return new getLiveListBudgetAsynctask(this.bdDao).execute().get();
     }
 
     public void insertBudget(budget b){
         new insertBudgetAsyncTask(bdDao).execute(b);
-
     }
 
     public void deleteBudget(budget b){
@@ -90,22 +79,23 @@ public class budgetRepository {
         }
     }
 
-
-    private static class getListBudgetAsyncTask extends AsyncTask<Void,Void,List<budget>>{
+    private static class getLiveListBudgetAsynctask extends AsyncTask<Void,Void,LiveData<List<budget>>>{
         private budgetDao dao;
 
-        public getListBudgetAsyncTask(budgetDao dao) {
-
+        public getLiveListBudgetAsynctask(budgetDao dao) {
             this.dao = dao;
         }
-        @Override
-        protected List<budget> doInBackground(Void... voids) {
-            return  dao.getListBudget();
-        }
-        @Override
-        protected void onPostExecute(List<budget> listMutableLiveData) {
-            super.onPostExecute(listMutableLiveData);
 
+        @Override
+        protected LiveData<List<budget>> doInBackground(Void... voids) {
+           // Log.d("xyc", "doInBackground: "+Thread.currentThread().getName());
+            return dao.getListBudget();
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<budget>> listLiveDataData) {
+            super.onPostExecute(listLiveDataData);
         }
     }
+
 }

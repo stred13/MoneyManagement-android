@@ -1,6 +1,8 @@
 package com.example.moneymanagement_android.fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +13,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.catincome;
+import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.models.income;
+import com.example.moneymanagement_android.repositories.CatIncomeRepository;
+import com.example.moneymanagement_android.utils.Util;
+import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
+import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -24,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -35,6 +49,15 @@ public class StatisticFragment extends Fragment {
     private Calendar calendar = Calendar.getInstance();
     private List<PieEntry> pieEntries = new ArrayList<>();
     private List<PieEntry> pieIncome = new ArrayList<>();
+    private expenseViewModel expenseViewModel;
+    private IncomeViewModel incomeViewModel;
+    private CatExpenseViewModel catExpenseViewModel;
+    private CatIncomeViewModel catIncomeViewModel;
+
+    private List<expense> expenseList = new ArrayList<>();
+    private List<income> incomeList = new ArrayList<>();
+
+    private TextView txtIncome, txtExpense;
 
     public StatisticFragment() {
         // Required empty public constructor
@@ -53,9 +76,61 @@ public class StatisticFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);
         pieChart = v.findViewById(R.id.pie_chart);
         pieChartIncome = v.findViewById(R.id.pie_chart_income);
+        txtExpense = v.findViewById(R.id.txtExpense);
+        txtIncome = v.findViewById(R.id.txtIncome);
         initialPieChart();
         initialPieChartIncome();
+        retriveDataFromdb();
         return v;
+    }
+
+    private void retriveDataFromdb() {
+        try {
+            expenseViewModel = new expenseViewModel(getActivity().getApplication());
+            expenseViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
+            expenseViewModel.getAllExpenseByDate("2019-05-01").observe(this, new Observer<List<expense>>() {
+                @Override
+                public void onChanged(@Nullable List<expense> expenses) {
+                    expenseList = expenses;
+                    long totalExpense = 0;
+                    for (expense expense : expenses) {
+                        totalExpense += expense.getNmoney();
+                    }
+                    txtExpense.setText(Util.formatCurrency(totalExpense));
+                }
+            });
+
+            incomeViewModel = new IncomeViewModel(getActivity().getApplication());
+            incomeViewModel = ViewModelProviders.of(this).get(IncomeViewModel.class);
+            incomeViewModel.getAllIncomeByDate("2019-05-01").observe(this, new Observer<List<income>>() {
+                @Override
+                public void onChanged(@Nullable List<income> incomes) {
+                    incomeList = incomes;
+                    long totalIncome = 0;
+                    for (income income : incomes) {
+                        totalIncome += income.getNmoney();
+                    }
+                    txtIncome.setText(Util.formatCurrency(totalIncome));
+                }
+            });
+
+            catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
+            String name = "Ăn uống";
+            String image = "123";
+            catexpense catexpense = new catexpense(name, image);
+            catExpenseViewModel.insertCatExpense(catexpense);
+
+            catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+            String name2 = "Lương";
+            String image2 = "123";
+            catincome catincome = new catincome(name2, image2);
+            catIncomeViewModel.insertCatIncome(catincome);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initialPieChart() {

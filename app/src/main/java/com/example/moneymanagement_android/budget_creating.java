@@ -1,8 +1,6 @@
 package com.example.moneymanagement_android;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +10,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.moneymanagement_android.fragments.BudgetFragment;
+import com.example.moneymanagement_android.adapters.budgetRecyclerViewAdapter;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
-
-import java.io.Serializable;
 
 public class budget_creating extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
@@ -26,7 +22,7 @@ public class budget_creating extends AppCompatActivity {
     private EditText etSoT;
     private Button btnTaoV;
     budgetViewModel bViewModel;
-    RecyclerAdapter recAdapter;
+    budgetRecyclerViewAdapter recAdapter;
     budget b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +37,24 @@ public class budget_creating extends AppCompatActivity {
         spCurrency = (Spinner) findViewById(R.id.spLoaiT);
         etSoT = (EditText) findViewById(R.id.etSoT);
         btnTaoV = (Button) findViewById(R.id.btnTaoV);
+//doanh
 
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
-
 
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                budget b = createBudget();
+                String namev = etTenV.getText().toString();
+                String note = etNote.getText().toString();
+                String currency = spCurrency.getSelectedItem().toString();
+                Toast.makeText(getApplication().getApplicationContext(), ""+namev, Toast.LENGTH_SHORT).show();
+                //insert
+                b = new budget(namev,currency,note);
                 bViewModel.insertBudget(b);
 
+                finish();
             }
         });
-    }
-
-
-    private budget createBudget (){
-        int id = 0;
-        String bName = etTenV.getText().toString();
-        String bcurrency = spCurrency.getSelectedItem().toString();
-        //int bsoT = Integer.parseInt(etSoT.getText().toString());
-        String bnote = etNote.getText().toString();
-        budget b = new budget(bName,"cc","nnn",0,1);
-        return b;
     }
 
 }

@@ -108,6 +108,7 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/txtIncome"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -128,6 +129,7 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/txtExpense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -211,42 +213,52 @@
                         android:textAllCaps="true"
                         android:textColor="@android:color/darker_gray"
                         android:textStyle="bold"/>
+
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
+
                         <ImageView
+                            android:id="@+id/imgExpenseMax"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:src="@drawable/burger"/>
+                            android:src="@drawable/burger" />
+
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
+                            android:orientation="vertical">
+
                             <TextView
+                                android:id="@+id/txtExpenseMax"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Nhà hàng"
-                                android:textColor="@android:color/black"/>
+                                android:textColor="@android:color/black" />
+
                             <TextView
+                                android:id="@+id/txtExpenseDateMax"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="8 tháng 4 2019"
-                                android:textColor="@android:color/darker_gray"/>
+                                android:textColor="@android:color/darker_gray" />
                         </LinearLayout>
+
                         <TextView
+                            android:id="@+id/txtExpenseMoneyMax"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
                             android:layout_weight="1"
                             android:text="12,000,000 đ"
-                            android:layout_gravity="center_vertical|end"
+                            android:textAlignment="textEnd"
                             android:textColor="@android:color/holo_red_light"
-                            android:textSize="18sp"
-                            android:textAlignment="textEnd"/>
+                            android:textSize="18sp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -275,70 +287,12 @@
                         android:layout_marginTop="10dp"
                         android:background="@android:color/darker_gray">
                     </View>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvListExpense"
+                        android:scrollbars="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/breakfast"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Ăn uống"
-                                android:textColor="@android:color/black"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="12,000,000 đ"
-                            android:layout_gravity="center_vertical|end"
-                            android:textColor="@android:color/holo_red_light"
-                            android:textSize="18sp"
-                            android:textAlignment="textEnd"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/beach"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Du lịch"
-                                android:textColor="@android:color/black"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="12,000,000 đ"
-                            android:layout_gravity="center_vertical|end"
-                            android:textColor="@android:color/holo_red_light"
-                            android:textSize="18sp"
-                            android:textAlignment="textEnd"/>
-                    </LinearLayout>
+                        android:layout_height="250dp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -378,71 +332,13 @@
                         android:layout_marginTop="10dp"
                         android:background="@android:color/darker_gray">
                     </View>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvListIncome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/breakfast"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Lương"
-                                android:textColor="@android:color/black"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="12,000,000 đ"
-                            android:layout_gravity="center_vertical|end"
-                            android:textColor="@android:color/holo_blue_light"
-                            android:textSize="18sp"
-                            android:textAlignment="textEnd"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/beach"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Bán đồ"
-                                android:textColor="@android:color/black"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="12,000,000 đ"
-                            android:layout_gravity="center_vertical|end"
-                            android:textColor="@android:color/holo_blue_light"
-                            android:textSize="18sp"
-                            android:textAlignment="textEnd"/>
-                    </LinearLayout>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
+
+
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>

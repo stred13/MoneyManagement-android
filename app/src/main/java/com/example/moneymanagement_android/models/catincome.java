@@ -4,12 +4,14 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class catincome {
+public class catincome implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int name;
+    private String name;
 
     private String image;
 
@@ -21,11 +23,11 @@ public class catincome {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -37,7 +39,7 @@ public class catincome {
         this.image = image;
     }
 
-    public catincome(int name, String image) {
+    public catincome(String name, String image) {
         this.name = name;
         this.image = image;
     }

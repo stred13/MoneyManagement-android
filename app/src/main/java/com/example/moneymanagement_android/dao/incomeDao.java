@@ -25,4 +25,9 @@ public interface incomeDao {
     @Query("Select * From income")
     LiveData<List<income>> getListincome();
 
+    @Query("Select * from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
+            "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month', '+1 month')) AS INT)" +
+            "ORDER by nmoney DESC")
+    LiveData<List<income>> getIncomeByDate(String time);
+
 }

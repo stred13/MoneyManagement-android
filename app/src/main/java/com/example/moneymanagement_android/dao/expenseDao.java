@@ -27,4 +27,9 @@ public interface expenseDao {
 
     @Query("Select * from expense Where idbudget = :id")
     LiveData<List<expense>> getAllExpensebyBudget(int id);
+
+    @Query("Select * from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
+            "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month', '+1 month')) AS INT)" +
+            "ORDER by nmoney DESC")
+    LiveData<List<expense>> getExpenseByDate(String time);
 }

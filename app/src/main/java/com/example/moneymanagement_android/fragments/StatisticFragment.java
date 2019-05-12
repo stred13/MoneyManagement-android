@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.adapters.StatisticExpenseAdapter;
 import com.example.moneymanagement_android.adapters.StatisticIncomeAdapter;
+
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
@@ -101,7 +102,7 @@ public class StatisticFragment extends Fragment {
         incomeLayoutManager = new LinearLayoutManager(getContext());
         rvIncome.setLayoutManager(incomeLayoutManager);
 
-        initialPieChartIncome();
+
         retriveDataFromdb();
         return v;
     }
@@ -154,6 +155,7 @@ public class StatisticFragment extends Fragment {
                         totalIncome += income.getNmoney();
                     }
                     txtIncome.setText(Util.formatCurrency(totalIncome));
+                    initialPieChartIncome();
                     setupIncomeAdapter();
                 }
             });

@@ -108,10 +108,12 @@ public class StatisticFragment extends Fragment {
     }
 
     private void setupUI() {
-        expense largestExpense = expenseList.get(0); // the largest one on top because the list has been sorted in descending order by the price
-        txtExpenseMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
-        txtExpenseDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
-        txtExpenseMax.setText(largestExpense.getName());
+        if(expenseList.size()>0) {
+            expense largestExpense = expenseList.get(0); // the largest one on top because the list has been sorted in descending order by the price
+            txtExpenseMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
+            txtExpenseDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
+            txtExpenseMax.setText(largestExpense.getName());
+        }
     }
 
     private void setupExpenseAdapter() {

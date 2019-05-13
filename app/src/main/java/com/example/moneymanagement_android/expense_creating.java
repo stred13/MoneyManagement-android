@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.fragments.ExpenseFragment;
@@ -25,14 +28,14 @@ import java.util.Date;
 
 public class expense_creating extends AppCompatActivity {
 
-    Button btnChonNgay;
-    EditText editTextChonNgay;
     EditText et_nMoney;
     EditText et_note;
     EditText et_name;
     Button btnAcc;
     expenseViewModel eViewModel;
-
+    CardView cardViewChiTieu;
+    TextView textViewChonNgay;
+    LinearLayout lnCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,10 @@ public class expense_creating extends AppCompatActivity {
         getSupportActionBar().setTitle("Tạo chi tiêu");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        editTextChonNgay = (EditText) findViewById(R.id.editTextChonNgay);
-        et_name = (EditText) findViewById(R.id.etEname);
+        //editTextChonNgay = (EditText) findViewById(R.id.editTextChonNgay);
+        cardViewChiTieu = (CardView) findViewById(R.id.CalenderChiTieu);
+        textViewChonNgay = (TextView) findViewById(R.id.textViewChonNgay);
+        lnCategory = (LinearLayout) findViewById(R.id.lnCategory);
         et_nMoney = (EditText) findViewById(R.id.etEnmoney);
         et_note = (EditText) findViewById(R.id.mtEnote);
         btnAcc = (Button) findViewById(R.id.btnAccept);
@@ -72,10 +77,21 @@ public class expense_creating extends AppCompatActivity {
             }
         });
 
-        editTextChonNgay.setOnClickListener(new View.OnClickListener() {
+        ChonNgayHienTai();
+        cardViewChiTieu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"aaaaa",Toast.LENGTH_SHORT).show();
                 ChonNgay();
+            }
+        });
+
+        lnCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), category.class);
+                startActivity(intent);
+
             }
         });
     }
@@ -91,10 +107,18 @@ public class expense_creating extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(year,month,dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                editTextChonNgay.setText(simpleDateFormat.format(calendar.getTime()));
+                textViewChonNgay.setText(simpleDateFormat.format(calendar.getTime()));
             }
         }, nam, thang, ngay);
         datePickerDialog.show();
+    }
+    private void ChonNgayHienTai(){
+        final Calendar calendar = Calendar.getInstance();
+        int ngay = calendar.get(Calendar.DATE);
+        int thang = calendar.get(Calendar.MONTH);
+        int nam = calendar.get(Calendar.YEAR);
+
+        textViewChonNgay.setText(ngay + "/" + (thang + 1) + "/" + nam);
     }
     @Override
     public boolean onSupportNavigateUp() {

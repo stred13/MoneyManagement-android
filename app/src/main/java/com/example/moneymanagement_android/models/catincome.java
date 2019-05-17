@@ -14,35 +14,35 @@ public class catincome implements Serializable {
 
     private String name;
 
-    private String image;
+    private int image;
 
     public int getId() {
         return id;
+    }
+
+    public catincome(String name, int image) {
+        this.name = name;
+        this.image = image;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getImage() {
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public catincome(String name, String image) {
-        this.name = name;
-        this.image = image;
     }
 
     @Ignore

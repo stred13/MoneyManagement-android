@@ -163,16 +163,19 @@ public class StatisticFragment extends Fragment {
             });
 
             catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
-            String name = "Ăn uống";
-            String image = "123";
-            catexpense catexpense = new catexpense(name, image);
-            catExpenseViewModel.insertCatExpense(catexpense);
 
-            catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
-            String name2 = "Lương";
-            String image2 = "123";
-            catincome catincome = new catincome(name2, image2);
-            catIncomeViewModel.insertCatIncome(catincome);
+            //image (int)
+
+//            String name = "Ăn uống";
+//            String image = "123";
+//            catexpense catexpense = new catexpense(name, image);
+//            catExpenseViewModel.insertCatExpense(catexpense);
+//
+//            catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+//            String name2 = "Lương";
+//            String image2 = "123";
+//            catincome catincome = new catincome(name2, image2);
+//            catIncomeViewModel.insertCatIncome(catincome);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

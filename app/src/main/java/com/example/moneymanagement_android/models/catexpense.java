@@ -4,41 +4,43 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class catexpense {
+public class catexpense implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
 
-    private String image;
+    private int image;
 
-    public int getId() {
-        return id;
+    public catexpense(String name, int image) {
+        this.name = name;
+        this.image = image;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getImage() {
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public catexpense(String name, String image) {
-        this.name = name;
-        this.image = image;
     }
 
     @Ignore

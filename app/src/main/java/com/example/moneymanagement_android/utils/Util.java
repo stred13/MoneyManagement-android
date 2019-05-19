@@ -1,5 +1,9 @@
 package com.example.moneymanagement_android.utils;
 
+import android.net.Uri;
+
+import com.example.moneymanagement_android.R;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -21,5 +25,9 @@ public class Util {
         sdf = new SimpleDateFormat("yyyy");
         String year = sdf.format(date);
         return day + " tháng " + month + " " + year;
+    }
+
+    public static String getPathForResouce(int id) {
+        return Uri.parse("android:resouce://"  + R.class.getPackage().getName() + "/" + id).toString();
     }
 }

@@ -11,6 +11,7 @@ import com.example.moneymanagement_android.repositories.CatExpenseRepository;
 import com.example.moneymanagement_android.repositories.CatIncomeRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CatIncomeViewModel extends AndroidViewModel {
 
@@ -26,4 +27,7 @@ public class CatIncomeViewModel extends AndroidViewModel {
         catIncomeRepository.insertCatIncome(c);
     }
 
+    public LiveData<List<catincome>> getAllCatIncome() throws ExecutionException, InterruptedException {
+        return catIncomeRepository.getAllCatIncome();
+    }
 }

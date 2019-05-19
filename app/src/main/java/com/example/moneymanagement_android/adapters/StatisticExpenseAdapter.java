@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.utils.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,10 +21,21 @@ public class StatisticExpenseAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private List<expense> expenseList;
     private Context context;
+    private List<catexpense> catexpenseList;
 
     public StatisticExpenseAdapter(List<expense> expenseList, Context context) {
         this.expenseList = expenseList;
         this.context = context;
+    }
+
+    public void setCatexpenseList(List<catexpense> catexpenseList) {
+        this.catexpenseList = catexpenseList;
+    }
+
+    public void setExpenseList(List<expense> expenseList) {
+        this.expenseList.clear();
+        this.expenseList = expenseList;
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,6 +51,12 @@ public class StatisticExpenseAdapter extends RecyclerView.Adapter<RecyclerView.V
         StatisticExpenseViewHolder expenseViewHolder = (StatisticExpenseViewHolder) viewHolder;
         expenseViewHolder.txtPrice.setText(Util.formatCurrency(expense.getNmoney()));
         expenseViewHolder.txtName.setText(expense.getName());
+        for (catexpense catx : catexpenseList) {
+            if (expense.getIdcatex() == catx.getId()) {
+                Picasso.get().load(catx.getImage()).error(R.drawable.breakfast).into(expenseViewHolder.imgItem);
+                break;
+            }
+        }
     }
 
     @Override

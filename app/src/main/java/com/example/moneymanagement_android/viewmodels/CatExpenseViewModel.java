@@ -6,9 +6,11 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.repositories.CatExpenseRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CatExpenseViewModel extends AndroidViewModel {
 
@@ -18,6 +20,10 @@ public class CatExpenseViewModel extends AndroidViewModel {
     public CatExpenseViewModel(@NonNull Application application) {
         super(application);
         catExpenseRepository = new CatExpenseRepository(application);
+    }
+
+    public LiveData<List<catexpense>> getAllCatExpense() throws ExecutionException, InterruptedException {
+        return catExpenseRepository.getAllCatExpense();
     }
 
     public void insertCatExpense(catexpense c) {

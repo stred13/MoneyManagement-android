@@ -29,5 +29,4 @@ public interface incomeDao {
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month', '+1 month')) AS INT)" +
             "ORDER by nmoney DESC")
     LiveData<List<income>> getIncomeByDate(String time);
-
 }

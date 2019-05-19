@@ -9,6 +9,7 @@ import com.example.moneymanagement_android.datamanagers.roomDatabase;
 import com.example.moneymanagement_android.models.catexpense;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CatExpenseRepository {
     private CatExpenseDAO catExpenseDAO;
@@ -19,8 +20,31 @@ public class CatExpenseRepository {
         this.catExpenseDAO = rtdb.catExpenseDAO();
     }
 
+    public LiveData<List<catexpense>> getAllCatExpense() throws ExecutionException, InterruptedException {
+        return new GetAllCatExpenseAsyncTask(this.catExpenseDAO).execute().get();
+    }
+
     public void insertCatExpense(catexpense c) {
         new InsertCatExpenseAsyncTask(catExpenseDAO).execute(c);
+    }
+
+    private static class GetAllCatExpenseAsyncTask extends AsyncTask<Void, Void, LiveData<List<catexpense>>> {
+
+        private CatExpenseDAO catExpenseDAO;
+
+        public GetAllCatExpenseAsyncTask(CatExpenseDAO catExpenseDAO) {
+            this.catExpenseDAO = catExpenseDAO;
+        }
+
+        @Override
+        protected LiveData<List<catexpense>> doInBackground(Void... voids) {
+            return catExpenseDAO.getListCatExpense();
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<catexpense>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
     }
 
     private static class InsertCatExpenseAsyncTask extends AsyncTask<catexpense, Void, Void> {

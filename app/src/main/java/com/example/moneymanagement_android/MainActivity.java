@@ -52,13 +52,12 @@ public class MainActivity extends AppCompatActivity
         statisticFragment = new StatisticFragment();
         //view paper
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
-        viewPaperAdapter.addFragment(budgetFragment,"Ví");
-        viewPaperAdapter.addFragment(statisticFragment,"Tổng quan");
+        viewPaperAdapter.addFragment(budgetFragment, "Ví");
+        viewPaperAdapter.addFragment(statisticFragment, "Tổng quan");
 
 
         mainView.setAdapter(viewPaperAdapter);
         tabLayout.setupWithViewPager(mainView);
-
 
 
         getSupportActionBar().setTitle("Money Management");
@@ -66,8 +65,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),budget_creating.class);
-               // BudgetFragment.startActivityForResult(intent,2);
+                Intent intent = new Intent(getApplicationContext(), budget_creating.class);
+                // BudgetFragment.startActivityForResult(intent,2);
                 budgetFragment.startActivity(intent);
 
             }
@@ -110,6 +109,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.menuQuanLyNhom) {
+            Intent intent = new Intent(getApplication(), category_settings.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

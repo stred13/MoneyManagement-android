@@ -25,6 +25,12 @@ public class StatisticIncomeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.context = context;
     }
 
+    public void setIncomeList(List<income> incomeList) {
+        this.incomeList.clear();
+        this.incomeList = incomeList;
+        this.notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

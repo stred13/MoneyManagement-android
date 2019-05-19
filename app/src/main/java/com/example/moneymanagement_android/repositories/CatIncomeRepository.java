@@ -24,10 +24,6 @@ public class CatIncomeRepository {
         this.catIncomeDAO = rtdb.catIncomeDAO();
     }
 
-    public LiveData<List<catincome>> getAllCatIncome() throws ExecutionException, InterruptedException {
-        return new getLiveListCatIncomeAsynctask(this.catIncomeDAO).execute().get();
-    }
-
     public void insertCatIncome(catincome c) {
         new InsertCatIncomeAsyncTask(catIncomeDAO).execute(c);
     }
@@ -38,6 +34,29 @@ public class CatIncomeRepository {
 
     public void updateCatIncome(catincome b){
         new updateCatIncomeAsyncTask(catIncomeDAO).execute(b);
+    }
+
+    public LiveData<List<catincome>> getAllCatIncome() throws ExecutionException, InterruptedException {
+        return new GetAllCatIncomeAsyncTask(this.catIncomeDAO).execute().get();
+    }
+
+    private static class GetAllCatIncomeAsyncTask extends AsyncTask<Void, Void, LiveData<List<catincome>>> {
+
+        private CatIncomeDAO catIncomeDAO;
+
+        public GetAllCatIncomeAsyncTask(CatIncomeDAO catIncomeDAO) {
+            this.catIncomeDAO = catIncomeDAO;
+        }
+
+        @Override
+        protected LiveData<List<catincome>> doInBackground(Void... voids) {
+            return catIncomeDAO.getListCatIncome();
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<catincome>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
     }
 
     private static class InsertCatIncomeAsyncTask extends AsyncTask<catincome, Void, Void> {

@@ -30,6 +30,25 @@ public class CatExpenseRepository {
         new InsertCatExpenseAsyncTask(catExpenseDAO).execute(c);
     }
 
+    private static class GetAllCatExpenseAsyncTask extends AsyncTask<Void, Void, LiveData<List<catexpense>>> {
+
+        private CatExpenseDAO catExpenseDAO;
+
+        public GetAllCatExpenseAsyncTask(CatExpenseDAO catExpenseDAO) {
+            this.catExpenseDAO = catExpenseDAO;
+        }
+
+        @Override
+        protected LiveData<List<catexpense>> doInBackground(Void... voids) {
+            return catExpenseDAO.getListCatExpense();
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<catexpense>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
+
     public void deleteCatExpense(catexpense b){
         new deleteCatExpenseAsyncTask(catExpenseDAO).execute(b);
     }

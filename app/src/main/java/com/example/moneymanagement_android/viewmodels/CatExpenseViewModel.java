@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.repositories.CatExpenseRepository;
 
 import java.util.List;

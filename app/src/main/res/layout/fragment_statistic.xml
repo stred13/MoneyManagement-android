@@ -38,6 +38,7 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/txtFirstBalance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -58,6 +59,7 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/txtLastBalance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -77,6 +79,7 @@
                             android:src="@drawable/arrow"
                             android:layout_marginRight="10dp"/>
                         <TextView
+                            android:id="@+id/txtDifferent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="8,981,000 đ"
@@ -163,6 +166,7 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold"/>
                         <TextView
+                            android:id="@+id/txtBudget"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -215,6 +219,21 @@
                         android:textStyle="bold"/>
 
                     <LinearLayout
+                        android:id="@+id/largestExpenseErrorHolder"
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Không có dữ liệu"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/largestExpenseContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -288,6 +307,15 @@
                         android:background="@android:color/darker_gray">
                     </View>
 
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/txtErrorExpenseList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Không có dữ liệu"
+                        />
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvListExpense"
                         android:scrollbars="vertical"
@@ -332,10 +360,19 @@
                         android:layout_marginTop="10dp"
                         android:background="@android:color/darker_gray">
                     </View>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/txtErrorIncomeList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Không có dữ liệu"
+                        />
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvListIncome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="250dp" />
                 </LinearLayout>
 
 

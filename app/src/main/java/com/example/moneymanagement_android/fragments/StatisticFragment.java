@@ -36,12 +36,16 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.squareup.picasso.Picasso;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -65,11 +69,19 @@ public class StatisticFragment extends Fragment {
 
     private List<expense> expenseList = new ArrayList<>();
     private List<income> incomeList = new ArrayList<>();
+    private List<catexpense> catexpenseList = new ArrayList<>();
+    private List<catincome> catincomeList = new ArrayList<>();
 
-    private TextView txtIncome, txtExpense, txtExpenseMax, txtExpenseDateMax, txtExpenseMoneyMax;
+    private TextView txtIncome, txtExpense, txtExpenseMax,
+            txtExpenseDateMax, txtExpenseMoneyMax, txtBudget,
+            txtFirstBalance, txtLastBalance, txtDifferent, txtErrorExpenseList, txtErrorIncomeList;
+    private View largestExpenseContainer, largestExpenseErrorHolder;
     private ImageView imgExpenseMax;
     private long totalExpense = 0;
     private long totalIncome = 0;
+    private long totalPrevExpense = 0;
+    private long totalPrevIncome = 0;
+    private Date selectedDate;
 
     public StatisticFragment() {
         // Required empty public constructor
@@ -93,6 +105,14 @@ public class StatisticFragment extends Fragment {
         txtExpenseMax = v.findViewById(R.id.txtExpenseMax);
         txtExpenseDateMax = v.findViewById(R.id.txtExpenseDateMax);
         txtExpenseMoneyMax = v.findViewById(R.id.txtExpenseMoneyMax);
+        txtBudget = v.findViewById(R.id.txtBudget);
+        txtFirstBalance = v.findViewById(R.id.txtFirstBalance);
+        txtLastBalance = v.findViewById(R.id.txtLastBalance);
+        txtDifferent = v.findViewById(R.id.txtDifferent);
+        largestExpenseContainer = v.findViewById(R.id.largestExpenseContainer);
+        largestExpenseErrorHolder = v.findViewById(R.id.largestExpenseErrorHolder);
+        txtErrorExpenseList = v.findViewById(R.id.txtErrorExpenseList);
+        txtErrorIncomeList = v.findViewById(R.id.txtErrorIncomeList);
         imgExpenseMax = v.findViewById(R.id.imgExpenseMax);
         rvExpense = v.findViewById(R.id.rvListExpense);
         rvIncome = v.findViewById(R.id.rvListIncome);
@@ -102,53 +122,75 @@ public class StatisticFragment extends Fragment {
         incomeLayoutManager = new LinearLayoutManager(getContext());
         rvIncome.setLayoutManager(incomeLayoutManager);
 
+        expenseList = new ArrayList<>();
+        incomeList = new ArrayList<>();
+        expenseAdapter = new StatisticExpenseAdapter(expenseList , getContext());
+        expenseAdapter.setCatexpenseList(catexpenseList);
+        rvExpense.setAdapter(expenseAdapter);
+
+        incomeAdapter = new StatisticIncomeAdapter(incomeList, getContext());
+        rvIncome.setAdapter(incomeAdapter);
 
         retriveDataFromdb();
         return v;
     }
 
     private void setupUI() {
-        if(expenseList.size()>0) {
-            expense largestExpense = expenseList.get(0); // the largest one on top because the list has been sorted in descending order by the price
-            txtExpenseMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
-            txtExpenseDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
-            txtExpenseMax.setText(largestExpense.getName());
-        }
+        if (expenseList.isEmpty()) return;
+        expense largestExpense = expenseList.get(0); // the largest one on top because the list has been sorted in descending order by the price
+        txtExpenseMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
+        txtExpenseDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
+        txtExpenseMax.setText(largestExpense.getName());
     }
 
     private void setupExpenseAdapter() {
-        expenseAdapter = new StatisticExpenseAdapter(expenseList , getContext());
-        rvExpense.setAdapter(expenseAdapter);
+        if (expenseList.isEmpty()) {
+            txtErrorExpenseList.setVisibility(View.VISIBLE);
+            rvExpense.setVisibility(View.GONE);
+            return;
+        } else {
+            txtErrorExpenseList.setVisibility(View.GONE);
+            rvExpense.setVisibility(View.VISIBLE);
+        }
+        expenseAdapter.setExpenseList(expenseList);
+
     }
 
     private void setupIncomeAdapter() {
-        incomeAdapter = new StatisticIncomeAdapter(incomeList, getContext());
-        rvIncome.setAdapter(incomeAdapter);
+        if (incomeList.isEmpty()) {
+            txtErrorIncomeList.setVisibility(View.VISIBLE);
+            rvIncome.setVisibility(View.GONE);
+            return;
+        } else {
+            txtErrorIncomeList.setVisibility(View.GONE);
+            rvIncome.setVisibility(View.VISIBLE);
+        }
+        incomeAdapter.setIncomeList(incomeList);
     }
 
-    private void retriveDataFromdb() {
+    private void setupExpenseAndIncome(String dateStr) {
         try {
             expenseViewModel = new expenseViewModel(getActivity().getApplication());
             expenseViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
-            expenseViewModel.getAllExpenseByDate("2019-05-01").observe(this, new Observer<List<expense>>() {
+            expenseViewModel.getAllExpenseByDate(dateStr).observe(this, new Observer<List<expense>>() {
                 @Override
                 public void onChanged(@Nullable List<expense> expenses) {
                     expenseList = expenses;
                     totalExpense = 0;
-
                     for (expense expense : expenses) {
                         totalExpense += expense.getNmoney();
                     }
                     txtExpense.setText(Util.formatCurrency(totalExpense));
+                    long budget = totalIncome - totalExpense;
                     setupUI();
-                    initialPieChart();
-                    setupExpenseAdapter();
+                    getCategoryExpense();
+                    setBudget(budget);
                 }
             });
 
             incomeViewModel = new IncomeViewModel(getActivity().getApplication());
             incomeViewModel = ViewModelProviders.of(this).get(IncomeViewModel.class);
-            incomeViewModel.getAllIncomeByDate("2019-05-01").observe(this, new Observer<List<income>>() {
+            incomeViewModel.getAllIncomeByDate(dateStr).observe(this, new Observer<List<income>>() {
                 @Override
                 public void onChanged(@Nullable List<income> incomes) {
                     incomeList = incomes;
@@ -157,39 +199,143 @@ public class StatisticFragment extends Fragment {
                         totalIncome += income.getNmoney();
                     }
                     txtIncome.setText(Util.formatCurrency(totalIncome));
-                    initialPieChartIncome();
+                    long budget = totalIncome - totalExpense;
+
+                    getCategoryIncome();
                     setupIncomeAdapter();
+                    setBudget(budget);
+                    setupBalanceUI();
                 }
             });
-
-            catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
-
-            //image (int)
-
-//            String name = "Ăn uống";
-//            String image = "123";
-//            catexpense catexpense = new catexpense(name, image);
-//            catExpenseViewModel.insertCatExpense(catexpense);
-//
-//            catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
-//            String name2 = "Lương";
-//            String image2 = "123";
-//            catincome catincome = new catincome(name2, image2);
-//            catIncomeViewModel.insertCatIncome(catincome);
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+    }
+
+    private void retriveDataFromdb() {
+        Calendar c = Calendar.getInstance();   // this takes current date
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        Date date = c.getTime();
+        selectedDate = date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = sdf.format(date);
+        setupExpenseAndIncome(dateStr);
+    }
+
+    private Date getPreviousDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.setTime(selectedDate);
+        calendar.add(Calendar.MONTH, -1);
+        Date previousDate = calendar.getTime();
+        return previousDate;
+    }
+
+    private void setupBalanceUI() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = sdf.format(getPreviousDate());
+        try {
+            expenseViewModel.getAllExpenseByDate(dateStr).observe(this, new Observer<List<expense>>() {
+                @Override
+                public void onChanged(@Nullable List<expense> expenses) {
+                    totalPrevExpense = 0;
+                    for (expense expense : expenses) {
+                        totalPrevExpense += expense.getNmoney();
+                    }
+                    txtFirstBalance.setText(Util.formatCurrency(totalPrevIncome - totalPrevExpense));
+                }
+            });
+            incomeViewModel.getAllIncomeByDate(dateStr).observe(this, new Observer<List<income>>() {
+                @Override
+                public void onChanged(@Nullable List<income> incomes) {
+                    totalPrevIncome = 0;
+                    for (income income : incomes) {
+                        totalPrevIncome += income.getNmoney();
+                    }
+                    long firstBalance = totalPrevIncome - totalPrevExpense;
+                    txtFirstBalance.setText(Util.formatCurrency(firstBalance));
+                    long lastBalance = totalPrevIncome + totalIncome;
+                    txtLastBalance.setText(Util.formatCurrency(lastBalance));
+                    txtDifferent.setText(Util.formatCurrency(lastBalance - firstBalance));
+                }
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
+    private void setBudget(long budget) {
+        txtBudget.setText(Util.formatCurrency(budget));
+        if (budget < 0) {
+            txtBudget.setTextColor(getContext().getResources().getColor(R.color.holo_red_light));
+        } else {
+            txtBudget.setTextColor(getContext().getResources().getColor(R.color.holo_blue_light));
+        }
+    }
+
+    private void getCategoryIncome(){
+        catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+        try {
+            catIncomeViewModel.getAllCatIncome().observe(this, new Observer<List<catincome>>() {
+                @Override
+                public void onChanged(@Nullable List<catincome> catincomes) {
+                    catincomeList = catincomes;
+                    initialPieChartIncome();
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getCategoryExpense() {
+        try {
+            catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
+            catExpenseViewModel.getAllCatExpense().observe(this, new Observer<List<com.example.moneymanagement_android.models.catexpense>>() {
+                @Override
+                public void onChanged(@Nullable List<com.example.moneymanagement_android.models.catexpense> catexpenses) {
+                    catexpenseList = catexpenses;
+                    if (!expenseList.isEmpty()) {
+                        largestExpenseErrorHolder.setVisibility(View.GONE);
+                        largestExpenseContainer.setVisibility(View.VISIBLE);
+                        expense largestExpense = expenseList.get(0);
+                        for (catexpense catex : catexpenseList) {
+                            if (catex.getId() == largestExpense.getIdcatex()) {
+                                Picasso.get().load(catex.getImage()).error(R.drawable.breakfast).into(imgExpenseMax);
+                                break;
+                            }
+                        }
+                        initialPieChart();
+                    } else {
+                        largestExpenseContainer.setVisibility(View.GONE);
+                        largestExpenseErrorHolder.setVisibility(View.VISIBLE);
+                    }
+                    setupExpenseAdapter();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initialPieChart() {
         pieEntries.clear();
-        if (totalExpense == 0) return;
-        for (expense expense : expenseList) {
-            pieEntries.add(new PieEntry((float) ((expense.getNmoney() * 1.0) / totalExpense) * 100, expense.getName()));
+        if (totalExpense == 0) {
+            pieChart.invalidate();
+            pieChart.clear();
+            return;
         }
+        Map<catexpense, Long> expenseByCate = calculateExpenseByCategory();
+        for (Map.Entry<catexpense, Long> entry : expenseByCate.entrySet()) {
+            catexpense catexpense = entry.getKey();
+            long value = entry.getValue();
+            pieEntries.add(new PieEntry((float) ((value * 1.0) / totalIncome) * 100, catexpense.getName()));
+        }
+
+        pieChart.invalidate();
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueTextSize(10f);
@@ -212,12 +358,51 @@ public class StatisticFragment extends Fragment {
         pieChart.setRotationEnabled(true);
     }
 
-    private void initialPieChartIncome() {
-        if (totalIncome == 0) return;
-        pieIncome.clear();
-        for (income income : incomeList) {
-            pieIncome.add(new PieEntry((float) ((income.getNmoney() * 1.0) / totalIncome) * 100, income.getName()));
+    private Map<catincome, Long> calculateIncomeByCategory() {
+        Map<catincome, Long> values = new HashMap<>();
+        for (catincome catincome : catincomeList) {
+            long total = 0;
+            values.put(catincome, total);
+            for (income income : incomeList) {
+                if (income.getIdcatin() == catincome.getId()) {
+                    total += income.getNmoney();
+                }
+            }
+            values.put(catincome, total);
         }
+        return values;
+    }
+
+    private Map<catexpense, Long> calculateExpenseByCategory() {
+        Map<catexpense, Long> values = new HashMap<>();
+        for (catexpense catexpense : catexpenseList) {
+            long total = 0;
+            values.put(catexpense, total);
+            for (expense expense : expenseList) {
+                if (expense.getIdcatex() == catexpense.getId()) {
+                    total += expense.getNmoney();
+                }
+            }
+            values.put(catexpense, total);
+        }
+        return values;
+    }
+
+    private void initialPieChartIncome() {
+        if (totalIncome == 0) {
+            pieChart.invalidate();
+            pieChart.clear();
+            return;
+        }
+        pieIncome.clear();
+        Map<catincome, Long> incomeByCate = calculateIncomeByCategory();
+        for (Map.Entry<catincome, Long> entry : incomeByCate.entrySet()) {
+            catincome catincome = entry.getKey();
+            long value = entry.getValue();
+            pieIncome.add(new PieEntry((float) ((value * 1.0) / totalIncome) * 100, catincome.getName()));
+        }
+
+        pieChartIncome.invalidate();
         PieDataSet dataSet = new PieDataSet(pieIncome, "");
         dataSet.setColors(ColorTemplate.PASTEL_COLORS);
         dataSet.setValueTextSize(10f);
@@ -260,7 +445,16 @@ public class StatisticFragment extends Fragment {
         MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(getActivity(), new MonthPickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(int selectedMonth, int selectedYear) {
-                // TODO: handle selected month and year in here
+                Calendar calendar = Calendar.getInstance();
+                calendar.clear();
+                calendar.set(Calendar.MONTH, selectedMonth);
+                calendar.set(Calendar.YEAR, selectedYear);
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                Date date = calendar.getTime();
+                selectedDate = date;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String dateStr = sdf.format(date);
+                setupExpenseAndIncome(dateStr);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
 

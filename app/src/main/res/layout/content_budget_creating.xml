@@ -62,12 +62,25 @@
                          android:layout_gravity="center_vertical"
                          android:src="@drawable/baseline_calendar_today_black_24dp" />
 
-                     <EditText
-                         android:id="@+id/eNgayTaoVi"
+                     <LinearLayout
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
+                         android:orientation="vertical"
                          android:layout_marginLeft="20dp"
-                         android:textSize="20sp" />
+                         >
+                         <TextView
+                             android:layout_marginTop="5dp"
+                             android:id="@+id/eNgayTaoVi"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:textSize="20sp"
+                             android:text="29/05/2019"/>
+                         <View
+                             android:layout_width="match_parent"
+                             android:layout_height="1dp"
+                             android:layout_marginTop="5dp"
+                             android:background="@android:color/darker_gray"></View>
+                     </LinearLayout>
                  </LinearLayout>
                 <View
                     android:layout_width="match_parent"

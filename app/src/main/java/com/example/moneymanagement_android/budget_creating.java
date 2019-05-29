@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.adapters.budgetRecyclerViewAdapter;
@@ -25,7 +26,7 @@ public class budget_creating extends AppCompatActivity {
     private EditText etTenV;
     private EditText etNote;
     private Button btnTaoV;
-    private EditText editTextChonNgay;
+    private TextView tvChonNgay;
     budgetViewModel bViewModel;
     budgetRecyclerViewAdapter recAdapter;
     budget b;
@@ -43,10 +44,17 @@ public class budget_creating extends AppCompatActivity {
         etTenV = (EditText) findViewById(R.id.etTenV);
         etNote = (EditText) findViewById(R.id.mtGhichu);
         btnTaoV = (Button) findViewById(R.id.btnTaoV);
-        editTextChonNgay = (EditText) findViewById(R.id.eNgayTaoVi);
+        tvChonNgay = (TextView) findViewById(R.id.eNgayTaoVi);
         a = (LinearLayout) findViewById(R.id.llCalender);
 
         bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
+
+        Calendar c = Calendar.getInstance();
+        int ngay = c.get(Calendar.DATE);
+        int thang = c.get(Calendar.MONTH);
+        int nam = c.get(Calendar.YEAR);
+
+        tvChonNgay.setText(ngay + "/" + thang + "/" + nam);
 
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +71,7 @@ public class budget_creating extends AppCompatActivity {
             }
         });
 
-        editTextChonNgay.setOnClickListener(new View.OnClickListener() {
+        tvChonNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChonNgay();
@@ -100,7 +108,7 @@ public class budget_creating extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(year, month, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                editTextChonNgay.setText(simpleDateFormat.format(calendar.getTime()));
+                tvChonNgay.setText(simpleDateFormat.format(calendar.getTime()));
             }
         }, nam, thang, ngay);
         datePickerDialog.show();

@@ -339,6 +339,7 @@ public class ExpenseFragment extends Fragment {
                 txtExpenseRangeTime.setText(Util.FromatStringToDateDDMM(dateFrom) + " ---> " + Util.FromatStringToDateDDMM(dateTo));
                 statisticDayFrom = dateFrom;
                 statisticDayTo = dateTo;
+                Toast.makeText(getActivity(),dateFrom,Toast.LENGTH_SHORT).show();
                 setupExpense(dateFrom, dateTo);
 
 
@@ -370,7 +371,7 @@ public class ExpenseFragment extends Fragment {
                 statisticDayTo = dateTo;
                 setupExpense(dateFrom, dateTo);
                 txtExpenseRangeTime.setVisibility(View.GONE);
-                txtExpenseRangeTime.setText(Util.FromatStringToDateDDMM(dateFrom) + " ---> " + Util.FromatStringToDateDDMM(dateTo));
+                //txtExpenseRangeTime.setText(Util.FromatStringToDateDDMM(dateFrom) + " ---> " + Util.FromatStringToDateDDMM(dateTo));
                 txtExpenseTitle.setText("Tổng quan chi tiêu tháng " + (selectedMonth + 1));
 
             }

@@ -39,14 +39,10 @@ public class Util {
     }
 
     public static String FromatStringToDateDDMM(String str) {
-        String month = str.substring(3, 5).replace("-", "");
-        String day = str.substring(0, 2).replace("-", "");
-        if (day.length() == 1) {
-            day = "0" + day;
-        }
-        if (month.length() == 1) {
-            month = "0" + month;
-        }
+        //2019-05-29
+        String month = str.substring(5, 7);
+        String day = str.substring(8, 10);
+
         return day + "/" + month;
     }
 }

@@ -3,32 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="5">
-    <ImageView
-        android:layout_width="wrap_content"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgExpenseBudgeImgage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/burger" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtExpenseBudgeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhà hàng"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/txtExpenseBudgeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8 tháng 4 2019"
+                android:textColor="@android:color/darker_gray" />
+        </LinearLayout>
+
+
+</LinearLayout>
+    <TextView
+        android:id="@+id/txtExpenseBudgeMoney"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/imgBudget"
-        android:src="@drawable/money_bag"
-        android:paddingTop="15dp"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:id="@+id/tv_exName"
-            android:text="name of budget"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="note"
-            android:id="@+id/tv_exNote"/>
-    </LinearLayout>
-
+        android:layout_gravity="center_vertical|end"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        android:textColor="@color/Blue"
+        android:textStyle="bold"
+        android:text="10,000,000 D"/>
 </LinearLayout>

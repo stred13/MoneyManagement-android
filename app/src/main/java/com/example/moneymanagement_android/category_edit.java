@@ -1,8 +1,11 @@
 package com.example.moneymanagement_android;
 
+import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,18 +14,29 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
+import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.models.income;
+import com.example.moneymanagement_android.utils.Util;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
+import com.example.moneymanagement_android.viewmodels.expenseViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class category_edit extends AppCompatActivity {
 
@@ -42,6 +56,10 @@ public class category_edit extends AppCompatActivity {
     private catexpense catexpense;
     private CatExpenseViewModel catExpenseViewModel;
     private CatIncomeViewModel catIncomeViewModel;
+    private IncomeViewModel incomeViewModel;
+    private expenseViewModel expenseViewModel;
+    private List<expense> expenseList;
+    private List<income> incomeList;
 
 
     @Override
@@ -75,12 +93,9 @@ public class category_edit extends AppCompatActivity {
             tennhom = catexpense.getName();
 
 
-
-
         } else {
             catincome = (catincome) intent.getSerializableExtra("catincome");
             flash = 2;
-            //Toast.makeText(getApplicationContext(),catincome.getName(),Toast.LENGTH_SHORT).show();
             ImageResource = catincome.getImage();
             tennhom = catincome.getName();
 
@@ -91,10 +106,6 @@ public class category_edit extends AppCompatActivity {
         //set enable button Lưu
         imgViewChangeIcon = ImageResource;
         stringEditText = tennhom;
-
-
-
-
 
 
         linearLayoutOption.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +120,9 @@ public class category_edit extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 stringEditText = editTextTenNhom.getText().toString();
-                if((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
+                if ((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
                     btnLuu.setEnabled(false);
-                }else{
+                } else {
                     btnLuu.setEnabled(true);
                 }
                 return false;
@@ -121,13 +132,7 @@ public class category_edit extends AppCompatActivity {
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flash == 1){
-                    catExpenseViewModel.deleteCatExpense(catexpense);
-                    finish();
-                }else if(flash == 2){
-                    catIncomeViewModel.deleteCatIncome(catincome);
-                    finish();
-                }
+                RemoveCategory();
             }
         });
 
@@ -146,12 +151,12 @@ public class category_edit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuSaveCategory:
-                if(flash == 1){
+                if (flash == 1) {
                     catexpense.setImage(imgViewChangeIcon);
                     catexpense.setName(stringEditText);
                     catExpenseViewModel.updateCatExpense(catexpense);
                     finish();
-                }else if(flash == 2){
+                } else if (flash == 2) {
                     catincome.setImage(imgViewChangeIcon);
                     catincome.setName(stringEditText);
                     catIncomeViewModel.updateCatIncome(catincome);
@@ -178,12 +183,89 @@ public class category_edit extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 imgViewChangeIcon = data.getIntExtra("resrc", 1);
                 imageViewIcon.setImageResource((imgViewChangeIcon));
-                if((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
+                if ((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
                     btnLuu.setEnabled(false);
-                }else{
+                } else {
                     btnLuu.setEnabled(true);
                 }
             }
         }
+    }
+
+    private void RemoveCategory() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_remove);
+        dialog.setCanceledOnTouchOutside(false);
+        Button btnDongY = (Button) dialog.findViewById(R.id.btnDongy);
+        Button btnHuy = (Button) dialog.findViewById(R.id.btnHuy);
+        TextView txtRemoveCategory = (TextView) dialog.findViewById(R.id.txtRemoveCategory);
+
+        if(flash == 1){
+            txtRemoveCategory.setText("Bạn sẽ mất toàn bộ giao dịch trong nhóm " + catexpense.getName());
+        }
+        else if(flash == 2){
+            txtRemoveCategory.setText("Bạn sẽ mất toàn bộ giao dịch trong nhóm " + catincome.getName());
+        }
+
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        btnDongY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (flash == 1) {
+                        DeleteCategoyInExpense();
+
+                    } else if (flash == 2) {
+
+                        DeleteCategoryInInCome();
+
+                    }
+                    dialog.cancel();
+                    finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        dialog.show();
+    }
+
+    private void DeleteCategoyInExpense() throws ExecutionException, InterruptedException {
+        expenseList = new ArrayList<>();
+        expenseViewModel = new expenseViewModel(getApplication());
+        expenseViewModel.getAllExpense().observe(this, new Observer<List<expense>>() {
+            @Override
+            public void onChanged(@Nullable List<expense> expenses) {
+                expenseList = expenses;
+                for (expense expense : expenseList) {
+                    if (expense.getIdcatex() == catexpense.getId()) {
+                        expenseViewModel.delete(expense);
+                    }
+                }
+            }
+        });
+        catExpenseViewModel.deleteCatExpense(catexpense);
+    }
+    private void DeleteCategoryInInCome() throws ExecutionException, InterruptedException {
+        incomeList = new ArrayList<>();
+        incomeViewModel = new IncomeViewModel(getApplication());
+        incomeViewModel.getAllIncome().observe(this, new Observer<List<income>>() {
+            @Override
+            public void onChanged(@Nullable List<income> incomes) {
+                for (income income : incomeList) {
+                    if (income.getIdcatin() == catincome.getId()) {
+                        incomeViewModel.delete(income);
+                    }
+                }
+            }
+        });
+        catIncomeViewModel.deleteCatIncome(catincome);
     }
 }

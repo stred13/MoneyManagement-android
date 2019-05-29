@@ -3,72 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="20dp"
-    android:padding="10dp">
+    android:padding="20dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chọn khoảng thời gian"
+        android:text="Bạn thực sự muốn xóa"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@color/Red"
         android:gravity="center" />
     <TextView
+        android:id="@+id/txtRemoveCategory"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Từ"
         android:textAlignment="center"
         android:textStyle="bold"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="../../...."
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:id="@+id/txtRangeTimeForm"
-            />
 
-    </LinearLayout>
-    <TextView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cần nhập đủ thông tin"
-        android:textColor="@color/Red"
-        android:id="@+id/txtErroRangeTimeForm"
-        android:textAlignment="center"/>
 
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đến"
-        android:textAlignment="center"
-        android:textStyle="bold"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="../../...."
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:id="@+id/txtRangeTimeTo"
-            />
 
-    </LinearLayout>
+
+
     <TextView
         android:visibility="gone"
         android:layout_width="match_parent"
@@ -85,6 +42,7 @@
         android:textColor="@color/Red"
         android:id="@+id/txtErrorRangeTime"
         android:textAlignment="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -106,5 +64,6 @@
             android:id="@+id/btnDongy"/>
 
     </LinearLayout>
+
 
 </LinearLayout>

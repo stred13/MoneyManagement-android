@@ -23,7 +23,6 @@ public class ManageExpenseRecyclerViewAdapter extends RecyclerView.Adapter<Manag
     private List<catexpense> eData = new ArrayList<>();
     private int layout;
     private View.OnClickListener itemClickExpenselistener;
-    //private View.OnLongClickListener iLongClicklistener;
 
     public ManageExpenseRecyclerViewAdapter(Context context, int layout) {
         this.context = context;
@@ -78,12 +77,11 @@ public class ManageExpenseRecyclerViewAdapter extends RecyclerView.Adapter<Manag
             tv_NameExpense = (TextView) itemView.findViewById(R.id.tvNameExIn);
             itemView.setTag(this);
             itemView.setOnClickListener(itemClickExpenselistener);
-
-            //itemView.setOnLongClickListener(iLongClicklistener);
         }
     }
 
     public void setOnItemExpenseClickListener(View.OnClickListener iClicklistener){
         this.itemClickExpenselistener = iClicklistener;
     }
+
 }

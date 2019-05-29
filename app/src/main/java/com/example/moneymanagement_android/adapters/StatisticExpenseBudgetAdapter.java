@@ -18,16 +18,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecyclerViewAdapter.MyViewHolder> {
+public class StatisticExpenseBudgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
     private List<expense> expenseList;
+    private Context context;
     private List<catexpense> catexpenseList;
-    
 
-    public expenseRecyclerViewAdapter(Context context, List<expense> listExpense) {
+    public StatisticExpenseBudgetAdapter(List<expense> expenseList, Context context) {
+        this.expenseList = expenseList;
         this.context = context;
-        this.expenseList = listExpense;
     }
 
     public void setCatexpenseList(List<catexpense> catexpenseList) {
@@ -35,7 +34,7 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
         notifyDataSetChanged();
     }
 
-    public void setExpenseBudgetList(List<expense> expenseList) {
+    public void setExpenseuBudgetList(List<expense> expenseList) {
         this.expenseList.clear();
         this.expenseList = expenseList;
         this.notifyDataSetChanged();
@@ -43,19 +42,18 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v;
-        v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_expense,viewGroup,false);
+        v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_statistic_expense_layout, viewGroup, false);
         MyViewHolder vHolder = new MyViewHolder(v);
         return vHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         expense expense = expenseList.get(i);
-        MyViewHolder MyViewHolder =  (MyViewHolder) myViewHolder;
+        MyViewHolder MyViewHolder =  (MyViewHolder) viewHolder;
         MyViewHolder.txtPrice.setText(Util.formatCurrency(expense.getNmoney()));
-        MyViewHolder.txtDate.setText(Util.formatDate(expense.getDcreated()));
         for (catexpense catx : catexpenseList) {
             if (expense.getIdcatex() == catx.getId()) {
                 Picasso.get().load(catx.getImage()).error(R.drawable.breakfast).into(MyViewHolder.imgItem);
@@ -65,27 +63,20 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
         }
     }
 
-
-
     @Override
     public int getItemCount() {
-
-        return this.expenseList.size();
+        return expenseList.size();
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgItem;
-        private TextView txtName, txtDate,txtPrice;
+        private TextView txtName, txtPrice;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
-            imgItem = itemView.findViewById(R.id.imgExpenseBudgeImgage);
-            txtName = itemView.findViewById(R.id.txtExpenseBudgeName);
-            txtDate = itemView.findViewById(R.id.txtExpenseBudgeDate);
-            txtPrice = itemView.findViewById(R.id.txtExpenseBudgeMoney);
+            imgItem = itemView.findViewById(R.id.imgItem);
+            txtName = itemView.findViewById(R.id.txtNameItem);
+            txtPrice = itemView.findViewById(R.id.txtPriceItem);
             itemView.setTag(this);
         }
     }
-
-
 }

@@ -29,8 +29,12 @@ public class expenseViewModel extends AndroidViewModel {
         eRepo.insert(e);
     }
 
+    public void delete(expense e){
+        eRepo.delelte(e);
+    }
+
     public LiveData<List<expense>> getAllExpense() throws ExecutionException, InterruptedException {
-        return this.listLiveEx;
+        return eRepo.getAllExpense();
     }
 
     public LiveData<List<expense>> getAllExpensebyBudget(int id) throws ExecutionException, InterruptedException {
@@ -40,5 +44,13 @@ public class expenseViewModel extends AndroidViewModel {
 
     public LiveData<List<expense>> getAllExpenseByDate(String time) throws ExecutionException, InterruptedException {
         return eRepo.getAllExpenseByDate(time);
+    }
+
+    public LiveData<List<expense>> getAllExpenseByDateBudget(String timeFrom,String timeTo, int id) throws ExecutionException, InterruptedException {
+        return eRepo.getAllExpenseByDateBudget(timeFrom, timeTo, id);
+    }
+
+    public LiveData<List<expense>> getAllExpenseBudgetRangeTime(String timeFrom, String timeTo, int id) throws ExecutionException, InterruptedException {
+        return eRepo.getAllExpenseBudgetRangeTime(timeFrom, timeTo, id);
     }
 }

@@ -63,8 +63,6 @@ public class ManageIncomeRecyclerViewAdapter extends RecyclerView.Adapter<Manage
             tv_NameIncome = (TextView) itemView.findViewById(R.id.tvNameExIn);
             itemView.setTag(this);
             itemView.setOnClickListener(itemClickIncomelistener);
-
-            //itemView.setOnLongClickListener(iLongClicklistener);
         }
     }
 

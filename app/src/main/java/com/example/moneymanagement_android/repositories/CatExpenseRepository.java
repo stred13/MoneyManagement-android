@@ -75,7 +75,7 @@ public class CatExpenseRepository {
     private static class deleteCatExpenseAsyncTask extends AsyncTask<catexpense,Void,Void>{
         private CatExpenseDAO bAsyncTaskDao;
         private deleteCatExpenseAsyncTask(CatExpenseDAO bdDao){
-            bAsyncTaskDao = bdDao;
+            this.bAsyncTaskDao = bdDao;
         }
 
         @Override
@@ -108,7 +108,7 @@ public class CatExpenseRepository {
 
         @Override
         protected LiveData<List<catexpense>> doInBackground(Void... voids) {
-            // Log.d("xyc", "doInBackground: "+Thread.currentThread().getName());
+
             return dao.getListCatExpense();
         }
 

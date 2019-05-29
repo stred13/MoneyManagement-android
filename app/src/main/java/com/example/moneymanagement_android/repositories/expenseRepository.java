@@ -2,6 +2,7 @@ package com.example.moneymanagement_android.repositories;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -42,8 +43,26 @@ public class expenseRepository {
         return listLiveData;
     }
 
+    public LiveData<List<expense>> getAllExpenseByDateBudget(String timeFrom, String timeTo, int id) throws ExecutionException, InterruptedException {
+        String[] timeId = {timeFrom,timeTo,id+""};
+        LiveData<List<expense>> listLiveData = new getAllExpensebyDateBudgetAsynctask(exDao).execute(timeId).get();
+        return listLiveData;
+    }
+
+    public LiveData<List<expense>> getAllExpenseBudgetRangeTime(String timeFrom, String timeTo, int id) throws ExecutionException, InterruptedException {
+        String[] timeId = {timeFrom,timeTo,id+""};
+        LiveData<List<expense>> listLiveData = new getAllExpenseBudgetRangeTimeAsynctask(exDao).execute(timeId).get();
+        return listLiveData;
+    }
+
+
+
     public void insert(expense e){
         new insertExpenseAsyncTask(this.exDao).execute(e);
+    }
+
+    public void delelte(expense e){
+        new deleteExpenseAsyncTask(this.exDao).execute(e);
     }
 
     private static class insertExpenseAsyncTask extends AsyncTask<expense,Void,Void> {
@@ -56,6 +75,20 @@ public class expenseRepository {
         @Override
         protected Void doInBackground(expense... expenses) {
             exDao.insert(expenses[0]);
+            return null;
+        }
+    }
+
+    private static class deleteExpenseAsyncTask extends AsyncTask<expense,Void,Void> {
+        private expenseDao exDao;
+
+        public deleteExpenseAsyncTask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected Void doInBackground(expense... expenses) {
+            exDao.delete(expenses[0]);
             return null;
         }
     }
@@ -113,4 +146,42 @@ public class expenseRepository {
             super.onPostExecute(listLiveData);
         }
     }
+
+    private static class getAllExpensebyDateBudgetAsynctask extends AsyncTask<String, Void, LiveData<List<expense>>>{
+        private expenseDao exDao;
+
+        public getAllExpensebyDateBudgetAsynctask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected LiveData<List<expense>> doInBackground(String... params) {
+            return exDao.getExpenseByDateBudget(params[0], params[1], Integer.parseInt(params[2]));
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<expense>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
+
+    private static class getAllExpenseBudgetRangeTimeAsynctask extends AsyncTask<String, Void, LiveData<List<expense>>>{
+        private expenseDao exDao;
+
+        public getAllExpenseBudgetRangeTimeAsynctask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected LiveData<List<expense>> doInBackground(String... params) {
+            return exDao.getExpenseBudgetRangeTime(params[0],params[1],Integer.parseInt(params[2]));
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<expense>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
+
+
 }

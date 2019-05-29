@@ -30,4 +30,23 @@ public class Util {
     public static String getPathForResouce(int id) {
         return Uri.parse("android:resouce://"  + R.class.getPackage().getName() + "/" + id).toString();
     }
+
+    public static String FromatStringToDate(String str) {
+        String year = str.substring(6, 10);
+        String month = str.substring(3, 5);
+        String day = str.substring(0, 2);
+        return year + "-" + month + "-" + day;
+    }
+
+    public static String FromatStringToDateDDMM(String str) {
+        String month = str.substring(3, 5).replace("-", "");
+        String day = str.substring(0, 2).replace("-", "");
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        return day + "/" + month;
+    }
 }

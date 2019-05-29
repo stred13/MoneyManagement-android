@@ -88,12 +88,14 @@
                     >
 
                     <ImageView
+                        android:id="@+id/imageViewChonNhom"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/list" />
 
                     <TextView
+                        android:id="@+id/textViewChonNhom"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"

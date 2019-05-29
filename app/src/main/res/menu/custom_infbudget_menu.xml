@@ -6,6 +6,11 @@
         app:showAsAction="always"
         android:icon="@drawable/bell"
         ></item>
+    <item
+        android:id="@+id/calendarInMonth"
+        android:icon="@drawable/baseline_calendar_today_white_24dp"
+        android:title="Chọn ngày"
+        app:showAsAction="ifRoom"/>
     <item android:title="Khoảng thời gian"
         android:id="@+id/menuKhoangThoiGian"></item>
     <item android:title="Các khoản tương lai"

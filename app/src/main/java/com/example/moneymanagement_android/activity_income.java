@@ -108,7 +108,7 @@ public class activity_income extends AppCompatActivity {
 
 
         retriveDataFromdb();
-        //initialPieChartIncome();
+
 
     }
 
@@ -161,11 +161,6 @@ public class activity_income extends AppCompatActivity {
     }
 
     private void retriveDataFromdb() {
-//        Calendar c = Calendar.getInstance();   // this takes current date
-//        Date date = c.getTime();
-//        selectedDate = date;
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateStr = sdf.format(date);
         setupIncome(statisticDayFrom, statisticDayTo);
     }
 

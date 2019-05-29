@@ -112,8 +112,6 @@ public class activity_expense extends AppCompatActivity {
         rvExpenseBudget.setAdapter(expenseAdapter);
 
 
-
-        //initialPieChart();
         retriveDataFromdb();
 
 
@@ -164,12 +162,6 @@ public class activity_expense extends AppCompatActivity {
     }
 
     private void retriveDataFromdb() {
-//        Calendar c = Calendar.getInstance();   // this takes current date
-//        Date date = c.getTime();
-//        selectedDate = date;
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateStr = sdf.format(date);
-//        Log.d("AAAA",dateStr);
         setupExpense(statisticDayFrom,statisticDayTo);
 
     }
@@ -243,25 +235,6 @@ public class activity_expense extends AppCompatActivity {
         expenseAdapter.setExpenseuBudgetList(expenseList);
     }
 
-//    private void setupBalanceUI() {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateStr = sdf.format(getPreviousDate());
-//        try {
-//            expenseViewModel.getAllExpenseByDate(dateStr).observe(this, new Observer<List<expense>>() {
-//                @Override
-//                public void onChanged(@Nullable List<expense> expenses) {
-//                    totalPrevExpense = 0;
-//                    for (expense expense : expenses) {
-//                        totalPrevExpense += expense.getNmoney();
-//                    }
-//                    txtFirstBalance.setText(Util.formatCurrency(totalPrevIncome - totalPrevExpense));
-//                }
-//            });
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private Date getPreviousDate() {
         Calendar calendar = Calendar.getInstance();
@@ -297,7 +270,7 @@ public class activity_expense extends AppCompatActivity {
                 break;
             }
         }
-        // the largest one on top because the list has been sorted in descending order by the price
+
         txtExpenseBudgetMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
         txtExpenseBudgetDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
 

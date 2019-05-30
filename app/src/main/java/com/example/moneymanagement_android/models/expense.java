@@ -13,15 +13,17 @@ import java.util.Date;
 
 @Entity(foreignKeys = {
         @ForeignKey(
-        entity = budget.class,
-        parentColumns = "id",
-        childColumns = "idbudget",
-        onUpdate = ForeignKey.CASCADE),
+                entity = budget.class,
+                parentColumns = "id",
+                childColumns = "idbudget",
+                onUpdate = ForeignKey.CASCADE,
+                onDelete = ForeignKey.CASCADE),
         @ForeignKey(
-        entity = catexpense.class,
-        parentColumns = "id",
-        childColumns = "idcatex",
-        onUpdate = ForeignKey.CASCADE)
+                entity = catexpense.class,
+                parentColumns = "id",
+                childColumns = "idcatex",
+                onUpdate = ForeignKey.CASCADE,
+                onDelete = ForeignKey.CASCADE)
 })
 public class expense implements Serializable {
     @PrimaryKey(autoGenerate = true)
@@ -106,7 +108,7 @@ public class expense implements Serializable {
     }
 
     @Ignore
-    public expense(){
+    public expense() {
 
     }
 }

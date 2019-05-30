@@ -14,12 +14,14 @@ import java.util.Date;
                 entity = budget.class,
                 parentColumns = "id",
                 childColumns = "idbudget",
-                onUpdate = ForeignKey.CASCADE),
+                onUpdate = ForeignKey.CASCADE,
+                onDelete = ForeignKey.CASCADE),
         @ForeignKey(
                 entity = catincome.class,
                 parentColumns = "id",
                 childColumns = "idcatin",
-                onUpdate = ForeignKey.CASCADE)
+                onUpdate = ForeignKey.CASCADE,
+                onDelete = ForeignKey.CASCADE)
 })
 public class income {
     @PrimaryKey(autoGenerate = true)

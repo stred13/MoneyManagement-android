@@ -219,12 +219,9 @@ public class category_edit extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if (flash == 1) {
-                        DeleteCategoyInExpense();
-
+                        catExpenseViewModel.deleteCatExpense(catexpense);
                     } else if (flash == 2) {
-
-                        DeleteCategoryInInCome();
-
+                        catIncomeViewModel.deleteCatIncome(catincome);
                     }
                     dialog.cancel();
                     finish();
@@ -235,37 +232,5 @@ public class category_edit extends AppCompatActivity {
             }
         });
         dialog.show();
-    }
-
-    private void DeleteCategoyInExpense() throws ExecutionException, InterruptedException {
-        expenseList = new ArrayList<>();
-        expenseViewModel = new expenseViewModel(getApplication());
-        expenseViewModel.getAllExpense().observe(this, new Observer<List<expense>>() {
-            @Override
-            public void onChanged(@Nullable List<expense> expenses) {
-                expenseList = expenses;
-                for (expense expense : expenseList) {
-                    if (expense.getIdcatex() == catexpense.getId()) {
-                        expenseViewModel.delete(expense);
-                    }
-                }
-            }
-        });
-        catExpenseViewModel.deleteCatExpense(catexpense);
-    }
-    private void DeleteCategoryInInCome() throws ExecutionException, InterruptedException {
-        incomeList = new ArrayList<>();
-        incomeViewModel = new IncomeViewModel(getApplication());
-        incomeViewModel.getAllIncome().observe(this, new Observer<List<income>>() {
-            @Override
-            public void onChanged(@Nullable List<income> incomes) {
-                for (income income : incomeList) {
-                    if (income.getIdcatin() == catincome.getId()) {
-                        incomeViewModel.delete(income);
-                    }
-                }
-            }
-        });
-        catIncomeViewModel.deleteCatIncome(catincome);
     }
 }

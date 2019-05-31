@@ -103,6 +103,7 @@
                         android:textSize="20sp"
                         android:hint="Ghi chú"
                         android:layout_marginLeft="20dp"
+                        android:maxLength="20"
                         />
                 </LinearLayout>
 

@@ -108,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:hint="Ghi chú"
+                    android:maxLength="20"
                     android:layout_marginLeft="20dp"
                     />
             </LinearLayout>

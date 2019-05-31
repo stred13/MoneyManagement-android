@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,6 +30,7 @@ import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
 import java.text.ParseException;
@@ -47,6 +49,7 @@ public class expense_creating extends AppCompatActivity {
     Button btnAcc;
     expenseViewModel eViewModel;
     IncomeViewModel iViewModel;
+    budgetViewModel bViewModel;
     CardView cardViewChiTieu;
     TextView textViewChonNgay;
     LinearLayout lnCategory;
@@ -76,9 +79,15 @@ public class expense_creating extends AppCompatActivity {
 
         eViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
         iViewModel = ViewModelProviders.of(this).get(IncomeViewModel.class);
+        bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
 
         final expense e = new expense();
         final income i = new income();
+
+        final budget b = infobudget.b;
+
+
+
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,17 +115,25 @@ public class expense_creating extends AppCompatActivity {
                 if(flash == 1) {
                     loai = catincome.getId();
 
-                    i.setIdbudget(infobudget.b.getId());
+                    i.setIdbudget(b.getId());
                     i.setDcreated(dateObj);
                     i.setName("");
                     i.setIdcatin(loai);
                     i.setNmoney(nmoney);
                     i.setNote(note);
 
+                    Log.d("b", "onCreate: "+b.getId()+" "+b.getBmoney());
+
                     iViewModel.insert(i);
+
+                    long bmoney = b.getBmoney()+i.getNmoney();
+                    b.setBmoney(bmoney);
+                    bViewModel.updateBudget(b);
+
                     finish();
                 }else if(flash == 2){
                     loai = catexpense.getId();
+
                     e.setIdbudget(infobudget.b.getId());
                     e.setDcreated(dateObj);
                     e.setName("");
@@ -124,7 +141,12 @@ public class expense_creating extends AppCompatActivity {
                     e.setNmoney(nmoney);
                     e.setNote(note);
 
+                    long bmoney = b.getBmoney()-e.getNmoney();
+                    b.setBmoney(bmoney);
+                    bViewModel.updateBudget(b);
+
                     eViewModel.insert(e);
+
                     finish();
                 }
                 else {

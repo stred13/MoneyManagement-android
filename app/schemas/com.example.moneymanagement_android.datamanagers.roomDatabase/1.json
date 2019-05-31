@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7d7427cfacbaea8958be73612abc0715",
+    "identityHash": "82ad88757b47e394842f0225f3a824f2",
     "entities": [
       {
         "tableName": "budget",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "income",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `note` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `idcatin` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `note` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `idcatin` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`idcatin`) REFERENCES `catincome`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -96,11 +96,34 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "budget",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idbudget"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "catincome",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idcatin"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `nmoney` INTEGER NOT NULL, `dcreated` INTEGER, `note` TEXT, `idcatex` INTEGER NOT NULL, `idbudget` INTEGER NOT NULL, FOREIGN KEY(`idbudget`) REFERENCES `budget`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`idcatex`) REFERENCES `catexpense`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -163,13 +186,88 @@
             "referencedColumns": [
               "id"
             ]
+          },
+          {
+            "table": "catexpense",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "idcatex"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
           }
         ]
+      },
+      {
+        "tableName": "catexpense",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `image` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "catincome",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `image` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7d7427cfacbaea8958be73612abc0715\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"82ad88757b47e394842f0225f3a824f2\")"
     ]
   }
 }

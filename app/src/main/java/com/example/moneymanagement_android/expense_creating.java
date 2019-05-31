@@ -1,9 +1,11 @@
 package com.example.moneymanagement_android;
 
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,13 +26,18 @@ import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
+import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
+import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class expense_creating extends AppCompatActivity {
 
@@ -45,6 +52,8 @@ public class expense_creating extends AppCompatActivity {
     LinearLayout lnCategory;
     TextView textViewChonNhom;
     ImageView imageViewChonNhom;
+    CatExpenseViewModel catExpenseViewModel;
+    CatIncomeViewModel catIncomeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,22 +193,65 @@ public class expense_creating extends AppCompatActivity {
                 String cat = data.getStringExtra("category");
                 if(cat.equals("catincome")){
                     catincome = (catincome) data.getSerializableExtra("catincome");
-                    textViewChonNhom.setText(catincome.getName());
-                    imageViewChonNhom.setImageResource(catincome.getImage());
-
-                    flash = 1;
-
+                    try {
+                        UpdateChonNhomIncome();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }else if(cat.equals("catexpense")){
                     catexpense = (catexpense) data.getSerializableExtra("catexpense");
-                    textViewChonNhom.setText(catexpense.getName());
-                    imageViewChonNhom.setImageResource(catexpense.getImage());
+                    try {
+                        UpdateChonNhomExpense();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                    flash = 2;
                 }
 
             }
         }
+    }
+
+    private void UpdateChonNhomIncome() throws ExecutionException, InterruptedException {
+        catIncomeViewModel = new CatIncomeViewModel(getApplication());
+        catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+        catIncomeViewModel.getAllCatIncome().observe(this, new Observer<List<com.example.moneymanagement_android.models.catincome>>() {
+            @Override
+            public void onChanged(@Nullable List<com.example.moneymanagement_android.models.catincome> catincomes) {
+                for(catincome ci : catincomes ){
+                    if(ci.getId() == catincome.getId()){
+                        textViewChonNhom.setText(ci.getName());
+                        imageViewChonNhom.setImageResource(ci.getImage());
+                        flash = 1;
+                        return;
+                    }
+                }
+                flash = 0;
+                textViewChonNhom.setText("Chọn nhóm");
+                imageViewChonNhom.setImageResource(R.drawable.list);
+            }
+        });
+    }
+    private void UpdateChonNhomExpense() throws ExecutionException, InterruptedException {
+        catExpenseViewModel = new CatExpenseViewModel(getApplication());
+        catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
+        catExpenseViewModel.getAllCatExpense().observe(this, new Observer<List<com.example.moneymanagement_android.models.catexpense>>() {
+            @Override
+            public void onChanged(@Nullable List<com.example.moneymanagement_android.models.catexpense> catexpenses) {
+                for(catexpense ce : catexpenses ){
+                    if(ce.getId() == catexpense.getId()){
+                        textViewChonNhom.setText(ce.getName());
+                        imageViewChonNhom.setImageResource(ce.getImage());
+                        flash = 2;
+                        return;
+                    }
+                }
+                flash = 0;
+                textViewChonNhom.setText("Chọn nhóm");
+                imageViewChonNhom.setImageResource(R.drawable.list);
+            }
+        });
     }
 
 

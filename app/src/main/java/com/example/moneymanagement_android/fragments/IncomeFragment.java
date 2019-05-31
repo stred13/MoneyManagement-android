@@ -138,22 +138,6 @@ public class IncomeFragment extends Fragment {
         Intent i = this.getActivity().getIntent();
         b = (budget) i.getSerializableExtra("budget");
 
-        try {
-            eViewModel = new IncomeViewModel(getActivity().getApplication());
-            eViewModel = ViewModelProviders.of(this).get(IncomeViewModel.class);
-            eViewModel.getAllIncomebyBudget(infobudget.b.getId()).observe(this, new Observer<List<income>>() {
-                @Override
-                public void onChanged(@Nullable List<income> expenses) {
-                    if (expenses != null) {
-                        listExpense = expenses;
-                        exRVAdapter.setIncomeBudgetList(listExpense);
-                    }
-                }
-            });
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
     private void retriveDataFromdb() {
         txtExpenseRangeTime.setVisibility(View.GONE);
@@ -185,11 +169,9 @@ public class IncomeFragment extends Fragment {
                         totalExpense += expense.getNmoney();
                     }
                     txtExpenseBudget.setText(Util.formatCurrency(totalExpense));
-
+                    exRVAdapter.setIncomeBudgetList(listExpense);
 
                     getCategoryExpense();
-
-                    //setupBalanceUI();
 
                 }
             });
@@ -215,10 +197,8 @@ public class IncomeFragment extends Fragment {
 
                     } else {
                         largestExpenseFragnemntErrorHolder.setVisibility(View.VISIBLE);
-                        //largestExpenseBudgetErrorHolder.setVisibility(View.VISIBLE);
                     }
-                    //setupExpenseAdapter();
-                    exRVAdapter.setIncomeBudgetList(listExpense);
+
                 }
             });
         } catch (Exception e) {
@@ -240,7 +220,6 @@ public class IncomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "thong bao", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menuKhoangThoiGian:
-                //Toast.makeText(getApplicationContext(),"khoang thoi gian",Toast.LENGTH_SHORT).show();
                 DialogRangeTime();
                 break;
             case R.id.menuTuongLai:

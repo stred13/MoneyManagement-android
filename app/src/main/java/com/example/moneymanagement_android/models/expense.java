@@ -3,6 +3,7 @@ package com.example.moneymanagement_android.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -11,20 +12,21 @@ import com.example.moneymanagement_android.converters.dateConverters;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(foreignKeys = {
-        @ForeignKey(
-                entity = budget.class,
-                parentColumns = "id",
-                childColumns = "idbudget",
-                onUpdate = ForeignKey.CASCADE,
-                onDelete = ForeignKey.CASCADE),
-        @ForeignKey(
-                entity = catexpense.class,
-                parentColumns = "id",
-                childColumns = "idcatex",
-                onUpdate = ForeignKey.CASCADE,
-                onDelete = ForeignKey.CASCADE)
-})
+@Entity(indices = {@Index("idbudget"), @Index("idcatex")},
+        foreignKeys = {
+                @ForeignKey(
+                        entity = budget.class,
+                        parentColumns = "id",
+                        childColumns = "idbudget",
+                        onUpdate = ForeignKey.CASCADE,
+                        onDelete = ForeignKey.CASCADE),
+                @ForeignKey(
+                        entity = catexpense.class,
+                        parentColumns = "id",
+                        childColumns = "idcatex",
+                        onUpdate = ForeignKey.CASCADE,
+                        onDelete = ForeignKey.CASCADE)
+        })
 public class expense implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;

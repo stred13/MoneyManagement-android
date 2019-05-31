@@ -120,6 +120,7 @@ public class BudgetFragment extends Fragment {
         try {
             bViewModel = new budgetViewModel(getActivity().getApplication());
             bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
+
             bViewModel.getListBudget().observe(this, new Observer<List<budget>>() {
                 @Override
                 public void onChanged(@Nullable List<budget> budgets) {

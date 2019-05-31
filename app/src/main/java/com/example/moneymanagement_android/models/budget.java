@@ -2,11 +2,12 @@ package com.example.moneymanagement_android.models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(indices = @Index("id"))
 public class budget implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -17,6 +18,8 @@ public class budget implements Serializable {
     private String currency;
 
     private String note;
+
+    private long bmoney;
 
     public int getId() {
         return id;
@@ -48,6 +51,14 @@ public class budget implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public long getBmoney() {
+        return bmoney;
+    }
+
+    public void setBmoney(long bmoney) {
+        this.bmoney = bmoney;
     }
 
     public budget(String name, String currency, String note) {

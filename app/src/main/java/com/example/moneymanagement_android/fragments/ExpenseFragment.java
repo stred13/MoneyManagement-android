@@ -146,11 +146,8 @@ public class ExpenseFragment extends Fragment {
                         totalExpense += expense.getNmoney();
                     }
                     txtExpenseBudget.setText(Util.formatCurrency(totalExpense));
-
-
+                    exRVAdapter.setExpenseBudgetList(listExpense);
                     getCategoryExpense();
-
-                    //setupBalanceUI();
 
                 }
             });
@@ -170,17 +167,12 @@ public class ExpenseFragment extends Fragment {
                     catexpenseList = catexpenses;
                     if (!listExpense.isEmpty()) {
                         exRVAdapter.setCatexpenseList(catexpenseList);
-                        //largestExpenseBudgetErrorHolder.setVisibility(View.GONE);
                         largestExpenseFragnemntErrorHolder.setVisibility(View.GONE);
                         expense largestExpense = listExpense.get(0);
-                        //setupUI();
 
                     } else {
                         largestExpenseFragnemntErrorHolder.setVisibility(View.VISIBLE);
-                        //largestExpenseBudgetErrorHolder.setVisibility(View.VISIBLE);
                     }
-                    //setupExpenseAdapter();
-                    exRVAdapter.setExpenseBudgetList(listExpense);
                 }
             });
         } catch (Exception e) {
@@ -195,23 +187,6 @@ public class ExpenseFragment extends Fragment {
         setHasOptionsMenu(true);
         Intent i = this.getActivity().getIntent();
         b = (budget) i.getSerializableExtra("budget");
-
-        try {
-            eViewModel = new expenseViewModel(getActivity().getApplication());
-            eViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
-            eViewModel.getAllExpensebyBudget(infobudget.b.getId()).observe(this, new Observer<List<expense>>() {
-                @Override
-                public void onChanged(@Nullable List<expense> expenses) {
-                    if (expenses != null) {
-                        listExpense = expenses;
-                        exRVAdapter.setExpenseBudgetList(listExpense);
-                        Toast.makeText(getActivity().getApplication(), "Expense: " + listExpense.size(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private View.OnClickListener onCardViewClickListener = new View.OnClickListener() {
@@ -225,14 +200,14 @@ public class ExpenseFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener onEditItem = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent infoBudget = new Intent(getContext().getApplicationContext(), category_update.class);
-            //infoBudget.putExtra("budget", b);
-            startActivity(infoBudget);
-        }
-    };
+//    private View.OnClickListener onEditItem = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Intent infoBudget = new Intent(getContext().getApplicationContext(), category_update.class);
+//            //infoBudget.putExtra("budget", b);
+//            startActivity(infoBudget);
+//        }
+//    };
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

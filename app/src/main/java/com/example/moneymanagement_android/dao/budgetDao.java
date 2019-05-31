@@ -26,4 +26,6 @@ public interface budgetDao{
     @Query("SELECT * FROM budget")
     LiveData<List<budget>> getListBudget();
 
+    @Query("SELECT * FROM budget WHERE id IN(:bid)")
+    LiveData<budget> getBudgetbyId(int bid);
 }

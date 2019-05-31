@@ -32,6 +32,10 @@ public class budgetViewModel extends AndroidViewModel {
         bRepository.deleteBudget(b);
     }
 
+    public LiveData<budget> getBudgetbyId(int id) throws ExecutionException, InterruptedException {
+        return this.bRepository.getBudgetbyID(id);
+    }
+
     public LiveData<List<budget>> getListBudget() throws ExecutionException, InterruptedException {
         //this.listBudget.setValue(bRepository.getlistBudget());
         return this.listBudget;

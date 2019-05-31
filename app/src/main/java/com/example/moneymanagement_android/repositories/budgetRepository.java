@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class budgetRepository {
     private budgetDao bdDao;
     private LiveData<List<budget>> lBudget;
+    private LiveData<budget> b;
     public budgetRepository(Application application){
         roomDatabase rdtb = roomDatabase.getInstance(application.getApplicationContext());
         bdDao = rdtb.bdDao();
@@ -37,6 +38,28 @@ public class budgetRepository {
 
     public void updateBudget(budget b){
         new updateBudgetAsyncTask(bdDao).execute(b);
+    }
+
+    public LiveData<budget> getBudgetbyID(int id) throws ExecutionException, InterruptedException {
+        return new getBudgetbyIdAsyntask(this.bdDao).execute(id).get();
+    }
+
+    private static class getBudgetbyIdAsyntask extends AsyncTask<Integer,Void,LiveData<budget>>{
+        private budgetDao bDao;
+
+        public getBudgetbyIdAsyntask(budgetDao bDao) {
+            this.bDao = bDao;
+        }
+
+        @Override
+        protected LiveData<budget> doInBackground(Integer... integers) {
+            return bDao.getBudgetbyId(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<budget> budget) {
+            super.onPostExecute(budget);
+        }
     }
 
     private static class insertBudgetAsyncTask extends AsyncTask<budget,Void,Void> {

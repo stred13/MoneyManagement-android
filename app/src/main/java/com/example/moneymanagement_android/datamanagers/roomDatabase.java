@@ -16,7 +16,7 @@ import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
 
-@Database(entities = {budget.class,income.class,expense.class, catexpense.class, catincome.class}, version = 1)
+@Database(entities = {budget.class,income.class,expense.class, catexpense.class, catincome.class}, version = 4)
 public abstract class roomDatabase extends RoomDatabase {
 
     public abstract expenseDao exDao();

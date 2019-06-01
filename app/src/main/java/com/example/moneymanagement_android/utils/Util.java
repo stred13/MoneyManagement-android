@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Util {
 
@@ -44,5 +45,20 @@ public class Util {
         String day = str.substring(8, 10);
 
         return day + "/" + month;
+    }
+
+    public static String formatPrice(String s) {
+        String str = s.toString().replaceAll("[^\\d]", "");
+        double s1 = 0;
+        try {
+            s1 = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
+        ((DecimalFormat) nf2).applyPattern("###,###.###");
+
+        return nf2.format(s1);
     }
 }

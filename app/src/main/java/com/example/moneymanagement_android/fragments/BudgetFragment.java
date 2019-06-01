@@ -54,7 +54,6 @@ public class BudgetFragment extends Fragment {
             Intent infoBudget = new Intent(getContext().getApplicationContext(), infobudget.class);
             infoBudget.putExtra("budget", b);
             startActivity(infoBudget);
-
         }
     };
 

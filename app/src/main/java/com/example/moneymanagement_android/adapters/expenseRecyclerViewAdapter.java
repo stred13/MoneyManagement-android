@@ -22,6 +22,7 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
 
     private Context context;
     private List<expense> expenseList;
+    private View.OnClickListener itemClicklistener;
     private List<catexpense> catexpenseList;
     
 
@@ -65,7 +66,9 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
         }
     }
 
-
+    public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
+    }
 
     @Override
     public int getItemCount() {
@@ -83,6 +86,7 @@ public class expenseRecyclerViewAdapter extends RecyclerView.Adapter<expenseRecy
             txtName = itemView.findViewById(R.id.txtExpenseBudgeName);
             txtDate = itemView.findViewById(R.id.txtExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtExpenseBudgeMoney);
+            itemView.setOnClickListener(itemClicklistener);
             itemView.setTag(this);
         }
     }

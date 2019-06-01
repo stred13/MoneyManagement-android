@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), budget_creating.class);
                 // BudgetFragment.startActivityForResult(intent,2);
                 budgetFragment.startActivity(intent);
-
             }
         });
 

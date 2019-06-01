@@ -32,6 +32,7 @@ import com.example.moneymanagement_android.activity_expense;
 import com.example.moneymanagement_android.adapters.expenseRecyclerViewAdapter;
 import com.example.moneymanagement_android.category_update;
 import com.example.moneymanagement_android.future_amounts;
+import com.example.moneymanagement_android.infoExpense;
 import com.example.moneymanagement_android.infobudget;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
@@ -108,6 +109,7 @@ public class ExpenseFragment extends Fragment {
 
         exRVAdapter = new expenseRecyclerViewAdapter(getActivity(), listExpense);
         exRVAdapter.setCatexpenseList(catexpenseList);
+        exRVAdapter.setOnItemClickListener(onItemClickListener);
         exRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         exRecyclerView.setAdapter(exRVAdapter);
 
@@ -115,6 +117,19 @@ public class ExpenseFragment extends Fragment {
 
         return v;
     }
+
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            int pos = viewHolder.getAdapterPosition();
+            expense e = listExpense.get(pos);
+
+            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
+            infoEx.putExtra("infoexpense",e);
+            startActivity(infoEx);
+        }
+    };
 
     private void retriveDataFromdb() {
         txtExpenseRangeTime.setVisibility(View.GONE);

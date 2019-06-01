@@ -34,14 +34,14 @@ public interface expenseDao {
     LiveData<List<expense>> getExpenseByDate(String time);
 
     @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatex, idbudget " +
-            "from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 days')) AS INT)" +
+            "from expense Where CAST(dcreated as INT) / 1000 > CAST(strftime('%s', date(:timeFrom,'-1 day')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s',date(:timeTo,'+1 days')) AS INT)" +
             "AND idbudget = :id Group by idcatex ORDER by nmoney DESC ")
     LiveData<List<expense>> getExpenseByDateBudget(String timeFrom, String timeTo, int id);
 
     @Query("Select * " +
-            "from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 days')) AS INT)" +
+            "from expense Where CAST(dcreated as INT) / 1000 > CAST(strftime('%s', date(:timeFrom,'-1 day')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s',date(:timeTo,'+1 day')) AS INT)" +
             "AND idbudget = :id ORDER by nmoney DESC ")
-    LiveData<List<expense>> getExpenseBudgetRangeTime(String timeFrom,String timeTo, int id);
+    LiveData<List<expense>> getExpenseBudgetRangeTime(String timeFrom, String timeTo, int id);
 }

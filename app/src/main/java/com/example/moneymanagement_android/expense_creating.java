@@ -11,7 +11,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,18 +30,22 @@ import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
+import com.example.moneymanagement_android.utils.Util;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class expense_creating extends AppCompatActivity {
@@ -87,12 +94,46 @@ public class expense_creating extends AppCompatActivity {
         final budget b = infobudget.b;
 
 
+        et_nMoney.addTextChangedListener(new TextWatcher() {
+            boolean isEdiging;
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (isEdiging) return;
+                isEdiging = true;
+//                String str = s.toString().replaceAll("[^\\d]", "");
+//                double s1 = 0;
+//                try {
+//                    s1 = Double.parseDouble(str);
+//                } catch (NumberFormatException e) {
+//                    e.printStackTrace();
+//                }
+
+                //NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
+                //((DecimalFormat) nf2).applyPattern("###,###.###");
+                String formatText = Util.formatPrice(s.toString());
+                s.replace(0, s.length(), formatText);
+
+
+                if (s.toString().equals("0")) {
+                    et_nMoney.setText("");
+                }
+                isEdiging = false;
+            }
+        });
+
 
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //String name = et_name.getText().toString();
-                int nmoney = Integer.parseInt(et_nMoney.getText().toString().equals("") ?  "0" : et_nMoney.getText().toString() );
+                String editMoneyReplaceComma = et_nMoney.getText().toString().replace(",","");
+                int nmoney = Integer.parseInt(editMoneyReplaceComma.equals("") ?  "0" : editMoneyReplaceComma );
                 String note = et_note.getText().toString();
                 if(nmoney == 0)
                 {

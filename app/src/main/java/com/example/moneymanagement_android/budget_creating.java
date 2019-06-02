@@ -51,7 +51,7 @@ public class budget_creating extends AppCompatActivity {
 
         Calendar c = Calendar.getInstance();
         int ngay = c.get(Calendar.DATE);
-        int thang = c.get(Calendar.MONTH);
+        int thang = c.get(Calendar.MONTH) + 1;
         int nam = c.get(Calendar.YEAR);
 
         tvChonNgay.setText(ngay + "/" + thang + "/" + nam);
@@ -112,38 +112,6 @@ public class budget_creating extends AppCompatActivity {
             }
         }, nam, thang, ngay);
         datePickerDialog.show();
-    }
-    private String DayOfWeek(int day){
-        switch (day) {
-            case Calendar.SUNDAY:
-                return "Chủ nhật";
-
-            case Calendar.MONDAY:
-                // Current day is Monday
-                return "Thứ hai";
-
-            case Calendar.TUESDAY:
-                // etc.
-                return "Thứ ba";
-
-            case Calendar.WEDNESDAY:
-                return "Thứ tư";
-            // etc.
-
-            case Calendar.THURSDAY:
-                return "Thứ năm";
-            // etc.
-
-            case Calendar.FRIDAY:
-                return "Thứ sáu";
-            // etc.
-
-            case Calendar.SATURDAY:
-                return "Thứ bảy";
-            // etc.
-
-        }
-        return "Sai";
     }
 
 }

@@ -152,11 +152,18 @@ public class category_edit extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menuSaveCategory:
                 if (flash == 1) {
+
+                    if (!checkCatExpenseByName(stringEditText)) {
+                        break;
+                    }
                     catexpense.setImage(imgViewChangeIcon);
                     catexpense.setName(stringEditText);
                     catExpenseViewModel.updateCatExpense(catexpense);
                     finish();
                 } else if (flash == 2) {
+                    if (!checkCatIncomeByName(stringEditText)) {
+                        break;
+                    }
                     catincome.setImage(imgViewChangeIcon);
                     catincome.setName(stringEditText);
                     catIncomeViewModel.updateCatIncome(catincome);
@@ -201,10 +208,9 @@ public class category_edit extends AppCompatActivity {
         Button btnHuy = (Button) dialog.findViewById(R.id.btnHuy);
         TextView txtRemoveCategory = (TextView) dialog.findViewById(R.id.txtRemoveCategory);
 
-        if(flash == 1){
+        if (flash == 1) {
             txtRemoveCategory.setText("Bạn sẽ mất toàn bộ giao dịch trong nhóm " + catexpense.getName());
-        }
-        else if(flash == 2){
+        } else if (flash == 2) {
             txtRemoveCategory.setText("Bạn sẽ mất toàn bộ giao dịch trong nhóm " + catincome.getName());
         }
 
@@ -232,5 +238,31 @@ public class category_edit extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    private boolean checkCatExpenseByName(String TenNhom) {
+        try {
+            if (!catExpenseViewModel.checkCatExpenseByName(TenNhom)) {
+                Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkCatIncomeByName(String TenNhom) {
+        try {
+            if (!catIncomeViewModel.checkCatIncomeByName(TenNhom)) {
+                Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

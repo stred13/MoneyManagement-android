@@ -24,6 +24,10 @@ public class CatIncomeRepository {
         this.catIncomeDAO = rtdb.catIncomeDAO();
     }
 
+    public boolean checkCatIncomeByName(String name) throws ExecutionException, InterruptedException {
+        return new checkCatIncomeByNameAsyncTask(this.catIncomeDAO).execute(name).get();
+    }
+
     public void insertCatIncome(catincome c) {
         new InsertCatIncomeAsyncTask(catIncomeDAO).execute(c);
     }
@@ -117,6 +121,22 @@ public class CatIncomeRepository {
         @Override
         protected void onPostExecute(LiveData<List<catincome>> listLiveDataData) {
             super.onPostExecute(listLiveDataData);
+        }
+    }
+
+    private static class checkCatIncomeByNameAsyncTask extends AsyncTask<String,Void,Boolean>{
+        private CatIncomeDAO bAsyncTaskDao;
+        private checkCatIncomeByNameAsyncTask(CatIncomeDAO bdDao){
+            bAsyncTaskDao = bdDao;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            List<catincome> catincomeList = bAsyncTaskDao.getCatIncomeByName(strings[0]);
+            if(catincomeList.isEmpty()){
+                return true;
+            }
+            return false;
         }
     }
 }

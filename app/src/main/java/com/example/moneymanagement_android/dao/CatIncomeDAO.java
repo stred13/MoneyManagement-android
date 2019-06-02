@@ -27,4 +27,7 @@ public interface CatIncomeDAO {
 
     @Query("SELECT * FROM catincome")
     LiveData<List<catincome>> getListCatIncome();
+
+    @Query("SELECT * FROM catincome where name = :name")
+    List<catincome> getCatIncomeByName(String name);
 }

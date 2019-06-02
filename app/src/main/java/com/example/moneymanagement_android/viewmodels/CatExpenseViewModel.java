@@ -39,4 +39,7 @@ public class CatExpenseViewModel extends AndroidViewModel {
     public LiveData<List<catexpense>> getAllCatExpense() throws ExecutionException, InterruptedException {
         return this.listLiveData;
     }
+    public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
+        return this.catExpenseRepository.checkCatExpenseByName(name);
+    }
 }

@@ -50,7 +50,7 @@ public class budget_update extends AppCompatActivity {
         tv_note.setText(b.getNote());
         Calendar c = Calendar.getInstance();
         int ngay = c.get(Calendar.DATE);
-        int thang = c.get(Calendar.MONTH);
+        int thang = c.get(Calendar.MONTH) + 1;
         int nam = c.get(Calendar.YEAR);
 
         tv_Date.setText(ngay + "/" + thang + "/" + nam);

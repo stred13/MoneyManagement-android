@@ -23,6 +23,10 @@ public class CatExpenseRepository {
         this.catExpenseDAO = rtdb.catExpenseDAO();
     }
 
+    public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
+        return new checkCatExpenseByNameAsyncTask(this.catExpenseDAO).execute(name).get();
+    }
+
     public LiveData<List<catexpense>> getAllCatExpense() throws ExecutionException, InterruptedException {
         return new getLiveListCatExpenseAsynctask(this.catExpenseDAO).execute().get();
     }
@@ -82,6 +86,22 @@ public class CatExpenseRepository {
         protected Void doInBackground(catexpense... catexpenses) {
             bAsyncTaskDao.delete(catexpenses[0]);
             return null;
+        }
+    }
+
+    private static class checkCatExpenseByNameAsyncTask extends AsyncTask<String,Void,Boolean>{
+        private CatExpenseDAO bAsyncTaskDao;
+        private checkCatExpenseByNameAsyncTask(CatExpenseDAO bdDao){
+            bAsyncTaskDao = bdDao;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            List<catexpense> catexpenseList = bAsyncTaskDao.getCatExpenseByName(strings[0]);
+            if(catexpenseList.isEmpty()){
+                return true;
+            }
+            return false;
         }
     }
 

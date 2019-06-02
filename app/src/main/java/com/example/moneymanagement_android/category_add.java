@@ -25,10 +25,12 @@ import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 
+import java.util.concurrent.ExecutionException;
+
 public class category_add extends AppCompatActivity {
 
-    private CatIncomeViewModel catIncomeViewModel ;
-    private CatExpenseViewModel catExpenseViewModel  ;
+    private CatIncomeViewModel catIncomeViewModel;
+    private CatExpenseViewModel catExpenseViewModel;
     LinearLayout linearLayoutOption;
     ImageView imageViewIcon;
     EditText editTextTenNhom;
@@ -60,7 +62,7 @@ public class category_add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), option_icon.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -68,9 +70,9 @@ public class category_add extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 String stringEditText = editTextTenNhom.getText().toString();
-                if(stringEditText.equals("")) {
+                if (stringEditText.equals("")) {
                     btnLuu.setEnabled(false);
-                }else{
+                } else {
                     btnLuu.setEnabled(true);
                 }
                 return false;
@@ -90,21 +92,28 @@ public class category_add extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuSaveCategory:
                 String TenNhom = editTextTenNhom.getText().toString();
-                if(radioButtonChi.isChecked()){
+                if (radioButtonChi.isChecked()) {
+                    if (!checkCatExpenseByName(TenNhom)) {
+                        break;
+                    }
+
                     catexpense catexpense = new catexpense(TenNhom, ImageResource);
                     catExpenseViewModel.insertCatExpense(catexpense);
-                    //Toast.makeText(getApplicationContext(),"Thanh cong",Toast.LENGTH_SHORT).show();
+
                     finish();
-                }else{
+                } else {
+                    if (!checkCatIncomeByName(TenNhom)) {
+                        break;
+                    }
+
                     catincome catI = new catincome(TenNhom, ImageResource);
                     catIncomeViewModel.insertCatIncome(catI);
-                    //Toast.makeText(getApplicationContext(),"Thanh cong",Toast.LENGTH_SHORT).show();
+
                     finish();
                 }
                 break;
@@ -114,20 +123,46 @@ public class category_add extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                ImageResource = data.getIntExtra("resrc",1);
+                ImageResource = data.getIntExtra("resrc", 1);
                 imageViewIcon.setImageResource((ImageResource));
             }
+        }
+    }
+
+    private boolean checkCatExpenseByName(String TenNhom) {
+        try {
+            if (!catExpenseViewModel.checkCatExpenseByName(TenNhom)) {
+                Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean checkCatIncomeByName(String TenNhom) {
+        try {
+            if (!catIncomeViewModel.checkCatIncomeByName(TenNhom)) {
+                Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

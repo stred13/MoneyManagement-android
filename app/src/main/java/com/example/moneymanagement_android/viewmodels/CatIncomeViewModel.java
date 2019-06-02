@@ -40,4 +40,7 @@ public class CatIncomeViewModel extends AndroidViewModel {
     public LiveData<List<catincome>> getAllCatIncome() throws ExecutionException, InterruptedException {
         return this.listLiveData;
     }
+    public boolean checkCatIncomeByName(String name) throws ExecutionException, InterruptedException {
+        return this.catIncomeRepository.checkCatIncomeByName(name);
+    }
 }

@@ -106,16 +106,7 @@ public class expense_creating extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (isEdiging) return;
                 isEdiging = true;
-//                String str = s.toString().replaceAll("[^\\d]", "");
-//                double s1 = 0;
-//                try {
-//                    s1 = Double.parseDouble(str);
-//                } catch (NumberFormatException e) {
-//                    e.printStackTrace();
-//                }
 
-                //NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
-                //((DecimalFormat) nf2).applyPattern("###,###.###");
                 String formatText = Util.formatPrice(s.toString());
                 s.replace(0, s.length(), formatText);
 

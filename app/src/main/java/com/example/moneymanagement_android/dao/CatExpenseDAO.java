@@ -27,4 +27,7 @@ public interface CatExpenseDAO {
     //LiveData<catincome> getCatIncomeById(String id);
     @Query("SELECT * FROM catexpense")
     LiveData<List<catexpense>> getListCatExpense();
+
+    @Query("SELECT * FROM catexpense where name = :name")
+    List<catexpense> getCatExpenseByName(String name);
 }

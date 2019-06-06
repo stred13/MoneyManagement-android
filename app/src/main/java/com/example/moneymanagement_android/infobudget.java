@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.example.moneymanagement_android.fragments.ExpenseBudgetFragment;
 import com.example.moneymanagement_android.fragments.ExpenseFragment;
+import com.example.moneymanagement_android.fragments.IncomeBudgetFragment;
 import com.example.moneymanagement_android.fragments.IncomeFragment;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
@@ -27,6 +28,7 @@ public class infobudget extends AppCompatActivity {
     private ExpenseFragment expenseFragment;
     private IncomeFragment incomeFragment;
     private ExpenseBudgetFragment expenseBudgetFragment;
+    private IncomeBudgetFragment incomeBudgetFragment;
     private ViewPager mainViewInfo;
     private TabLayout tabLayoutInfo;
 
@@ -80,11 +82,13 @@ public class infobudget extends AppCompatActivity {
         expenseFragment = new ExpenseFragment();
         incomeFragment = new IncomeFragment();
         expenseBudgetFragment = new ExpenseBudgetFragment();
+        incomeBudgetFragment = new IncomeBudgetFragment();
 
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
         //viewPaperAdapter.addFragment(expenseFragment, "Chi Tiêu 333");
         //viewPaperAdapter.addFragment(incomeFragment, "Thu Nhập");
-        viewPaperAdapter.addFragment(expenseBudgetFragment, "Chi tiêu");
+        viewPaperAdapter.addFragment(expenseBudgetFragment, "Chi Tiêu");
+        viewPaperAdapter.addFragment(incomeBudgetFragment,"Thu Nhập");
 
         mainViewInfo.setAdapter(viewPaperAdapter);
         tabLayoutInfo.setupWithViewPager(mainViewInfo);

@@ -43,6 +43,6 @@ public interface incomeDao {
     @Query("Select * " +
             "from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 day')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s',date(:timeTo,'+1 day')) AS INT)" +
-            "AND idbudget = :id ORDER by nmoney DESC ")
+            "AND idbudget = :id ORDER by dcreated DESC ")
     LiveData<List<income>> getIncomeBudgetRangeTime(String timeFrom,String timeTo, int id);
 }

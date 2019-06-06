@@ -7,6 +7,7 @@ import com.example.moneymanagement_android.R;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -60,5 +61,47 @@ public class Util {
         ((DecimalFormat) nf2).applyPattern("###,###.###");
 
         return nf2.format(s1);
+    }
+    public static String getDayOfWeek(Date date){
+        String strDate = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        String day = sdf.format(date);
+        sdf = new SimpleDateFormat("MM");
+        String month = sdf.format(date);
+        sdf = new SimpleDateFormat("yyyy");
+        String year = sdf.format(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, Integer.parseInt(month));
+        calendar.set(Calendar.YEAR, Integer.parseInt(year));
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+        strDate = "thg " + month + " " + year + ", ";
+        int dayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (dayofWeek) {
+            case Calendar.MONDAY:
+                strDate += "Thứ Hai";
+                break;
+
+            case Calendar.TUESDAY:
+                strDate += "Thứ Ba";
+                break;
+            case Calendar.WEDNESDAY:
+                strDate += "Thứ Tư";
+                break;
+            case Calendar.THURSDAY:
+                strDate += "Thứ Năm";
+                break;
+            case Calendar.FRIDAY:
+                strDate += "Thứ Sáu";
+                break;
+            case Calendar.SATURDAY:
+                strDate += "Thứ Bảy";
+                break;
+            case Calendar.SUNDAY:
+                strDate += "Thứ Chủ Nhât";
+                break;
+
+        }
+        return strDate;
+
     }
 }

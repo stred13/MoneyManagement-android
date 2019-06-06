@@ -1,10 +1,8 @@
 package com.example.moneymanagement_android.fragments;
 
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,23 +21,26 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.activity_expense;
+import com.example.moneymanagement_android.activity_income;
 import com.example.moneymanagement_android.adapters.ParenExpenseRecyclerViewAdapter;
+import com.example.moneymanagement_android.adapters.ParenIncomeRecyclerViewAdapter;
 import com.example.moneymanagement_android.adapters.expenseRecyclerViewAdapter;
-import com.example.moneymanagement_android.category_update;
-import com.example.moneymanagement_android.future_amounts;
+import com.example.moneymanagement_android.adapters.incomeRecyclerViewAdapter;
 import com.example.moneymanagement_android.infoExpense;
-import com.example.moneymanagement_android.infobudget;
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.utils.Util;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
+import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -49,23 +49,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ExpenseBudgetFragment extends Fragment {
+public class IncomeBudgetFragment extends Fragment {
 
     CardView cardViewTongQuanChiTieu;
     View v;
-    ParenExpenseRecyclerViewAdapter parenExpenseRecyclerViewAdapter;
+    ParenIncomeRecyclerViewAdapter parenExpenseRecyclerViewAdapter;
     RecyclerView exRecyclerView;
-    List<expense> listExpense = new ArrayList<>();
-    List<catexpense> catexpenseList = new ArrayList<>();
+    List<income> listExpense = new ArrayList<>();
+    List<catincome> catexpenseList = new ArrayList<>();
 
     expenseViewModel eViewModel;
-    CatExpenseViewModel catExpenseViewModel;
+    CatIncomeViewModel catExpenseViewModel;
     ImageView editThuoc;
     View largestExpenseFragnemntErrorHolder;
     TextView txtExpenseTitle;
@@ -74,7 +69,7 @@ public class ExpenseBudgetFragment extends Fragment {
     private Date selectedDate;
     private Calendar calendar = Calendar.getInstance();
 
-    private expenseViewModel expenseViewModel;
+    private IncomeViewModel expenseViewModel;
     private int totalExpense = 0;
 
     private TextView txtExpenseBudget;
@@ -89,7 +84,7 @@ public class ExpenseBudgetFragment extends Fragment {
 
     budget b;
 
-    public ExpenseBudgetFragment() {
+    public IncomeBudgetFragment() {
         // Required empty public constructor
     }
 
@@ -99,7 +94,7 @@ public class ExpenseBudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        v = inflater.inflate(R.layout.fragment_expense_budget, container, false);
+        v = inflater.inflate(R.layout.fragment_income_budget, container, false);
 
 
         cardViewTongQuanChiTieu = (CardView) v.findViewById(R.id.cardViewTongQuanChiTieu);
@@ -111,9 +106,9 @@ public class ExpenseBudgetFragment extends Fragment {
         txtExpenseRangeTime = v.findViewById(R.id.txtExpenseRangeTime);
 
 
-        parenExpenseRecyclerViewAdapter = new ParenExpenseRecyclerViewAdapter(getActivity(), catexpenseList, listExpense);
+        parenExpenseRecyclerViewAdapter = new ParenIncomeRecyclerViewAdapter(getActivity(), catexpenseList, listExpense);
         //getCategoryExpense();
-        parenExpenseRecyclerViewAdapter.setCatexpenseList(catexpenseList);
+        parenExpenseRecyclerViewAdapter.setCatincomeList(catexpenseList);
         //exRVAdapter.setExpenseBudgetList(listExpense);
         //exRVAdapter.setOnItemClickListener(onItemClickListener);
         exRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -124,18 +119,18 @@ public class ExpenseBudgetFragment extends Fragment {
         return v;
     }
 
-    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
-            int pos = viewHolder.getAdapterPosition();
-            expense e = listExpense.get(pos);
-
-            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
-            infoEx.putExtra("infoexpense", e);
-            startActivity(infoEx);
-        }
-    };
+//    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+//            int pos = viewHolder.getAdapterPosition();
+//            income e = listExpense.get(pos);
+//
+//            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
+//            infoEx.putExtra("infoexpense", e);
+//            startActivity(infoEx);
+//        }
+//    };
 
     private void retriveDataFromdb() {
         txtExpenseRangeTime.setVisibility(View.GONE);
@@ -156,15 +151,15 @@ public class ExpenseBudgetFragment extends Fragment {
     private void setupExpense(String dateFrom, String dateTo) {
 
         try {
-            expenseViewModel = new expenseViewModel(getActivity().getApplication());
-            expenseViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
-            expenseViewModel.getAllExpenseBudgetRangeTime(dateFrom, dateTo, b.getId()).observe(this, new Observer<List<expense>>() {
+            expenseViewModel = new IncomeViewModel(getActivity().getApplication());
+            expenseViewModel = ViewModelProviders.of(this).get(com.example.moneymanagement_android.viewmodels.IncomeViewModel.class);
+            expenseViewModel.getAllIncomeBudgetRangeTime(dateFrom, dateTo, b.getId()).observe(this, new Observer<List<income>>() {
                 @Override
-                public void onChanged(@Nullable List<expense> expenses) {
+                public void onChanged(@Nullable List<income> expenses) {
                     listExpense = expenses;
-                    parenExpenseRecyclerViewAdapter.setExpenseBudgetList(listExpense);
+                    parenExpenseRecyclerViewAdapter.setIncomeBudgetList(listExpense);
                     totalExpense = 0;
-                    for (expense expense : expenses) {
+                    for (income expense : expenses) {
                         totalExpense += expense.getNmoney();
                     }
                     txtExpenseBudget.setText(Util.formatCurrency(totalExpense));
@@ -187,14 +182,14 @@ public class ExpenseBudgetFragment extends Fragment {
     private void getCategoryExpense(final String dateFrom, final String dateTo) {
         try {
 
-            catExpenseViewModel = new CatExpenseViewModel(getActivity().getApplication());
-            catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
-            catExpenseViewModel.getAllCatExpense().observe(this, new Observer<List<catexpense>>() {
+            catExpenseViewModel = new CatIncomeViewModel(getActivity().getApplication());
+            catExpenseViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+            catExpenseViewModel.getAllCatIncome().observe(this, new Observer<List<catincome>>() {
                 @Override
-                public void onChanged(@Nullable List<catexpense> catexpenses) {
+                public void onChanged(@Nullable List<catincome> catexpenses) {
                     catexpenseList = catexpenses;
                     if (!catexpenseList.isEmpty()) {
-                        parenExpenseRecyclerViewAdapter.setCatexpenseList(catexpenseList);
+                        parenExpenseRecyclerViewAdapter.setCatincomeList(catexpenseList);
                         largestExpenseFragnemntErrorHolder.setVisibility(View.GONE);
 
                     } else {
@@ -221,7 +216,7 @@ public class ExpenseBudgetFragment extends Fragment {
     private View.OnClickListener onCardViewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent infoBudget = new Intent(getContext().getApplicationContext(), activity_expense.class);
+            Intent infoBudget = new Intent(getContext().getApplicationContext(), activity_income.class);
             infoBudget.putExtra("budget", b);
             infoBudget.putExtra("dayFrom", statisticDayFrom);
             infoBudget.putExtra("dayTo", statisticDayTo);
@@ -423,6 +418,5 @@ public class ExpenseBudgetFragment extends Fragment {
 
         datePickerDialog.show();
     }
-
 
 }

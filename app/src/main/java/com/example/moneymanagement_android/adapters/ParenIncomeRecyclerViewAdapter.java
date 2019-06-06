@@ -9,49 +9,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
+import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.utils.Util;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenExpenseRecyclerViewAdapter.MyViewHolder> {
+public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIncomeRecyclerViewAdapter.MyViewHolder> {
     private Context context;
-    private List<expense> expenseList;
+    private List<income> incomeList;
     private View.OnClickListener itemClicklistener;
-    private List<catexpense> catexpenseList;
-    private List<expense> expenseChildList = new ArrayList<>();
-    private ChildExpenseRecyclerViewAdapter childExpenseRecyclerViewAdapter;
+    private List<catincome> catincomeList;
+    private List<income> incomeChildList = new ArrayList<>();
+    private ChildIncomeRecyclerViewAdapter childIncomeRecyclerViewAdapter;
     private List<Integer> integerListViTri = new ArrayList<>();
     private int SoLan = 0;
 
-    public ParenExpenseRecyclerViewAdapter(Context context, List<catexpense> catexpenses, List<expense> list) {
+    public ParenIncomeRecyclerViewAdapter(Context context, List<catincome> catincomes, List<income> list) {
         this.context = context;
-        this.expenseList = list;
-        this.catexpenseList = catexpenses;
+        this.incomeList = list;
+        this.catincomeList = catincomes;
         SoLan = 0;
     }
 
-    public void setCatexpenseList(List<catexpense> catexpenseList) {
-        this.catexpenseList.clear();
-        this.catexpenseList = catexpenseList;
+    public void setCatincomeList(List<catincome> catincomeList) {
+        this.catincomeList.clear();
+        this.catincomeList = catincomeList;
         this.notifyDataSetChanged();
         SoLan = 0;
     }
 
-    public void setExpenseBudgetList(List<expense> expenseList) {
-        this.expenseList.clear();
-        this.expenseList = expenseList;
+    public void setIncomeBudgetList(List<income> incomeList) {
+        this.incomeList.clear();
+        this.incomeList = incomeList;
         this.notifyDataSetChanged();
         SoLan = 0;
     }
-
 
     @NonNull
     @Override
@@ -64,53 +63,50 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        //get vi tri item co phan tu
         int vitri = integerListViTri.get(SoLan++);
 
-        catexpense catexpense = catexpenseList.get(vitri);
-        expenseChildList.clear();
+        catincome catincome = catincomeList.get(vitri);
+        incomeChildList.clear();
         int total = 0;
-        for (int j = 0; j < expenseList.size(); j++) {
-            expense expenseTemp = expenseList.get(j);
-            if (expenseTemp.getIdcatex() == catexpense.getId()) {
-                expenseChildList.add(expenseTemp);
-                total += expenseTemp.getNmoney();
+        for (int j = 0; j < incomeList.size(); j++) {
+            if (incomeList.get(j).getIdcatin() == catincome.getId()) {
+                incomeChildList.add(incomeList.get(j));
+                total += incomeList.get(j).getNmoney();
             }
         }
-        if(expenseChildList.size()!= 0) {
-            myViewHolder.imgItem.setImageResource(catexpense.getImage());
-            myViewHolder.txtName.setText(catexpense.getName());
-            myViewHolder.txtSoluong.setText(expenseChildList.size() + " giao dịch");
+        if(incomeChildList.size()!= 0) {
+            myViewHolder.imgItem.setImageResource(catincome.getImage());
+            myViewHolder.txtName.setText(catincome.getName());
+            myViewHolder.txtSoluong.setText(incomeChildList.size() + " giao dịch");
             myViewHolder.txtPrice.setText(Util.formatCurrency(total));
 
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             myViewHolder.parentRV.setLayoutManager(layoutManager);
             myViewHolder.parentRV.setHasFixedSize(true);
 
-            childExpenseRecyclerViewAdapter = new ChildExpenseRecyclerViewAdapter(this.context,expenseChildList);
-            myViewHolder.parentRV.setAdapter(childExpenseRecyclerViewAdapter);
+            childIncomeRecyclerViewAdapter = new ChildIncomeRecyclerViewAdapter(incomeChildList);
+            myViewHolder.parentRV.setAdapter(childIncomeRecyclerViewAdapter);
         }
-
     }
 
     @Override
     public int getItemCount() {
         int size = 0;
         integerListViTri.clear();
-        for (int i = 0; i < catexpenseList.size(); i++) {
-            catexpense catexpense = catexpenseList.get(i);
-            for (int j = 0; j < expenseList.size(); j++) {
-                expense expense = expenseList.get(j);
-                if (expense.getIdcatex() == catexpense.getId()) {
+        for (int i = 0; i < catincomeList.size(); i++) {
+            catincome catincome = catincomeList.get(i);
+            for (int j = 0; j < incomeList.size(); j++) {
+                income income = incomeList.get(j);
+                if (income.getIdcatin() == catincome.getId()) {
                     size++;
                     integerListViTri.add(i);
                     break;
                 }
             }
         }
-        Log.d("AAAA", "size catepense List" + this.catexpenseList.size());
         return size;
     }
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgItem;

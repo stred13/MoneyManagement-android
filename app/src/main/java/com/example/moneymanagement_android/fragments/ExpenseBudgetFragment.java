@@ -117,6 +117,7 @@ public class ExpenseBudgetFragment extends Fragment {
         //exRVAdapter.setExpenseBudgetList(listExpense);
         //exRVAdapter.setOnItemClickListener(onItemClickListener);
         exRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+       // parenExpenseRecyclerViewAdapter.setOnItemClickListener(onClickListener);
         exRecyclerView.setAdapter(parenExpenseRecyclerViewAdapter);
 
         retriveDataFromdb();
@@ -124,10 +125,18 @@ public class ExpenseBudgetFragment extends Fragment {
         return v;
     }
 
-    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+   /*private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
+            startActivity(infoEx);
+        }
+    };*/
+
+   /* private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            parenExpenseRecyclerViewAdapter.MyViewHolder viewHolder = (parenExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
             int pos = viewHolder.getAdapterPosition();
             expense e = listExpense.get(pos);
 
@@ -135,7 +144,7 @@ public class ExpenseBudgetFragment extends Fragment {
             infoEx.putExtra("infoexpense", e);
             startActivity(infoEx);
         }
-    };
+    };*/
 
     private void retriveDataFromdb() {
         txtExpenseRangeTime.setVisibility(View.GONE);

@@ -1,6 +1,7 @@
 package com.example.moneymanagement_android.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.infoExpense;
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.utils.Util;
@@ -87,10 +89,41 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             myViewHolder.parentRV.setHasFixedSize(true);
 
             childExpenseRecyclerViewAdapter = new ChildExpenseRecyclerViewAdapter(this.context,expenseChildList);
+            childExpenseRecyclerViewAdapter.setOnItemClickListener(onClickListener);
             myViewHolder.parentRV.setAdapter(childExpenseRecyclerViewAdapter);
         }
 
     }
+
+    /*private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            int pos = viewHolder.getAdapterPosition();
+            expense e = listExpense.get(pos);
+
+            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
+            infoEx.putExtra("infoexpense",e);
+            startActivity(infoEx);
+        }
+    };*/
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ChildExpenseRecyclerViewAdapter.MyViewHolder vhd = (ChildExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            int pos = vhd.getAdapterPosition();
+            expense e = expenseChildList.get(pos);
+
+            Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
+            infoEx.putExtra("infoexpense",e);
+            context.startActivity(infoEx);
+        }
+    };
+
+    /*public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
+    }*/
 
     @Override
     public int getItemCount() {
@@ -124,6 +157,8 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             txtSoluong = itemView.findViewById(R.id.txtParenExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtParenExpenseBudgeMoney);
             parentRV = itemView.findViewById(R.id.childRV);
+           // itemView.setOnClickListener(itemClicklistener);
+
             itemView.setTag(this);
         }
     }

@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.budget_update;
@@ -39,6 +41,8 @@ public class BudgetFragment extends Fragment {
     private RecyclerView myRecyclerView;
     private budgetRecyclerViewAdapter recycleViewAdapter;
     private List<budget> listBudget = new ArrayList<>();
+    private TextView txtTotal_m;
+    private long sum_m =0;
 
     public BudgetFragment() {
         // Required empty public constructor
@@ -104,6 +108,7 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_budget, container, false);
         myRecyclerView = (RecyclerView) v.findViewById(R.id.recylerBudget);
+        txtTotal_m = v.findViewById(R.id.total_m);
         recycleViewAdapter = new budgetRecyclerViewAdapter();
         recycleViewAdapter.setListbudget(listBudget);
         myRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
@@ -116,6 +121,8 @@ public class BudgetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //txtExpenseBudget = v.findViewById(R.id.txtExpenseBudget);
+
         try {
             bViewModel = new budgetViewModel(getActivity().getApplication());
             bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
@@ -124,8 +131,13 @@ public class BudgetFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<budget> budgets) {
                     if (budgets != null) {
+                        sum_m=0;
                         listBudget = budgets;
+                        for (budget bud : listBudget) {
+                            sum_m+=bud.getBmoney();
+                        }
                         recycleViewAdapter.setListbudget(listBudget);
+                        txtTotal_m.setText(""+sum_m);
                         Toast.makeText(getActivity().getApplication(), "on change: " + budgets.size(), Toast.LENGTH_SHORT).show();
                     }
                 }

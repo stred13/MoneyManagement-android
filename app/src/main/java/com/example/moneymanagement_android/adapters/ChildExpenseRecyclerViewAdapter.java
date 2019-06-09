@@ -21,6 +21,8 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
 
     Context context;
     List<expense> expenseArrayList;
+    private View.OnClickListener itemClicklistener;
+
 
 
     public ChildExpenseRecyclerViewAdapter(Context context,List<expense> expenseList) {
@@ -51,6 +53,10 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
         myViewHolder.txtNote.setText(expense.getNote());
     }
 
+
+    public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
+    }
     @Override
     public int getItemCount() {
         return expenseArrayList.size();
@@ -65,6 +71,8 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
             txtDate = itemView.findViewById(R.id.txtChildExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);
             txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
+            itemView.setOnClickListener(itemClicklistener);
+
             itemView.setTag(this);
         }
     }

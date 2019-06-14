@@ -42,4 +42,8 @@ public class CatExpenseViewModel extends AndroidViewModel {
     public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
         return this.catExpenseRepository.checkCatExpenseByName(name);
     }
+
+    public catexpense getCatExpenseById(int id) throws ExecutionException, InterruptedException {
+        return this.catExpenseRepository.getCatExpenseById(id);
+    }
 }

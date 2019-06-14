@@ -63,7 +63,7 @@ public class ExpenseBudgetFragment extends Fragment {
     RecyclerView exRecyclerView;
     List<expense> listExpense = new ArrayList<>();
     List<catexpense> catexpenseList = new ArrayList<>();
-
+    List<List<expense>> expnsesbyCat = new ArrayList<>();
     expenseViewModel eViewModel;
     CatExpenseViewModel catExpenseViewModel;
     ImageView editThuoc;
@@ -101,7 +101,7 @@ public class ExpenseBudgetFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_expense_budget, container, false);
 
-
+        Toast.makeText(getContext(),"oke",Toast.LENGTH_LONG).show();
         cardViewTongQuanChiTieu = (CardView) v.findViewById(R.id.cardViewTongQuanChiTieu);
         cardViewTongQuanChiTieu.setOnClickListener(onCardViewClickListener);
         exRecyclerView = (RecyclerView) v.findViewById(R.id.ParentRV);
@@ -114,6 +114,7 @@ public class ExpenseBudgetFragment extends Fragment {
         parenExpenseRecyclerViewAdapter = new ParenExpenseRecyclerViewAdapter(getActivity(), catexpenseList, listExpense);
         //getCategoryExpense();
         parenExpenseRecyclerViewAdapter.setCatexpenseList(catexpenseList);
+
         //exRVAdapter.setExpenseBudgetList(listExpense);
         //exRVAdapter.setOnItemClickListener(onItemClickListener);
         exRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -125,24 +126,14 @@ public class ExpenseBudgetFragment extends Fragment {
         return v;
     }
 
-   /*private View.OnClickListener onClickListener = new View.OnClickListener() {
+  /* private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
-            startActivity(infoEx);
-        }
-    };*/
-
-   /* private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            parenExpenseRecyclerViewAdapter.MyViewHolder viewHolder = (parenExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            ParenExpenseRecyclerViewAdapter.MyViewHolder viewHolder = (ParenExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
             int pos = viewHolder.getAdapterPosition();
-            expense e = listExpense.get(pos);
+           // expense e = listExpense.get(pos);
+            Toast.makeText(getContext(), "vtp: " + pos, Toast.LENGTH_SHORT).show();
 
-            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
-            infoEx.putExtra("infoexpense", e);
-            startActivity(infoEx);
         }
     };*/
 
@@ -172,6 +163,7 @@ public class ExpenseBudgetFragment extends Fragment {
                 public void onChanged(@Nullable List<expense> expenses) {
                     listExpense = expenses;
                     parenExpenseRecyclerViewAdapter.setExpenseBudgetList(listExpense);
+
                     totalExpense = 0;
                     for (expense expense : expenses) {
                         totalExpense += expense.getNmoney();

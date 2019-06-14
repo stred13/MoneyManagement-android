@@ -51,26 +51,28 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
         myViewHolder.txtDate.setText(Util.getDayOfWeek(expense.getDcreated()));
         myViewHolder.txtPrice.setText(Util.formatCurrency(expense.getNmoney()));
         myViewHolder.txtNote.setText(expense.getNote());
+        myViewHolder.txtCatex.setText(String.valueOf(expense.getIdcatex()) );
     }
 
 
     public void setOnItemClickListener(View.OnClickListener iClicklistener){
         this.itemClicklistener = iClicklistener;
     }
+
     @Override
     public int getItemCount() {
         return expenseArrayList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView imgItem,txtDate,txtPrice, txtNote;
-
+        private TextView imgItem,txtDate,txtPrice, txtNote, txtCatex;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItem = itemView.findViewById(R.id.imgChildExpenseBudgeImgage);
             txtDate = itemView.findViewById(R.id.txtChildExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);
             txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
+            txtCatex = itemView.findViewById(R.id.txtCatexpense);
             itemView.setOnClickListener(itemClicklistener);
 
             itemView.setTag(this);

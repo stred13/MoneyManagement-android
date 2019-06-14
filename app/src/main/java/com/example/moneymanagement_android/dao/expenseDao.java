@@ -42,6 +42,6 @@ public interface expenseDao {
     @Query("Select * " +
             "from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 day')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s',date(:timeTo,'+1 day')) AS INT)" +
-            "AND idbudget = :id ORDER by dcreated DESC ")
+            "AND idbudget = :id ORDER by dcreated DESC , idcatex")
     LiveData<List<expense>> getExpenseBudgetRangeTime(String timeFrom, String timeTo, int id);
 }

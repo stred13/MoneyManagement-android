@@ -23,6 +23,10 @@ public class CatExpenseRepository {
         this.catExpenseDAO = rtdb.catExpenseDAO();
     }
 
+    public catexpense getCatExpenseById(int id) throws ExecutionException, InterruptedException {
+        return new getgetCatExpenseByIdAsynctask(this.catExpenseDAO).execute(id).get();
+    }
+
     public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
         return new checkCatExpenseByNameAsyncTask(this.catExpenseDAO).execute(name).get();
     }
@@ -135,6 +139,24 @@ public class CatExpenseRepository {
         @Override
         protected void onPostExecute(LiveData<List<catexpense>> listLiveDataData) {
             super.onPostExecute(listLiveDataData);
+        }
+    }
+
+    private static class getgetCatExpenseByIdAsynctask extends AsyncTask<Integer,Void,catexpense>{
+        private CatExpenseDAO catdao;
+
+        public getgetCatExpenseByIdAsynctask(CatExpenseDAO catdao) {
+            this.catdao = catdao;
+        }
+
+        @Override
+        protected catexpense doInBackground(Integer... integers) {
+            return catdao.getCatExpenseById(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(catexpense catexpense) {
+            super.onPostExecute(catexpense);
         }
     }
 }

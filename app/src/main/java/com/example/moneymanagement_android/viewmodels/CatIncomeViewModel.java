@@ -43,4 +43,8 @@ public class CatIncomeViewModel extends AndroidViewModel {
     public boolean checkCatIncomeByName(String name) throws ExecutionException, InterruptedException {
         return this.catIncomeRepository.checkCatIncomeByName(name);
     }
+
+    public catincome getCatIncomeById(int id) throws ExecutionException, InterruptedException {
+        return this.catIncomeRepository.getCatIncomeById(id);
+    }
 }

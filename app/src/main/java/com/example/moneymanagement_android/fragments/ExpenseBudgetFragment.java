@@ -230,15 +230,6 @@ public class ExpenseBudgetFragment extends Fragment {
         }
     };
 
-//    private View.OnClickListener onEditItem = new View.OnClickListener() {
-////        @Override
-////        public void onClick(View v) {
-////            Intent infoBudget = new Intent(getContext().getApplicationContext(), category_update.class);
-////            //infoBudget.putExtra("budget", b);
-////            startActivity(infoBudget);
-////        }
-////    };
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.custom_infbudget_menu, menu);
@@ -424,6 +415,4 @@ public class ExpenseBudgetFragment extends Fragment {
 
         datePickerDialog.show();
     }
-
-
 }

@@ -25,8 +25,8 @@ public class CatExpenseRepository {
     }
 
     public catexpense getCatExpenseById(int id) throws ExecutionException, InterruptedException {
-        Log.d("repo", "getCatExpenseById: "+id);
-        return new getgetCatExpenseByIdAsynctask(this.catExpenseDAO).execute(id).get();
+        //Log.d("repo", "getCatExpenseById: "+id);
+        return new getCatExpenseByIdAsynctask(this.catExpenseDAO).execute(id).get();
     }
 
     public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
@@ -144,18 +144,15 @@ public class CatExpenseRepository {
         }
     }
 
-    private static class getgetCatExpenseByIdAsynctask extends AsyncTask<Integer,Void,catexpense>{
+    private static class getCatExpenseByIdAsynctask extends AsyncTask<Integer,Void,catexpense>{
         private CatExpenseDAO catdao;
 
-        public getgetCatExpenseByIdAsynctask(CatExpenseDAO catdao) {
+        public getCatExpenseByIdAsynctask(CatExpenseDAO catdao) {
             this.catdao = catdao;
         }
 
         @Override
         protected catexpense doInBackground(Integer... integers) {
-            //catexpense car = catdao.getCatExpenseById(integers[0]);
-
-                Log.d("", "onPostExecute: "+integers[0]);
 
             return catdao.getCatExpenseById(integers[0]);
         }

@@ -32,6 +32,6 @@ public interface CatExpenseDAO {
     @Query("SELECT * FROM catexpense where name = :name")
     List<catexpense> getCatExpenseByName(String name);
 
-    @Query("SELECT * FROM catexpense where id = :id")
-    catexpense getCatExpenseById(int id);
+    @Query("SELECT * FROM catexpense where id IN(:ceid)")
+    catexpense getCatExpenseById(int ceid);
 }

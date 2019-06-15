@@ -43,10 +43,7 @@ public class category extends AppCompatActivity {
 
         viewPager.setAdapter(viewPaperAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
     }
-
-
 
     @Override
     public boolean onSupportNavigateUp() {

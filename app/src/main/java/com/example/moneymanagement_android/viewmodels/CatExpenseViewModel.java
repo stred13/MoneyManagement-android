@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
@@ -28,12 +29,12 @@ public class CatExpenseViewModel extends AndroidViewModel {
         catExpenseRepository.insertCatExpense(c);
     }
 
-    public void updateCatExpense(catexpense b) {
-        catExpenseRepository.updateCatExpense(b);
+    public void updateCatExpense(catexpense catex) {
+        catExpenseRepository.updateCatExpense(catex);
     }
 
-    public void deleteCatExpense(catexpense b) {
-        catExpenseRepository.deleteCatExpense(b);
+    public void deleteCatExpense(catexpense catex) {
+        catExpenseRepository.deleteCatExpense(catex);
     }
 
     public LiveData<List<catexpense>> getAllCatExpense() throws ExecutionException, InterruptedException {
@@ -44,6 +45,9 @@ public class CatExpenseViewModel extends AndroidViewModel {
     }
 
     public catexpense getCatExpenseById(int id) throws ExecutionException, InterruptedException {
+        catexpense  c = this.catExpenseRepository.getCatExpenseById(id);
+        if(c==null)
+            Log.d("", "getCatExpenseById: ");
         return this.catExpenseRepository.getCatExpenseById(id);
     }
 }

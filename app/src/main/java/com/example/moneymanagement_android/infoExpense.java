@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,28 +26,35 @@ import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class infoExpense extends AppCompatActivity {
 
     EditText etNmoney;
-    TextView tvCatExpense,textViewChonNgay;
+    TextView tvCatExpense, textViewChonNgay;
     EditText etNote;
     ImageView imCatex;
     LinearLayout lnCategory;
     CardView cardViewChiTieu;
+    Button btnSave;
     CatExpenseViewModel catExpenseViewModel;
+    expenseViewModel expenseVM;
+    Date datecreated;
+
     int kcat = 0;
 
     private catincome catIncome;
     private catexpense catExpense;
     private expense ex;
     private income in;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,17 +74,15 @@ public class infoExpense extends AppCompatActivity {
         lnCategory = (LinearLayout) findViewById(R.id.lnCategory);
         textViewChonNgay = (TextView) findViewById(R.id.textViewChonNgay);
         cardViewChiTieu = (CardView) findViewById(R.id.CalenderChiTieu);
-
-
+        btnSave = (Button) findViewById(R.id.btnSave);
 
         Intent iExpense = getIntent();
         Intent iIncome = getIntent();
-        ex =(expense) iExpense.getSerializableExtra("infoexpense");
+        ex = (expense) iExpense.getSerializableExtra("infoexpense");
         in = (income) iIncome.getSerializableExtra("infoincome");
 
-
-        if(ex!=null){
-            Toast.makeText(this, "chi tiêu "+ex.getNmoney(), Toast.LENGTH_SHORT).show();
+        if (ex != null) {
+            Toast.makeText(this, "chi tiêu " + ex.getNmoney(), Toast.LENGTH_SHORT).show();
             kcat = 0;
             etNmoney.setText(String.valueOf(ex.getNmoney()));
             etNote.setText(String.valueOf(ex.getNote()));
@@ -84,8 +90,10 @@ public class infoExpense extends AppCompatActivity {
             try {
                 catExpenseViewModel = new CatExpenseViewModel(this.getApplication());
                 catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
-                catExpense= catExpenseViewModel.getCatExpenseById(ex.getId());
-                tvCatExpense.setText(catExpense.getName());
+
+                catExpense = (catexpense) catExpenseViewModel.getCatExpenseById(ex.getIdcatex());
+
+                tvCatExpense.setText(catExpense.getName().toString());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 String day = sdf.format(ex.getDcreated());
@@ -94,9 +102,7 @@ public class infoExpense extends AppCompatActivity {
                 sdf = new SimpleDateFormat("yyyy");
                 String year = sdf.format(ex.getDcreated());
 
-                textViewChonNgay.setText(day+"/"+month+"/"+year);
-
-
+                textViewChonNgay.setText(day + "/" + month + "/" + year);
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -104,18 +110,17 @@ public class infoExpense extends AppCompatActivity {
             }
         }
 
-        if(in!=null){
-            Toast.makeText(this, "thu nhập "+in.getNmoney(), Toast.LENGTH_SHORT).show();
+        if (in != null) {
+            Toast.makeText(this, "thu nhập " + in.getNmoney(), Toast.LENGTH_SHORT).show();
             kcat = 1;
         }
 
         lnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("", "onClick: ");
                 Intent intent = new Intent(getApplicationContext(), singleCategory.class);
-                intent.putExtra("singlecat",kcat);
-                startActivityForResult(intent,0);
+                intent.putExtra("singlecat", kcat);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -123,6 +128,33 @@ public class infoExpense extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ChonNgay();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    expenseVM = new expenseViewModel(getApplication());
+                    ex.setNote(etNote.getText().toString());
+                    ex.setNmoney(Long.parseLong(etNmoney.getText().toString()));
+                    ex.setIdcatex(catExpense.getId());
+
+                    datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
+
+                    ex.setDcreated(datecreated);
+                    Log.d("info ex", " onClick: " + ex.getNmoney() + " " + ex.getIdcatex() + " " + ex.getDcreated() + " " + ex.getIdbudget()
+                            + " " + ex.getNote() + " " + ex.getId());
+                    expenseVM.update(ex);
+                    finish();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
@@ -141,23 +173,25 @@ public class infoExpense extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(year,month,dayOfMonth);
+                calendar.set(year, month, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 textViewChonNgay.setText(simpleDateFormat.format(calendar.getTime()));
             }
         }, nam, thang, ngay);
         datePickerDialog.show();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0 && resultCode == Activity.RESULT_OK){
-            catexpense catex = (catexpense) data.getSerializableExtra("catexSelected");
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            catExpense = (catexpense) data.getSerializableExtra("catexSelected");
             //Log.d("", "onActivityResult: "+catex.getName());
-            tvCatExpense.setText(catex.getName().toString());
-            imCatex.setImageResource(catex.getImage());
+            tvCatExpense.setText(catExpense.getName().toString());
+            imCatex.setImageResource(catExpense.getImage());
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

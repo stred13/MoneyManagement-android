@@ -3,6 +3,7 @@ package com.example.moneymanagement_android.repositories;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.moneymanagement_android.dao.CatExpenseDAO;
 import com.example.moneymanagement_android.dao.budgetDao;
@@ -21,6 +22,11 @@ public class CatExpenseRepository {
         roomDatabase rtdb = roomDatabase.getInstance(application);
         catExpenseDAO = rtdb.catExpenseDAO();
         this.catExpenseDAO = rtdb.catExpenseDAO();
+    }
+
+    public catexpense getCatExpenseById(int id) throws ExecutionException, InterruptedException {
+        Log.d("repo", "getCatExpenseById: "+id);
+        return new getgetCatExpenseByIdAsynctask(this.catExpenseDAO).execute(id).get();
     }
 
     public boolean checkCatExpenseByName(String name) throws ExecutionException, InterruptedException {
@@ -135,6 +141,29 @@ public class CatExpenseRepository {
         @Override
         protected void onPostExecute(LiveData<List<catexpense>> listLiveDataData) {
             super.onPostExecute(listLiveDataData);
+        }
+    }
+
+    private static class getgetCatExpenseByIdAsynctask extends AsyncTask<Integer,Void,catexpense>{
+        private CatExpenseDAO catdao;
+
+        public getgetCatExpenseByIdAsynctask(CatExpenseDAO catdao) {
+            this.catdao = catdao;
+        }
+
+        @Override
+        protected catexpense doInBackground(Integer... integers) {
+            //catexpense car = catdao.getCatExpenseById(integers[0]);
+
+                Log.d("", "onPostExecute: "+integers[0]);
+
+            return catdao.getCatExpenseById(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(catexpense catexpense) {
+
+            super.onPostExecute(catexpense);
         }
     }
 }

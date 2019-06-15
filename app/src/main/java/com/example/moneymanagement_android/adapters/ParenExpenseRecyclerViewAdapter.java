@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.moneymanagement_android.R;
 import com.example.moneymanagement_android.infoExpense;
@@ -32,6 +33,7 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
     private ChildExpenseRecyclerViewAdapter childExpenseRecyclerViewAdapter;
     private List<Integer> integerListViTri = new ArrayList<>();
     private int SoLan = 0;
+   // private static List<List<expense>> expensesCat =new ArrayList<>() ;
 
     public ParenExpenseRecyclerViewAdapter(Context context, List<catexpense> catexpenses, List<expense> list) {
         this.context = context;
@@ -43,6 +45,7 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
     public void setCatexpenseList(List<catexpense> catexpenseList) {
         this.catexpenseList.clear();
         this.catexpenseList = catexpenseList;
+
         this.notifyDataSetChanged();
         SoLan = 0;
     }
@@ -64,6 +67,7 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
         return vHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         int vitri = integerListViTri.get(SoLan++);
@@ -78,7 +82,10 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
                 total += expenseTemp.getNmoney();
             }
         }
-        if(expenseChildList.size()!= 0) {
+
+       // Log.d("size", " child: "+catexpense.size());
+
+        if (expenseChildList.size() != 0) {
             myViewHolder.imgItem.setImageResource(catexpense.getImage());
             myViewHolder.txtName.setText(catexpense.getName());
             myViewHolder.txtSoluong.setText(expenseChildList.size() + " giao dịch");
@@ -88,32 +95,35 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             myViewHolder.parentRV.setLayoutManager(layoutManager);
             myViewHolder.parentRV.setHasFixedSize(true);
 
-            childExpenseRecyclerViewAdapter = new ChildExpenseRecyclerViewAdapter(this.context,expenseChildList);
+            childExpenseRecyclerViewAdapter = new ChildExpenseRecyclerViewAdapter(this.context, expenseChildList);
             childExpenseRecyclerViewAdapter.setOnItemClickListener(onClickListener);
             myViewHolder.parentRV.setAdapter(childExpenseRecyclerViewAdapter);
         }
 
     }
 
-    /*private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            expenseRecyclerViewAdapter.MyViewHolder viewHolder = (expenseRecyclerViewAdapter.MyViewHolder) view.getTag();
-            int pos = viewHolder.getAdapterPosition();
-            expense e = listExpense.get(pos);
 
-            Intent infoEx = new Intent(getContext().getApplicationContext(), infoExpense.class);
-            infoEx.putExtra("infoexpense",e);
-            startActivity(infoEx);
-        }
-    };*/
+
+    public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             ChildExpenseRecyclerViewAdapter.MyViewHolder vhd = (ChildExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
             int pos = vhd.getAdapterPosition();
-            expense e = expenseChildList.get(pos);
+            TextView tvcat = vhd.itemView.findViewById(R.id.txtCatexpense);
+            expense e = new expense();
+
+
+            for(int i=0;i<expenseList.size();i++){
+                if(expenseList.get(i).getIdcatex()== Integer.parseInt(tvcat.getText().toString())){
+                    e=expenseList.get(i+pos);
+                    Log.d("i: "+(i+pos), " onClick: "+expenseList.get(i+pos).getId()+" pos: "+expenseList.get(i+pos).getNmoney());
+                    break;
+                }
+            }
 
             Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
             infoEx.putExtra("infoexpense",e);
@@ -121,9 +131,8 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
         }
     };
 
-    /*public void setOnItemClickListener(View.OnClickListener iClicklistener){
-        this.itemClicklistener = iClicklistener;
-    }*/
+
+   
 
     @Override
     public int getItemCount() {
@@ -140,7 +149,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
                 }
             }
         }
-        Log.d("AAAA", "size catepense List" + this.catexpenseList.size());
         return size;
     }
 
@@ -157,7 +165,7 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             txtSoluong = itemView.findViewById(R.id.txtParenExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtParenExpenseBudgeMoney);
             parentRV = itemView.findViewById(R.id.childRV);
-           // itemView.setOnClickListener(itemClicklistener);
+            itemView.setOnClickListener(itemClicklistener);
 
             itemView.setTag(this);
         }

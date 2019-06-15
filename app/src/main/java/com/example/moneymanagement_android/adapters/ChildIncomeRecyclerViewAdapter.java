@@ -16,6 +16,8 @@ import java.util.List;
 
 public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIncomeRecyclerViewAdapter.MyViewHolder> {
     List<income> incomeArrayList;
+    private View.OnClickListener itemClicklistener;
+
 
     public ChildIncomeRecyclerViewAdapter(List<income> incomeArrayList) {
         this.incomeArrayList = incomeArrayList;
@@ -39,6 +41,12 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
         myViewHolder.txtDate.setText(Util.getDayOfWeek(income.getDcreated()));
         myViewHolder.txtPrice.setText(Util.formatCurrency(income.getNmoney()));
         myViewHolder.txtNote.setText(income.getNote());
+        myViewHolder.txtCatex.setText(String.valueOf(income.getIdcatin()));
+
+    }
+
+    public void setOnItemClickListener(View.OnClickListener iClicklistener){
+        this.itemClicklistener = iClicklistener;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView imgItem, txtDate, txtPrice, txtNote;
+        private TextView imgItem, txtDate, txtPrice, txtNote,txtCatex;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +63,10 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
             txtDate = itemView.findViewById(R.id.txtChildExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);
             txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
+            txtCatex = itemView.findViewById(R.id.txtCatexpense);
+
+            itemView.setOnClickListener(itemClicklistener);
+
             itemView.setTag(this);
         }
     }

@@ -118,7 +118,6 @@ public class expense_creating extends AppCompatActivity {
             }
         });
 
-
         btnAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +130,6 @@ public class expense_creating extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Cần nhập số tiền",Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 Date dateObj = new Date();
                 try {
                     String dateStr = textViewChonNgay.getText().toString();
@@ -141,8 +139,6 @@ public class expense_creating extends AppCompatActivity {
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
-
-
                 int loai;
                 if(flash == 1) {
                     loai = catincome.getId();
@@ -172,7 +168,6 @@ public class expense_creating extends AppCompatActivity {
                     e.setIdcatex(loai);
                     e.setNmoney(nmoney);
                     e.setNote(note);
-
                     long bmoney = b.getBmoney()-e.getNmoney();
                     b.setBmoney(bmoney);
                     bViewModel.updateBudget(b);
@@ -228,7 +223,6 @@ public class expense_creating extends AppCompatActivity {
         int ngay = calendar.get(Calendar.DATE);
         int thang = calendar.get(Calendar.MONTH);
         int nam = calendar.get(Calendar.YEAR);
-
         textViewChonNgay.setText(ngay + "/" + (thang + 1) + "/" + nam);
     }
     @Override

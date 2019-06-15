@@ -76,7 +76,8 @@ public class ExpenseCategoryFragment extends Fragment {
         @Override
         public void onClick(View v) {
             ManageExpenseRecyclerViewAdapter.MyViewHolder viewHolder = (ManageExpenseRecyclerViewAdapter.MyViewHolder) v.getTag();
-            int pos = viewHolder.getAdapterPosition();catexpense b = listCatExpense.get(pos);
+            int pos = viewHolder.getAdapterPosition();
+            catexpense b = listCatExpense.get(pos);
 
             Intent intent = new Intent();
             intent.putExtra("category","catexpense");

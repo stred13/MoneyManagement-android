@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import com.example.moneymanagement_android.converters.dateConverters;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(indices = {@Index("idbudget"),@Index("idcatin")},tableName = "income", foreignKeys = {
@@ -24,7 +25,7 @@ import java.util.Date;
                 onUpdate = ForeignKey.CASCADE,
                 onDelete = ForeignKey.CASCADE)
 })
-public class income {
+public class income implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 

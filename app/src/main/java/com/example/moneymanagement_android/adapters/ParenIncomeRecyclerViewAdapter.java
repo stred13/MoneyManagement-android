@@ -1,6 +1,7 @@
 package com.example.moneymanagement_android.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
+import com.example.moneymanagement_android.infoExpense;
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
@@ -75,7 +77,7 @@ public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIn
                 total += incomeList.get(j).getNmoney();
             }
         }
-        if(incomeChildList.size()!= 0) {
+        if (incomeChildList.size() != 0) {
             myViewHolder.imgItem.setImageResource(catincome.getImage());
             myViewHolder.txtName.setText(catincome.getName());
             myViewHolder.txtSoluong.setText(incomeChildList.size() + " giao dịch");
@@ -86,9 +88,35 @@ public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIn
             myViewHolder.parentRV.setHasFixedSize(true);
 
             childIncomeRecyclerViewAdapter = new ChildIncomeRecyclerViewAdapter(incomeChildList);
+            childIncomeRecyclerViewAdapter.setOnItemClickListener(onClickListener);
             myViewHolder.parentRV.setAdapter(childIncomeRecyclerViewAdapter);
         }
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ChildIncomeRecyclerViewAdapter.MyViewHolder vhd = (ChildIncomeRecyclerViewAdapter.MyViewHolder) view.getTag();
+            int pos = vhd.getAdapterPosition();
+            TextView tvcat =(TextView) vhd.itemView.findViewById(R.id.txtCatexpense);
+            income in = new income();
+             for(int i=0;i<incomeList.size();i++){
+                if(incomeList.get(i).getIdcatin()== Integer.parseInt(tvcat.getText().toString())){
+                    in=incomeList.get(i+pos);
+                    Log.d("i: "+(i+pos), " onClick: "+incomeList.get(i+pos).getId()+" pos: "+incomeList.get(i+pos).getNmoney());
+                    break;
+                }
+            }
+
+            Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
+            infoEx.putExtra("infoincome",in);
+            context.startActivity(infoEx);
+
+           /* for(int i=0;i<incomeList.size();i++){
+
+            }*/
+        }
+    };
 
     @Override
     public int getItemCount() {

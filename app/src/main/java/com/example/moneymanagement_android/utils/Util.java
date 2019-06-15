@@ -56,7 +56,6 @@ public class Util {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
         NumberFormat nf2 = NumberFormat.getInstance(Locale.ENGLISH);
         ((DecimalFormat) nf2).applyPattern("###,###.###");
 

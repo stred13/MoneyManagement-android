@@ -24,6 +24,8 @@ public class budgetRepository {
         this.lBudget = bdDao.getListBudget();
     }
 
+
+
     public LiveData<List<budget>> getAllbudget() throws ExecutionException, InterruptedException {
         return new getLiveListBudgetAsynctask(this.bdDao).execute().get();
     }

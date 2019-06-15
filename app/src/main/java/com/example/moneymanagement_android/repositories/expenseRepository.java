@@ -65,6 +65,24 @@ public class expenseRepository {
         new deleteExpenseAsyncTask(this.exDao).execute(e);
     }
 
+    public void update(expense e){
+        new updateExpenseAsynctask(this.exDao).execute(e);
+    }
+
+    private static class updateExpenseAsynctask extends AsyncTask<expense,Void,Void>{
+        private expenseDao exDao;
+
+        public updateExpenseAsynctask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected Void doInBackground(expense... expenses) {
+            exDao.update(expenses[0]);
+            return null;
+        }
+    }
+
     private static class insertExpenseAsyncTask extends AsyncTask<expense,Void,Void> {
         private expenseDao exDao;
 

@@ -33,6 +33,11 @@ public class expenseViewModel extends AndroidViewModel {
         eRepo.delelte(e);
     }
 
+    public void update(expense e){
+        Log.d("", "update: "+e.getId()+" "+e.getNmoney());
+        eRepo.update(e);
+    }
+
     public LiveData<List<expense>> getAllExpense() throws ExecutionException, InterruptedException {
         return eRepo.getAllExpense();
     }

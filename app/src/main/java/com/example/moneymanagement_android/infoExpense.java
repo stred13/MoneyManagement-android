@@ -40,13 +40,14 @@ public class infoExpense extends AppCompatActivity {
     EditText etNmoney;
     TextView tvCatExpense, textViewChonNgay;
     EditText etNote;
-    ImageView imCatex;
+    ImageView imCatex,btndelete;
     LinearLayout lnCategory;
     CardView cardViewChiTieu;
     Button btnSave;
     CatExpenseViewModel catExpenseViewModel;
     expenseViewModel expenseVM;
     Date datecreated;
+
 
     int kcat = 0;
 
@@ -57,6 +58,7 @@ public class infoExpense extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_expense);
 
@@ -75,6 +77,7 @@ public class infoExpense extends AppCompatActivity {
         textViewChonNgay = (TextView) findViewById(R.id.textViewChonNgay);
         cardViewChiTieu = (CardView) findViewById(R.id.CalenderChiTieu);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btndelete = (ImageView) findViewById(R.id.btndelExpense);
 
         Intent iExpense = getIntent();
         Intent iIncome = getIntent();
@@ -88,6 +91,8 @@ public class infoExpense extends AppCompatActivity {
             etNote.setText(String.valueOf(ex.getNote()));
 
             try {
+                expenseVM = new expenseViewModel(getApplication());
+
                 catExpenseViewModel = new CatExpenseViewModel(this.getApplication());
                 catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
 
@@ -131,11 +136,18 @@ public class infoExpense extends AppCompatActivity {
             }
         });
 
+        btndelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expenseVM.delete(ex);
+                finish();
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    expenseVM = new expenseViewModel(getApplication());
                     ex.setNote(etNote.getText().toString());
                     ex.setNmoney(Long.parseLong(etNmoney.getText().toString()));
                     ex.setIdcatex(catExpense.getId());
@@ -147,14 +159,9 @@ public class infoExpense extends AppCompatActivity {
                             + " " + ex.getNote() + " " + ex.getId());
                     expenseVM.update(ex);
                     finish();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }

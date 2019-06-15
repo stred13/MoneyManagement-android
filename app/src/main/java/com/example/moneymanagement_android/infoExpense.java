@@ -162,7 +162,10 @@ public class infoExpense extends AppCompatActivity {
         btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expenseVM.delete(ex);
+                if(ex!=null)
+                    expenseVM.delete(ex);
+                if(in!=null)
+                    incomeVM.delete(in);
                 finish();
             }
         });

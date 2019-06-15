@@ -1,5 +1,6 @@
 package com.example.moneymanagement_android.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,15 +16,24 @@ import com.example.moneymanagement_android.utils.Util;
 import java.util.List;
 
 public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIncomeRecyclerViewAdapter.MyViewHolder> {
+    Context context;
     List<income> incomeArrayList;
     private View.OnClickListener itemClicklistener;
 
+    public ChildIncomeRecyclerViewAdapter(Context context, List<income> incomeArrayList) {
+        this.context = context;
+        this.incomeArrayList = incomeArrayList;
+    }
 
     public ChildIncomeRecyclerViewAdapter(List<income> incomeArrayList) {
         this.incomeArrayList = incomeArrayList;
         this.notifyDataSetChanged();
     }
 
+    public void setListIncome(List<income> l){
+        this.incomeArrayList=l;
+        notifyDataSetChanged();;
+    }
 
     @NonNull
     @Override
@@ -42,7 +52,6 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
         myViewHolder.txtPrice.setText(Util.formatCurrency(income.getNmoney()));
         myViewHolder.txtNote.setText(income.getNote());
         myViewHolder.txtCatex.setText(String.valueOf(income.getIdcatin()));
-
     }
 
     public void setOnItemClickListener(View.OnClickListener iClicklistener){
@@ -56,7 +65,6 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView imgItem, txtDate, txtPrice, txtNote,txtCatex;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItem = itemView.findViewById(R.id.imgChildExpenseBudgeImgage);
@@ -64,9 +72,7 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
             txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);
             txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
             txtCatex = itemView.findViewById(R.id.txtCatexpense);
-
             itemView.setOnClickListener(itemClicklistener);
-
             itemView.setTag(this);
         }
     }

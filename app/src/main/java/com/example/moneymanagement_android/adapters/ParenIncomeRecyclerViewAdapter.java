@@ -98,23 +98,19 @@ public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIn
         public void onClick(View view) {
             ChildIncomeRecyclerViewAdapter.MyViewHolder vhd = (ChildIncomeRecyclerViewAdapter.MyViewHolder) view.getTag();
             int pos = vhd.getAdapterPosition();
-            TextView tvcat =(TextView) vhd.itemView.findViewById(R.id.txtCatexpense);
+            TextView tvcat = (TextView) vhd.itemView.findViewById(R.id.txtCatexpense);
             income in = new income();
-             for(int i=0;i<incomeList.size();i++){
-                if(incomeList.get(i).getIdcatin()== Integer.parseInt(tvcat.getText().toString())){
-                    in=incomeList.get(i+pos);
-                    Log.d("i: "+(i+pos), " onClick: "+incomeList.get(i+pos).getId()+" pos: "+incomeList.get(i+pos).getNmoney());
+
+            for (int i = 0; i < incomeList.size(); i++) {
+                if (incomeList.get(i).getIdcatin() == Integer.parseInt(tvcat.getText().toString())) {
+                    in = incomeList.get(i + pos);
+                    Log.d("i: " + (i + pos), " onClick: " + incomeList.get(i + pos).getId() + " pos: " + incomeList.get(i + pos).getNmoney());
                     break;
                 }
             }
-
             Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
-            infoEx.putExtra("infoincome",in);
+            infoEx.putExtra("infoincome", in);
             context.startActivity(infoEx);
-
-           /* for(int i=0;i<incomeList.size();i++){
-
-            }*/
         }
     };
 
@@ -140,7 +136,6 @@ public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIn
         private ImageView imgItem;
         private TextView txtName, txtSoluong, txtPrice;
         private RecyclerView parentRV;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItem = itemView.findViewById(R.id.imgParenExpenseBudgeImgage);

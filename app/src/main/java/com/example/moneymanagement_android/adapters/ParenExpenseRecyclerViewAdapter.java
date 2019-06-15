@@ -45,7 +45,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
     public void setCatexpenseList(List<catexpense> catexpenseList) {
         this.catexpenseList.clear();
         this.catexpenseList = catexpenseList;
-
         this.notifyDataSetChanged();
         SoLan = 0;
     }
@@ -57,7 +56,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
         SoLan = 0;
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -66,7 +64,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
         MyViewHolder vHolder = new MyViewHolder(v);
         return vHolder;
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
@@ -82,8 +79,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
                 total += expenseTemp.getNmoney();
             }
         }
-
-       // Log.d("size", " child: "+catexpense.size());
 
         if (expenseChildList.size() != 0) {
             myViewHolder.imgItem.setImageResource(catexpense.getImage());
@@ -116,7 +111,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             TextView tvcat = vhd.itemView.findViewById(R.id.txtCatexpense);
             expense e = new expense();
 
-
             for(int i=0;i<expenseList.size();i++){
                 if(expenseList.get(i).getIdcatex()== Integer.parseInt(tvcat.getText().toString())){
                     e=expenseList.get(i+pos);
@@ -124,15 +118,11 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
                     break;
                 }
             }
-
             Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
             infoEx.putExtra("infoexpense",e);
             context.startActivity(infoEx);
         }
     };
-
-
-   
 
     @Override
     public int getItemCount() {
@@ -152,12 +142,10 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
         return size;
     }
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgItem;
         private TextView txtName, txtSoluong, txtPrice;
         private RecyclerView parentRV;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItem = itemView.findViewById(R.id.imgParenExpenseBudgeImgage);
@@ -166,7 +154,6 @@ public class ParenExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ParenE
             txtPrice = itemView.findViewById(R.id.txtParenExpenseBudgeMoney);
             parentRV = itemView.findViewById(R.id.childRV);
             itemView.setOnClickListener(itemClicklistener);
-
             itemView.setTag(this);
         }
     }

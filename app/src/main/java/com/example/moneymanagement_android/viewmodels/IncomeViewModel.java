@@ -23,8 +23,12 @@ public class IncomeViewModel extends AndroidViewModel {
         incomeRepository = new IncomeRepository(application);
     }
 
-    public void insert(income e){
-        incomeRepository.insert(e);
+    public void insert(income in){
+        incomeRepository.insert(in);
+    }
+
+    public void update(income in ){
+        incomeRepository.update(in);
     }
 
     public void delete(income e){

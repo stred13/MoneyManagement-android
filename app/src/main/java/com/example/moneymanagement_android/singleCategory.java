@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.moneymanagement_android.adapters.SingleCatExpenseRecyclerAdapter;
+import com.example.moneymanagement_android.adapters.SingleCatIncomeRecyclerAdapter;
 import com.example.moneymanagement_android.models.catexpense;
+import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 
@@ -27,8 +29,11 @@ public class singleCategory extends AppCompatActivity {
     RecyclerView singleCatRecyclerView;
     CatExpenseViewModel catExpenseVM;
     CatIncomeViewModel catIncomeVM;
-    SingleCatExpenseRecyclerAdapter sgCatxpenseAdapter;
+    SingleCatExpenseRecyclerAdapter sgCatexpenseAdapter;
+    SingleCatIncomeRecyclerAdapter sgCatincomeAdapter;
+
     List<catexpense> catexpenseList = new ArrayList<>();
+    List<catincome> catincomeList = new ArrayList<>();
     int kcat;
 
     @Override
@@ -42,10 +47,10 @@ public class singleCategory extends AppCompatActivity {
         if(kcat==0){
             singleCatRecyclerView = (RecyclerView) findViewById(R.id.singlecat);
             singleCatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            sgCatxpenseAdapter = new SingleCatExpenseRecyclerAdapter(this.getApplicationContext());
-            sgCatxpenseAdapter.setCatExpenses(catexpenseList);
-            sgCatxpenseAdapter.setOnItemCatClickListener(onClickListener);
-            singleCatRecyclerView.setAdapter(sgCatxpenseAdapter);
+            sgCatexpenseAdapter = new SingleCatExpenseRecyclerAdapter(this.getApplicationContext());
+            sgCatexpenseAdapter.setCatExpenses(catexpenseList);
+            sgCatexpenseAdapter.setOnItemCatClickListener(onClickListener);
+            singleCatRecyclerView.setAdapter(sgCatexpenseAdapter);
 
             try {
                 catExpenseVM = new CatExpenseViewModel(this.getApplication());
@@ -55,10 +60,36 @@ public class singleCategory extends AppCompatActivity {
                     public void onChanged(@Nullable List<catexpense> catexpenses) {
                         if(catexpenses!= null){
                             catexpenseList = catexpenses;
-                            sgCatxpenseAdapter.setCatExpenses(catexpenseList);
+                            sgCatexpenseAdapter.setCatExpenses(catexpenseList);
                         }
                     }
                 });
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if(kcat ==1){
+            singleCatRecyclerView = (RecyclerView) findViewById(R.id.singlecat);
+            singleCatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            sgCatincomeAdapter = new SingleCatIncomeRecyclerAdapter(this.getApplicationContext());
+            sgCatincomeAdapter.setCatIncomes(catincomeList);
+            sgCatincomeAdapter.setOnItemCatClickListener(onClickListener);
+            singleCatRecyclerView.setAdapter(sgCatincomeAdapter);
+
+            try {
+                catIncomeVM = new CatIncomeViewModel(this.getApplication());
+                catIncomeVM = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+               catIncomeVM.getAllCatIncome().observe(this, new Observer<List<catincome>>() {
+                   @Override
+                   public void onChanged(@Nullable List<catincome> catincomes) {
+                       if(catincomes!=null){
+                            catincomeList = catincomes;
+                            sgCatincomeAdapter.setCatIncomes(catincomeList);
+                       }
+                   }
+               });
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -74,13 +105,19 @@ public class singleCategory extends AppCompatActivity {
                 SingleCatExpenseRecyclerAdapter.MyViewHolder viewHolder = (SingleCatExpenseRecyclerAdapter.MyViewHolder) view.getTag();
                 int pos = viewHolder.getAdapterPosition();
 
-                Log.d("pos cat", "onClick: "+catexpenseList.get(pos).getName());
-
                 Intent intent = new Intent(getApplication(),infoExpense.class);
                 intent.putExtra("catexSelected",catexpenseList.get(pos));
                 setResult(Activity.RESULT_OK,intent);
+                finish();
             }
-            finish();
+            if(kcat==1){
+                SingleCatIncomeRecyclerAdapter.MyViewHolder viewHolder = (SingleCatIncomeRecyclerAdapter.MyViewHolder) view.getTag();
+                int pos = viewHolder.getAdapterPosition();
+                Intent intent = new Intent(getApplication(),infoExpense.class);
+                intent.putExtra("catinSelected",catincomeList.get(pos));
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+            }
         }
     };
 }

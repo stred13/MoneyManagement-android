@@ -23,8 +23,6 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
     List<expense> expenseArrayList;
     private View.OnClickListener itemClicklistener;
 
-
-
     public ChildExpenseRecyclerViewAdapter(Context context,List<expense> expenseList) {
         this.expenseArrayList = expenseList;
         this.context = context;
@@ -54,7 +52,6 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
         myViewHolder.txtCatex.setText(String.valueOf(expense.getIdcatex()) );
     }
 
-
     public void setOnItemClickListener(View.OnClickListener iClicklistener){
         this.itemClicklistener = iClicklistener;
     }
@@ -74,7 +71,6 @@ public class ChildExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ChildE
             txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
             txtCatex = itemView.findViewById(R.id.txtCatexpense);
             itemView.setOnClickListener(itemClicklistener);
-
             itemView.setTag(this);
         }
     }

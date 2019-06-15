@@ -30,4 +30,7 @@ public interface CatIncomeDAO {
 
     @Query("SELECT * FROM catincome where name = :name")
     List<catincome> getCatIncomeByName(String name);
+
+    @Query("SELECT * FROM catincome WHERE id IN(:cinid)")
+    catincome getCatIncomeById(int cinid);
 }

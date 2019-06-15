@@ -20,12 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.moneymanagement_android.adapters.incomeRecyclerViewAdapter;
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
 import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
 import java.text.ParseException;
@@ -45,7 +47,9 @@ public class infoExpense extends AppCompatActivity {
     CardView cardViewChiTieu;
     Button btnSave;
     CatExpenseViewModel catExpenseViewModel;
+    CatIncomeViewModel catIncomeViewModel;
     expenseViewModel expenseVM;
+    IncomeViewModel incomeVM;
     Date datecreated;
 
 
@@ -89,15 +93,11 @@ public class infoExpense extends AppCompatActivity {
             kcat = 0;
             etNmoney.setText(String.valueOf(ex.getNmoney()));
             etNote.setText(String.valueOf(ex.getNote()));
-
             try {
                 expenseVM = new expenseViewModel(getApplication());
-
                 catExpenseViewModel = new CatExpenseViewModel(this.getApplication());
                 catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
-
                 catExpense = (catexpense) catExpenseViewModel.getCatExpenseById(ex.getIdcatex());
-
                 tvCatExpense.setText(catExpense.getName().toString());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd");
@@ -114,18 +114,41 @@ public class infoExpense extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         if (in != null) {
             Toast.makeText(this, "thu nhập " + in.getNmoney(), Toast.LENGTH_SHORT).show();
             kcat = 1;
+            etNmoney.setText(String.valueOf(in.getNmoney()));
+            etNote.setText(String.valueOf(in.getNote()));
+            try {
+                incomeVM = new IncomeViewModel(getApplication());
+                catIncomeViewModel = new CatIncomeViewModel(getApplication());
+                catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
+                catIncome = (catincome) catIncomeViewModel.getCatIncomeById(in.getIdcatin());
+                tvCatExpense.setText(catIncome.getName().toString());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd");
+                String day = sdf.format(in.getDcreated());
+                sdf = new SimpleDateFormat("MM");
+                String month = sdf.format(in.getDcreated());
+                sdf = new SimpleDateFormat("yyyy");
+                String year = sdf.format(in.getDcreated());
+
+                textViewChonNgay.setText(day + "/" + month + "/" + year);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
         lnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), singleCategory.class);
                 intent.putExtra("singlecat", kcat);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, kcat);
             }
         });
 
@@ -147,21 +170,39 @@ public class infoExpense extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    ex.setNote(etNote.getText().toString());
-                    ex.setNmoney(Long.parseLong(etNmoney.getText().toString()));
-                    ex.setIdcatex(catExpense.getId());
+                if(ex!=null){
+                    try {
+                        ex.setNote(etNote.getText().toString());
+                        ex.setNmoney(Long.parseLong(etNmoney.getText().toString()));
+                        ex.setIdcatex(catExpense.getId());
 
-                    datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
+                        datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
 
-                    ex.setDcreated(datecreated);
-                    Log.d("info ex", " onClick: " + ex.getNmoney() + " " + ex.getIdcatex() + " " + ex.getDcreated() + " " + ex.getIdbudget()
-                            + " " + ex.getNote() + " " + ex.getId());
-                    expenseVM.update(ex);
-                    finish();
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                        ex.setDcreated(datecreated);
+                   /* Log.d("info ex", " onClick: " + ex.getNmoney() + " " + ex.getIdcatex() + " " + ex.getDcreated() + " " + ex.getIdbudget()
+                            + " " + ex.getNote() + " " + ex.getId());*/
+                        expenseVM.update(ex);
+                        finish();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
+                if(in!=null){
+                    try {
+                        in.setNote(etNote.getText().toString());
+                        in.setNmoney(Long.parseLong(etNmoney.getText().toString()));
+                        in.setIdcatin(catIncome.getId());
+
+                        datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
+
+                        in.setDcreated(datecreated);
+                        incomeVM.update(in);
+                        finish();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
         });
     }
@@ -196,6 +237,11 @@ public class infoExpense extends AppCompatActivity {
             //Log.d("", "onActivityResult: "+catex.getName());
             tvCatExpense.setText(catExpense.getName().toString());
             imCatex.setImageResource(catExpense.getImage());
+        }
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            catIncome = (catincome) data.getSerializableExtra("catinSelected");
+            tvCatExpense.setText(catIncome.getName().toString());
+            imCatex.setImageResource(catIncome.getImage());
         }
     }
 

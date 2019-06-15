@@ -10,31 +10,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moneymanagement_android.R;
-import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 
 import java.util.List;
 
-public class SingleCatExpenseRecyclerAdapter extends RecyclerView.Adapter<SingleCatExpenseRecyclerAdapter.MyViewHolder> {
+public class SingleCatIncomeRecyclerAdapter extends RecyclerView.Adapter<SingleCatIncomeRecyclerAdapter.MyViewHolder> {
     private Context context;
-    private List<catexpense> catExpenses;
+    private List<catincome> catIncomes;
     private View.OnClickListener onItemCatClick;
 
-    public SingleCatExpenseRecyclerAdapter(Context context) {
+    public SingleCatIncomeRecyclerAdapter(Context context, List<catincome> catIncomes) {
         this.context = context;
+        this.catIncomes = catIncomes;
     }
 
-    public SingleCatExpenseRecyclerAdapter(Context context, List<catexpense> catExpenses) {
+    public SingleCatIncomeRecyclerAdapter(Context context) {
         this.context = context;
-        this.catExpenses = catExpenses;
     }
 
     public void setOnItemCatClickListener(View.OnClickListener iClicklistener){
         this.onItemCatClick = iClicklistener;
     }
 
-    public void setCatExpenses(List<catexpense> catex){
-        this.catExpenses=catex;
+    public void setCatIncomes(List<catincome> catins){
+        this.catIncomes = catins;
         notifyDataSetChanged();
     }
 
@@ -42,29 +41,29 @@ public class SingleCatExpenseRecyclerAdapter extends RecyclerView.Adapter<Single
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v;
-        v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_manage_expense, viewGroup, false);
+        v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_manage_income, viewGroup, false);
         MyViewHolder vHolder = new MyViewHolder(v);
         return vHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.img_Icon.setImageResource(catExpenses.get(i).getImage());
-        myViewHolder.tv_NameExpense.setText(catExpenses.get(i).getName());
+        myViewHolder.img_Icon.setImageResource(catIncomes.get(i).getImage());
+        myViewHolder.tv_NameIncome.setText(catIncomes.get(i).getName());
     }
 
     @Override
     public int getItemCount() {
-        return catExpenses.size();
+        return catIncomes.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_Icon;
-        private TextView tv_NameExpense;
+        private TextView tv_NameIncome;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             img_Icon = (ImageView) itemView.findViewById(R.id.imgExIn);
-            tv_NameExpense = (TextView) itemView.findViewById(R.id.tvNameExIn);
+            tv_NameIncome = (TextView) itemView.findViewById(R.id.tvNameExIn);
             itemView.setTag(this);
             itemView.setOnClickListener(onItemCatClick);
         }

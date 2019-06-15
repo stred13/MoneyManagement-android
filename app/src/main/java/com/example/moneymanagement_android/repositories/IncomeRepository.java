@@ -24,6 +24,10 @@ public class IncomeRepository {
         this.incomeDao = rdtb.icDao();
     }
 
+    public void update(income in){
+        new updateIncomeAsynctask(this.incomeDao).execute(in);
+    }
+
     public LiveData<List<income>> getAllIncome() throws ExecutionException, InterruptedException {
         return new getAllIncomeAsynctask(this.incomeDao).execute().get();
     }
@@ -80,6 +84,20 @@ public class IncomeRepository {
 
     public void delete(income e) {
         new deleteIncomeAsyncTask(this.incomeDao).execute(e);
+    }
+
+    private static class updateIncomeAsynctask extends AsyncTask<income,Void,Void>{
+        private incomeDao inDao;
+
+        public updateIncomeAsynctask(incomeDao inDao) {
+            this.inDao = inDao;
+        }
+
+        @Override
+        protected Void doInBackground(income... incomes) {
+            inDao.update(incomes[0]);
+            return null;
+        }
     }
 
     private static class insertIncomeAsyncTask extends AsyncTask<income, Void, Void> {

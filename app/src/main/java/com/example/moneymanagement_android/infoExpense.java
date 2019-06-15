@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.moneymanagement_android.adapters.incomeRecyclerViewAdapter;
+import com.example.moneymanagement_android.models.budget;
 import com.example.moneymanagement_android.models.catexpense;
 import com.example.moneymanagement_android.models.catincome;
 import com.example.moneymanagement_android.models.expense;
@@ -28,6 +29,7 @@ import com.example.moneymanagement_android.models.income;
 import com.example.moneymanagement_android.viewmodels.CatExpenseViewModel;
 import com.example.moneymanagement_android.viewmodels.CatIncomeViewModel;
 import com.example.moneymanagement_android.viewmodels.IncomeViewModel;
+import com.example.moneymanagement_android.viewmodels.budgetViewModel;
 import com.example.moneymanagement_android.viewmodels.expenseViewModel;
 
 import java.text.ParseException;
@@ -50,6 +52,7 @@ public class infoExpense extends AppCompatActivity {
     CatIncomeViewModel catIncomeViewModel;
     expenseViewModel expenseVM;
     IncomeViewModel incomeVM;
+    budgetViewModel bViewModel;
     Date datecreated;
 
 
@@ -83,10 +86,14 @@ public class infoExpense extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnSave);
         btndelete = (ImageView) findViewById(R.id.btndelExpense);
 
+        final budget b = infobudget.b;
+
         Intent iExpense = getIntent();
         Intent iIncome = getIntent();
         ex = (expense) iExpense.getSerializableExtra("infoexpense");
         in = (income) iIncome.getSerializableExtra("infoincome");
+
+        bViewModel = ViewModelProviders.of(this).get(budgetViewModel.class);
 
         if (ex != null) {
             Toast.makeText(this, "chi tiêu " + ex.getNmoney(), Toast.LENGTH_SHORT).show();
@@ -145,7 +152,6 @@ public class infoExpense extends AppCompatActivity {
         lnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(), singleCategory.class);
                 intent.putExtra("singlecat", kcat);
                 startActivityForResult(intent, kcat);
@@ -162,10 +168,17 @@ public class infoExpense extends AppCompatActivity {
         btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ex!=null)
+                if(ex!=null){
+                    b.setBmoney(b.getBmoney()+ex.getNmoney());
+                    bViewModel.updateBudget(b);
                     expenseVM.delete(ex);
-                if(in!=null)
+                }
+                if(in!=null){
+                    b.setBmoney(b.getBmoney()-in.getNmoney());
+                    bViewModel.updateBudget(b);
                     incomeVM.delete(in);
+                }
+
                 finish();
             }
         });
@@ -173,17 +186,22 @@ public class infoExpense extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                long bemoney = 0;
+                long afmoney =0;
                 if(ex!=null){
                     try {
+                        bemoney = ex.getNmoney();
+                        afmoney = Long.parseLong(etNmoney.getText().toString());
                         ex.setNote(etNote.getText().toString());
                         ex.setNmoney(Long.parseLong(etNmoney.getText().toString()));
                         ex.setIdcatex(catExpense.getId());
-
                         datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
 
                         ex.setDcreated(datecreated);
-                   /* Log.d("info ex", " onClick: " + ex.getNmoney() + " " + ex.getIdcatex() + " " + ex.getDcreated() + " " + ex.getIdbudget()
-                            + " " + ex.getNote() + " " + ex.getId());*/
+
+                        b.setBmoney(b.getBmoney()+bemoney-afmoney);
+                        bViewModel.updateBudget(b);
+
                         expenseVM.update(ex);
                         finish();
                     } catch (ParseException e) {
@@ -192,6 +210,8 @@ public class infoExpense extends AppCompatActivity {
                 }
                 if(in!=null){
                     try {
+                        bemoney = in.getNmoney();
+                        afmoney = Long.parseLong(etNmoney.getText().toString());
                         in.setNote(etNote.getText().toString());
                         in.setNmoney(Long.parseLong(etNmoney.getText().toString()));
                         in.setIdcatin(catIncome.getId());
@@ -199,6 +219,9 @@ public class infoExpense extends AppCompatActivity {
                         datecreated = new SimpleDateFormat("dd/MM/yyyy").parse(textViewChonNgay.getText().toString());
 
                         in.setDcreated(datecreated);
+                        b.setBmoney(b.getBmoney()-bemoney+afmoney);
+                        bViewModel.updateBudget(b);
+
                         incomeVM.update(in);
                         finish();
                     } catch (ParseException e) {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".fragments.ExpenseCategoryFragment">
+    tools:context="com.nhom10.moneymanagement_android.fragments.ExpenseCategoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView

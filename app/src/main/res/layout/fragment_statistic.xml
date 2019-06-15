@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/LightGray"
     android:orientation="vertical"
-    tools:context=".fragments.StatisticFragment">
+    tools:context="com.nhom10.moneymanagement_android.fragments.StatisticFragment">
 
     <ScrollView
         android:layout_width="match_parent"

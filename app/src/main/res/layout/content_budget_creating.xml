@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="4"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".budget_creating"
+    tools:context="com.nhom10.moneymanagement_android.budget_creating"
     tools:showIn="@layout/activity_budget_creating">
 
 

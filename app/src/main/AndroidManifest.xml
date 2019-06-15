@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moneymanagement_android">
+    package="com.nhom10.moneymanagement_android">
 
     <application
         android:allowBackup="true"
@@ -9,34 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".singleCategory"></activity>
-        <activity android:name=".infoIncome" />
-        <activity android:name=".infoExpense" />
-        <activity android:name=".future_amounts" />
-        <activity android:name=".category_settings" />
-        <activity android:name=".option_icon" />
-        <activity android:name=".category_add" />
-        <activity android:name=".category_edit" />
-        <activity android:name=".category" />
-        <activity android:name=".future_amounts" />
-        <activity android:name=".category_update" />
-        <activity android:name=".activity_income" />
-        <activity android:name=".activity_expense" />
-        <activity android:name=".budget_update" />
+        <activity android:name="com.nhom10.moneymanagement_android.singleCategory"></activity>
+        <activity android:name="com.nhom10.moneymanagement_android.infoIncome" />
+        <activity android:name="com.nhom10.moneymanagement_android.infoExpense" />
+        <activity android:name="com.nhom10.moneymanagement_android.future_amounts" />
+        <activity android:name="com.nhom10.moneymanagement_android.category_settings" />
+        <activity android:name="com.nhom10.moneymanagement_android.option_icon" />
+        <activity android:name="com.nhom10.moneymanagement_android.category_add" />
+        <activity android:name="com.nhom10.moneymanagement_android.category_edit" />
+        <activity android:name="com.nhom10.moneymanagement_android.category" />
+        <activity android:name="com.nhom10.moneymanagement_android.future_amounts" />
+        <activity android:name="com.nhom10.moneymanagement_android.category_update" />
+        <activity android:name="com.nhom10.moneymanagement_android.activity_income" />
+        <activity android:name="com.nhom10.moneymanagement_android.activity_expense" />
+        <activity android:name="com.nhom10.moneymanagement_android.budget_update" />
         <activity
-            android:name=".infobudget"
+            android:name="com.nhom10.moneymanagement_android.infobudget"
             android:label="@string/title_activity_infobudget"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".expense_creating"
+            android:name="com.nhom10.moneymanagement_android.expense_creating"
             android:label="@string/title_activity_expense_creating"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".budget_creating"
+            android:name="com.nhom10.moneymanagement_android.budget_creating"
             android:label="@string/title_activity_budget_creating"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.nhom10.moneymanagement_android.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

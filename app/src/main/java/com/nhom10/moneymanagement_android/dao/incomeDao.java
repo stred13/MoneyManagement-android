@@ -33,6 +33,11 @@ public interface incomeDao {
             "Group by idcatin ORDER by nmoney DESC")
     LiveData<List<income>> getIncomeByDate(String time);
 
+    @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatin, idbudget from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:start)) AS INT)" +
+            "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:end)) AS INT)" +
+            "Group by idcatin ORDER by nmoney DESC")
+    LiveData<List<income>> getIncomeInRange(String start, String end);
+
     @Query("Select * from income Where CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
             "ORDER by nmoney DESC")
     LiveData<List<income>> getIncomeBeforeDate(String time);

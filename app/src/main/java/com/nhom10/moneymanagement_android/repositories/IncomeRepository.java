@@ -44,6 +44,11 @@ public class IncomeRepository {
         return listLiveData;
     }
 
+    public LiveData<List<income>> getAllIncomeInRange(String start, String end) throws ExecutionException, InterruptedException {
+        LiveData<List<income>> listLiveData = new getAllIncomeInRangeAsyncTask(incomeDao).execute(start, end).get();
+        return listLiveData;
+    }
+
     public LiveData<List<income>> getAllIncomeBeforeDate(String time) throws ExecutionException, InterruptedException {
         LiveData<List<income>> listLiveData = new getAllIncomeBeforeDateAsyncTask(incomeDao).execute(time).get();
         return listLiveData;
@@ -91,6 +96,25 @@ public class IncomeRepository {
         @Override
         protected LiveData<List<income>> doInBackground(String... strings) {
             return incomeDao.getIncomeBeforeDate(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<income>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
+
+    private static class getAllIncomeInRangeAsyncTask extends AsyncTask<String, Void, LiveData<List<income>>> {
+
+        private incomeDao incomeDao;
+
+        public getAllIncomeInRangeAsyncTask(incomeDao incomeDao) {
+            this.incomeDao = incomeDao;
+        }
+
+        @Override
+        protected LiveData<List<income>> doInBackground(String... strings) {
+            return incomeDao.getIncomeInRange(strings[0], strings[1]);
         }
 
         @Override

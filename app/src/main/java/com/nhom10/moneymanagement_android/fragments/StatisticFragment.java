@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nhom10.moneymanagement_android.R;
 import com.nhom10.moneymanagement_android.adapters.StatisticExpenseAdapter;
@@ -45,8 +47,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
 
 /**
@@ -172,6 +177,50 @@ public class StatisticFragment extends Fragment {
             rvIncome.setVisibility(View.VISIBLE);
         }
         incomeAdapter.setIncomeList(incomeList);
+    }
+
+    private void setupExpenseAndIncomeInRange(String startDate, String endDate) {
+        try {
+            expenseViewModel = new expenseViewModel(getActivity().getApplication());
+            expenseViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
+            expenseViewModel.getAllExpenseInRange(startDate, endDate).observe(this, new Observer<List<expense>>() {
+                @Override
+                public void onChanged(@Nullable List<expense> expenses) {
+                    expenseList = expenses;
+                    totalExpense = 0;
+                    for (expense expense : expenses) {
+                        totalExpense += expense.getNmoney();
+                    }
+                    txtExpense.setText(Util.formatCurrency(totalExpense));
+                    long budget = totalIncome - totalExpense;
+                    setupUI();
+                    getCategoryExpense();
+                    setBudget(budget);
+                }
+            });
+
+            incomeViewModel = new IncomeViewModel(getActivity().getApplication());
+            incomeViewModel = ViewModelProviders.of(this).get(IncomeViewModel.class);
+            incomeViewModel.getAllIncomeInRange(startDate, endDate).observe(this, new Observer<List<income>>() {
+                @Override
+                public void onChanged(@Nullable List<income> incomes) {
+                    incomeList = incomes;
+                    totalIncome = 0;
+                    for (income income : incomes) {
+                        totalIncome += income.getNmoney();
+                    }
+                    txtIncome.setText(Util.formatCurrency(totalIncome));
+                    long budget = totalIncome - totalExpense;
+
+                    getCategoryIncome();
+                    setupIncomeAdapter();
+                    setBudget(budget);
+                    setupBalanceUI();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupExpenseAndIncome(String dateStr) {
@@ -446,8 +495,39 @@ public class StatisticFragment extends Fragment {
             case R.id.action_calendar:
                 setupDatePicker();
                 return true;
+            case R.id.menu_statistic_in_range:
+                getStatisticInRange();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getStatisticInRange() {
+        new SlyCalendarDialog()
+                .setSingle(false)
+                .setCallback(new SlyCalendarDialog.Callback() {
+                    @Override
+                    public void onCancelled() {
+                        // do nothing
+                    }
+
+                    @Override
+                    public void onDataSelected(Calendar firstDate, Calendar secondDate, int hours, int minutes) {
+                        if (firstDate != null) {
+                            if (secondDate == null) {
+                                firstDate.set(Calendar.HOUR_OF_DAY, hours);
+                                firstDate.set(Calendar.MINUTE, minutes);
+                                Toast.makeText(getContext(), "Vui lòng chọn ngày kết thúc để thực hiện thống kê", Toast.LENGTH_LONG).show();
+                            } else {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String startDate = sdf.format(firstDate.getTime());
+                                String endDate = sdf.format(secondDate.getTime());
+                                setupExpenseAndIncomeInRange(startDate, endDate);
+                            }
+                        }
+                    }
+                })
+                .show(getFragmentManager(), "TAG_SLYCALENDAR");
     }
 
     private void setupDatePicker() {
@@ -481,4 +561,6 @@ public class StatisticFragment extends Fragment {
             item.setVisible(false);
         }
     }
+
+
 }

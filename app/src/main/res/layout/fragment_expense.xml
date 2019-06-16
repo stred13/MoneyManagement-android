@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.ExpenseFragment">
+    tools:context="com.nhom10.moneymanagement_android.fragments.ExpenseFragment">
 
     <ScrollView
         android:layout_width="match_parent"

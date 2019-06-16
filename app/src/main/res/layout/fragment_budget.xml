@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_budget"
-    tools:context=".fragments.BudgetFragment"
+    tools:context="com.nhom10.moneymanagement_android.fragments.BudgetFragment"
     >
 
     <RelativeLayout

@@ -51,6 +51,10 @@ public class expenseViewModel extends AndroidViewModel {
         return eRepo.getAllExpenseByDate(time);
     }
 
+    public LiveData<List<expense>> getAllExpenseBeforeDate(String time) throws ExecutionException, InterruptedException {
+        return eRepo.getAllExpenseBeforeDate(time);
+    }
+
     public LiveData<List<expense>> getAllExpenseByDateBudget(String timeFrom,String timeTo, int id) throws ExecutionException, InterruptedException {
         return eRepo.getAllExpenseByDateBudget(timeFrom, timeTo, id);
     }

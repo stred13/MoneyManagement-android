@@ -63,10 +63,15 @@ public class StatisticFragment extends Fragment {
     private CatExpenseViewModel catExpenseViewModel;
     private CatIncomeViewModel catIncomeViewModel;
     private RecyclerView rvExpense, rvIncome;
+
+    // dung de xac dinh layout theo hang ngang hay doc
     private RecyclerView.LayoutManager expenseLayoutManager, incomeLayoutManager;
+
+    // cau noi view va data
     private StatisticExpenseAdapter expenseAdapter;
     private StatisticIncomeAdapter incomeAdapter;
 
+    // du lieu can de hien thi danh sach trong recyclerview
     private List<expense> expenseList = new ArrayList<>();
     private List<income> incomeList = new ArrayList<>();
     private List<catexpense> catexpenseList = new ArrayList<>();
@@ -124,11 +129,13 @@ public class StatisticFragment extends Fragment {
 
         expenseList = new ArrayList<>();
         incomeList = new ArrayList<>();
+
         expenseAdapter = new StatisticExpenseAdapter(expenseList , getContext());
         expenseAdapter.setCatexpenseList(catexpenseList);
         rvExpense.setAdapter(expenseAdapter);
 
         incomeAdapter = new StatisticIncomeAdapter(incomeList, getContext());
+        incomeAdapter.setCatincomes(catincomeList);
         rvIncome.setAdapter(incomeAdapter);
 
         retriveDataFromdb();
@@ -140,7 +147,6 @@ public class StatisticFragment extends Fragment {
         expense largestExpense = expenseList.get(0); // the largest one on top because the list has been sorted in descending order by the price
         txtExpenseMoneyMax.setText(Util.formatCurrency(largestExpense.getNmoney()));
         txtExpenseDateMax.setText(Util.formatDate(largestExpense.getDcreated()));
-        txtExpenseMax.setText(largestExpense.getName());
     }
 
     private void setupExpenseAdapter() {
@@ -233,9 +239,9 @@ public class StatisticFragment extends Fragment {
 
     private void setupBalanceUI() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = sdf.format(getPreviousDate());
+        String dateStr = sdf.format(selectedDate);
         try {
-            expenseViewModel.getAllExpenseByDate(dateStr).observe(this, new Observer<List<expense>>() {
+            expenseViewModel.getAllExpenseBeforeDate(dateStr).observe(this, new Observer<List<expense>>() {
                 @Override
                 public void onChanged(@Nullable List<expense> expenses) {
                     totalPrevExpense = 0;
@@ -245,7 +251,7 @@ public class StatisticFragment extends Fragment {
                     txtFirstBalance.setText(Util.formatCurrency(totalPrevIncome - totalPrevExpense));
                 }
             });
-            incomeViewModel.getAllIncomeByDate(dateStr).observe(this, new Observer<List<income>>() {
+            incomeViewModel.getAllIncomeBeforeDate(dateStr).observe(this, new Observer<List<income>>() {
                 @Override
                 public void onChanged(@Nullable List<income> incomes) {
                     totalPrevIncome = 0;
@@ -281,6 +287,7 @@ public class StatisticFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<catincome> catincomes) {
                     catincomeList = catincomes;
+                    incomeAdapter.setCatincomes(catincomeList);
                     initialPieChartIncome();
                 }
             });
@@ -298,12 +305,14 @@ public class StatisticFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<com.example.moneymanagement_android.models.catexpense> catexpenses) {
                     catexpenseList = catexpenses;
+                    expenseAdapter.setCatexpenseList(catexpenseList);
                     if (!expenseList.isEmpty()) {
                         largestExpenseErrorHolder.setVisibility(View.GONE);
                         largestExpenseContainer.setVisibility(View.VISIBLE);
                         expense largestExpense = expenseList.get(0);
                         for (catexpense catex : catexpenseList) {
                             if (catex.getId() == largestExpense.getIdcatex()) {
+                                txtExpenseMax.setText(catex.getName());
                                 Picasso.get().load(catex.getImage()).error(R.drawable.breakfast).into(imgExpenseMax);
                                 break;
                             }

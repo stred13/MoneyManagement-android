@@ -29,10 +29,13 @@ public interface expenseDao {
     @Query("Select * from expense Where idbudget = :id")
     LiveData<List<expense>> getAllExpensebyBudget(int id);
 
-    @Query("Select * from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
+    @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatex, idbudget from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month', '+1 month')) AS INT)" +
-            "ORDER by nmoney DESC")
+            "Group by idcatex ORDER by nmoney DESC")
     LiveData<List<expense>> getExpenseByDate(String time);
+
+    @Query("Select * from expense where CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month')) AS INT)")
+    LiveData<List<expense>> getAllExpenseBeforeDate(String time);
 
     @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatex, idbudget " +
             "from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 day')) AS INT)" +

@@ -45,6 +45,10 @@ public class IncomeViewModel extends AndroidViewModel {
         return incomeRepository.getAllIncomeByDate(time);
     }
 
+    public LiveData<List<income>> getAllIncomeBeforeDate(String time) throws ExecutionException, InterruptedException {
+        return incomeRepository.getAllIncomeBeforeDate(time);
+    }
+
     public LiveData<List<income>> getAllIncomeByDateBudget(String timeFrom, String timeTo, int id) throws ExecutionException, InterruptedException {
         return incomeRepository.getAllIncomeByDateBudget(timeFrom, timeTo, id);
     }

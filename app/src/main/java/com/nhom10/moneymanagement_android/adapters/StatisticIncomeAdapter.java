@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nhom10.moneymanagement_android.R;
+import com.nhom10.moneymanagement_android.models.catincome;
 import com.nhom10.moneymanagement_android.models.income;
 import com.nhom10.moneymanagement_android.utils.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class StatisticIncomeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private List<income> incomeList;
     private Context context;
+    private List<catincome> catincomes;
 
     public StatisticIncomeAdapter(List<income> incomeList, Context context) {
         this.incomeList = incomeList;
@@ -28,6 +31,11 @@ public class StatisticIncomeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setIncomeList(List<income> incomeList) {
         this.incomeList.clear();
         this.incomeList = incomeList;
+        this.notifyDataSetChanged();
+    }
+
+    public void setCatincomes(List<catincome> catincomes) {
+        this.catincomes = catincomes;
         this.notifyDataSetChanged();
     }
 
@@ -43,7 +51,13 @@ public class StatisticIncomeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         income income = incomeList.get(i);
         StatisticExpenseViewHolder expenseViewHolder = (StatisticExpenseViewHolder) viewHolder;
         expenseViewHolder.txtPrice.setText(Util.formatCurrency(income.getNmoney()));
-        expenseViewHolder.txtName.setText(income.getName());
+        for (catincome cati : catincomes) {
+            if (income.getIdcatin() == cati.getId()) {
+                expenseViewHolder.txtName.setText(cati.getName());
+                Picasso.get().load(cati.getImage()).error(R.drawable.breakfast).into(expenseViewHolder.imgItem);
+                break;
+            }
+        }
     }
 
     @Override

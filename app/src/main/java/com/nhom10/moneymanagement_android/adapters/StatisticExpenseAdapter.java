@@ -30,6 +30,7 @@ public class StatisticExpenseAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setCatexpenseList(List<catexpense> catexpenseList) {
         this.catexpenseList = catexpenseList;
+        this.notifyDataSetChanged();
     }
 
     public void setExpenseList(List<expense> expenseList) {
@@ -50,9 +51,9 @@ public class StatisticExpenseAdapter extends RecyclerView.Adapter<RecyclerView.V
         expense expense = expenseList.get(i);
         StatisticExpenseViewHolder expenseViewHolder = (StatisticExpenseViewHolder) viewHolder;
         expenseViewHolder.txtPrice.setText(Util.formatCurrency(expense.getNmoney()));
-        expenseViewHolder.txtName.setText(expense.getName());
         for (catexpense catx : catexpenseList) {
             if (expense.getIdcatex() == catx.getId()) {
+                expenseViewHolder.txtName.setText(catx.getName());
                 Picasso.get().load(catx.getImage()).error(R.drawable.breakfast).into(expenseViewHolder.imgItem);
                 break;
             }

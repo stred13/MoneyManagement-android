@@ -28,10 +28,14 @@ public interface incomeDao {
     @Query("Select * from income Where idbudget = :id")
     LiveData<List<income>> getAllIncomebyBudget(int id);
 
-    @Query("Select * from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
+    @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatin, idbudget from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
             "AND CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month', '+1 month')) AS INT)" +
-            "ORDER by nmoney DESC")
+            "Group by idcatin ORDER by nmoney DESC")
     LiveData<List<income>> getIncomeByDate(String time);
+
+    @Query("Select * from income Where CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month')) AS INT)" +
+            "ORDER by nmoney DESC")
+    LiveData<List<income>> getIncomeBeforeDate(String time);
 
     @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatin, idbudget " +
             "from income Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:timeFrom,'+0 day')) AS INT)" +

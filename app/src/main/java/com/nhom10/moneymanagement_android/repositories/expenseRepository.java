@@ -40,6 +40,11 @@ public class expenseRepository {
         return listLiveData;
     }
 
+    public LiveData<List<expense>> getAllExpenseInRange(String start, String end) throws ExecutionException, InterruptedException {
+        LiveData<List<expense>> listLiveData = new getAllExpenseInRangeAsynctask(exDao).execute(start, end).get();
+        return listLiveData;
+    }
+
     public LiveData<List<expense>> getAllExpenseBeforeDate(String time) throws ExecutionException, InterruptedException {
         LiveData<List<expense>> listLiveData = new getAllExpenseBeforeDateAsynctask(exDao).execute(time).get();
         return listLiveData;
@@ -141,6 +146,24 @@ public class expenseRepository {
         @Override
         protected LiveData<List<expense>> doInBackground(Integer... integers) {
             return exDao.getAllExpensebyBudget(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(LiveData<List<expense>> listLiveData) {
+            super.onPostExecute(listLiveData);
+        }
+    }
+
+    private static class getAllExpenseInRangeAsynctask extends AsyncTask<String, Void, LiveData<List<expense>>>{
+        private expenseDao exDao;
+
+        public getAllExpenseInRangeAsynctask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected LiveData<List<expense>> doInBackground(String... params) {
+            return exDao.getExpenseByRange(params[0], params[1]);
         }
 
         @Override

@@ -6,4 +6,6 @@
         android:icon="@drawable/baseline_calendar_today_white_24dp"
         android:title="Chọn ngày"
         app:showAsAction="ifRoom"/>
+    <item android:title="Thống kê trong khoảng thời gian"
+        android:id="@+id/menu_statistic_in_range"></item>
 </menu>

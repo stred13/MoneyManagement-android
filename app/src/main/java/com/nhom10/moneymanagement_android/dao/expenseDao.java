@@ -34,6 +34,11 @@ public interface expenseDao {
             "Group by idcatex ORDER by nmoney DESC")
     LiveData<List<expense>> getExpenseByDate(String time);
 
+    @Query("Select id, name, sum(nmoney) as nmoney , dcreated, note, idcatex, idbudget from expense Where CAST(dcreated as INT) / 1000 >= CAST(strftime('%s', date(:start)) AS INT)" +
+            "AND CAST(dcreated as INT) / 1000 <= CAST(strftime('%s', date(:end)) AS INT)" +
+            "Group by idcatex ORDER by nmoney DESC")
+    LiveData<List<expense>> getExpenseByRange(String start, String end);
+
     @Query("Select * from expense where CAST(dcreated as INT) / 1000 < CAST(strftime('%s', date(:time,'start of month')) AS INT)")
     LiveData<List<expense>> getAllExpenseBeforeDate(String time);
 

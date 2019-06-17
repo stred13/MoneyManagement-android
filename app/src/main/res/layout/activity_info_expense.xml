@@ -25,13 +25,16 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
 
             />
-        <ImageButton
-            android:id="@+id/btndelExpense"
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/delete"
+            android:text="Lưu"
+            android:textColor="@color/White"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"/>
+            android:background="?attr/colorPrimary"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -231,12 +234,14 @@
                 android:padding="20dp">
 
                 <Button
-                    android:id="@+id/btnSave"
+                    android:id="@+id/btndelExpense"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lưu"
-                    android:textColor="@color/blueLight"
-                    android:textSize="20sp" />
+                    android:layout_height="40dp"
+                    android:background="@color/LightGray"
+                    android:text="Xóa"
+                    android:textColor="@color/Red"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 

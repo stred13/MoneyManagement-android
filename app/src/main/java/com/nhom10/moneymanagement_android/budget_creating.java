@@ -58,10 +58,13 @@ public class budget_creating extends AppCompatActivity {
         btnTaoV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String namev = etTenV.getText().toString();
                 String note = etNote.getText().toString();
                 //String currency = spCurrency.getSelectedItem().toString();
-                Toast.makeText(getApplication().getApplicationContext(), "" + namev, Toast.LENGTH_SHORT).show();
+                if(namev.equals("")){
+                    Toast.makeText(getApplication().getApplicationContext(), "Nhập tên ví" + namev, Toast.LENGTH_SHORT).show();
+                }
                 //insert
                 b = new budget(namev, "demo", note);
                 bViewModel.insertBudget(b);

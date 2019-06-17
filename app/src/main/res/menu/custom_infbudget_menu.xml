@@ -15,5 +15,9 @@
         android:id="@+id/menuKhoangThoiGian"></item>
     <item android:title="Các khoản tương lai"
         android:id="@+id/menuTuongLai"></item>
+    <item android:title="Hiển thị tất cả"
+        android:id="@+id/menuShowAll"></item>
+
+
 
 </menu>

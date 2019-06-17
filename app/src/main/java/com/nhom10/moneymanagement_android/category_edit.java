@@ -107,18 +107,18 @@ public class category_edit extends AppCompatActivity {
             }
         });
 
-        editTextTenNhom.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                stringEditText = editTextTenNhom.getText().toString();
-                if ((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
-                    btnLuu.setEnabled(false);
-                } else {
-                    btnLuu.setEnabled(true);
-                }
-                return false;
-            }
-        });
+//        editTextTenNhom.setOnKeyListener(new View.OnKeyListener() {
+////            @Override
+////            public boolean onKey(View v, int keyCode, KeyEvent event) {
+////                stringEditText = editTextTenNhom.getText().toString();
+////                if ((stringEditText.equals(tennhom) && imgViewChangeIcon == ImageResource) || stringEditText.equals("")) {
+////                    btnLuu.setEnabled(false);
+////                } else {
+////                    btnLuu.setEnabled(true);
+////                }
+////                return false;
+////            }
+////        });
 
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +132,7 @@ public class category_edit extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.custom_category_add_menu, menu);
-        menu.getItem(0).setEnabled(false);
+        //menu.getItem(0).setEnabled(false);
         btnLuu = (MenuItem) menu.findItem(R.id.menuSaveCategory);
 
         return super.onCreateOptionsMenu(menu);
@@ -142,6 +142,7 @@ public class category_edit extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuSaveCategory:
+                stringEditText = editTextTenNhom.getText().toString().trim();
                 if (flash == 1) {
 
                     if (!checkCatExpenseByName(stringEditText)) {
@@ -233,6 +234,10 @@ public class category_edit extends AppCompatActivity {
 
     private boolean checkCatExpenseByName(String TenNhom) {
         try {
+            if(TenNhom.equals("")){
+                Toast.makeText(getApplicationContext(), "Nhập tên nhóm !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
             if (!catExpenseViewModel.checkCatExpenseByName(TenNhom)) {
                 Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
                 return false;
@@ -246,6 +251,10 @@ public class category_edit extends AppCompatActivity {
 
     private boolean checkCatIncomeByName(String TenNhom) {
         try {
+            if(TenNhom.equals("")){
+                Toast.makeText(getApplicationContext(), "Nhập tên nhóm !!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
             if (!catIncomeViewModel.checkCatIncomeByName(TenNhom)) {
                 Toast.makeText(getApplicationContext(), "Tên nhóm đã tồn tại !!", Toast.LENGTH_SHORT).show();
                 return false;

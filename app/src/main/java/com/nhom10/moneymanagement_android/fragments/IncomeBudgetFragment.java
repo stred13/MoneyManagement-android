@@ -252,10 +252,19 @@ public class IncomeBudgetFragment extends Fragment {
                 statisticDayTo = dateTo;
                 setupExpense(dateFrom, dateTo);
                 txtExpenseRangeTime.setVisibility(View.GONE);
-                txtExpenseTitle.setText("Tổng quan chi tiêu tương lai");
+                txtExpenseTitle.setText("Tổng quan thu nhập tương lai");
                 break;
             case R.id.calendarInMonth:
                 setupDatePicker();
+                break;
+            case R.id.menuShowAll:
+                String dateF = "1990-01-01";
+                String dateT = "2050-12-31";
+                statisticDayFrom = dateF;
+                statisticDayTo = dateT;
+                setupExpense(dateF, dateT);
+                txtExpenseRangeTime.setVisibility(View.GONE);
+                txtExpenseTitle.setText("Tổng quan tất cả thu nhập ");
                 break;
         }
 

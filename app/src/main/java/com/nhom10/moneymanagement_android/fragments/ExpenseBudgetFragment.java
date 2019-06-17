@@ -253,6 +253,15 @@ public class ExpenseBudgetFragment extends Fragment {
             case R.id.calendarInMonth:
                 setupDatePicker();
                 break;
+            case R.id.menuShowAll:
+                String dateF = "1990-01-01";
+                String dateT = "2050-12-31";
+                statisticDayFrom = dateF;
+                statisticDayTo = dateT;
+                setupExpense(dateF, dateT);
+                txtExpenseRangeTime.setVisibility(View.GONE);
+                txtExpenseTitle.setText("Tổng quan tất cả chi tiêu ");
+                break;
         }
 
         return super.onOptionsItemSelected(item);

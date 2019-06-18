@@ -66,6 +66,15 @@ public class ChildIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ChildIn
         private TextView imgItem, txtDate, txtPrice, txtNote,txtCatex;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            /* imgItem = itemView.findViewById(R.id.imgChildExpenseBudgeImgage);
+            txtDate = itemView.findViewById(R.id.txtChildExpenseBudgeDate);
+            txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);
+            txtNote = itemView.findViewById(R.id.txtParenExpenseBudgeNote);
+            txtCatex = itemView.findViewById(R.id.txtCatexpense);
+            itemView.setOnClickListener(itemClicklistener);
+            itemView.setTag(this);*/
+
             imgItem = itemView.findViewById(R.id.imgChildExpenseBudgeImgage);
             txtDate = itemView.findViewById(R.id.txtChildExpenseBudgeDate);
             txtPrice = itemView.findViewById(R.id.txtChildExpenseBudgeMoney);

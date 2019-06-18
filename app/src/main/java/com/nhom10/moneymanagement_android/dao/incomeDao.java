@@ -22,6 +22,9 @@ public interface incomeDao {
     @Update
     void update(income i);
 
+    @Query("Select * from income Where idcatin IN(:id)")
+    List<income> getAllIncomebyCatId(int id);
+
     @Query("Select * From income")
     LiveData<List<income>> getListincome();
 

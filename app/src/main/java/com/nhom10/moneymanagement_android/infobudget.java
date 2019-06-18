@@ -17,10 +17,13 @@ import com.nhom10.moneymanagement_android.fragments.ExpenseFragment;
 import com.nhom10.moneymanagement_android.fragments.IncomeBudgetFragment;
 import com.nhom10.moneymanagement_android.fragments.IncomeFragment;
 import com.nhom10.moneymanagement_android.models.budget;
+import com.nhom10.moneymanagement_android.models.expense;
+import com.nhom10.moneymanagement_android.models.income;
 import com.nhom10.moneymanagement_android.viewmodels.IncomeViewModel;
 import com.nhom10.moneymanagement_android.viewmodels.budgetViewModel;
 import com.nhom10.moneymanagement_android.viewmodels.expenseViewModel;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class infobudget extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class infobudget extends AppCompatActivity {
     private budgetViewModel bViewMd;
     private IncomeViewModel inViewMd;
     private expenseViewModel exViewMd;
-
+    long tongtien = 0;
     public static budget b = new budget();
 
     @Override
@@ -49,12 +52,49 @@ public class infobudget extends AppCompatActivity {
         //Toast.makeText(this, "budget: "+b.getId(), Toast.LENGTH_SHORT).show();
 
         bViewMd = ViewModelProviders.of(this).get(budgetViewModel.class);
+        exViewMd = ViewModelProviders.of(this).get(expenseViewModel.class);
+        inViewMd = ViewModelProviders.of(this).get(IncomeViewModel.class);
+
+       /* tongtien = b.getBmoney();
+        try {
+            exViewMd.getAllExpensebyBudget(b.getId()).observe(this, new Observer<List<expense>>() {
+                @Override
+                public void onChanged(@Nullable List<expense> expenses) {
+                    if(expenses!= null){
+                        for (expense ex:expenses){
+                            tongtien-=ex.getNmoney();
+                        }
+                    }
+                    b.setBmoney(tongtien);
+                    bViewMd.updateBudget(b);
+
+                }
+            });
+
+
+            inViewMd.getAllIncomebyBudget(b.getId()).observe(this, new Observer<List<income>>() {
+                @Override
+                public void onChanged(@Nullable List<income> incomes) {
+                    if(incomes!=null){
+                        for (income in : incomes){
+                            tongtien+=in.getNmoney();
+                        }
+                    }
+                    b.setBmoney(tongtien);
+                    bViewMd.updateBudget(b);
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
         try {
             bViewMd.getBudgetbyId(b.getId()).observe(this, new Observer<budget>() {
                 @Override
                 public void onChanged(@Nullable budget budget) {
-                    getSupportActionBar().setTitle("Tổng tiền "+budget.getBmoney());
+                    getSupportActionBar().setTitle(""+budget.getBmoney());
                 }
             });
         } catch (ExecutionException e) {

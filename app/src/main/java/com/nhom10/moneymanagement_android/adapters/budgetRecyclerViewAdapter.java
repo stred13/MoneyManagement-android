@@ -46,6 +46,7 @@ public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecycl
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_bName.setText(bData.get(i).getName());
         myViewHolder.tv_bNote.setText(bData.get(i).getNote());
+       // myViewHolder.tv_bdate.setText(String.valueOf(bData.get(i).getBdate()));
     }
 
     public void setListbudget(List<budget> lst){
@@ -71,11 +72,13 @@ public class budgetRecyclerViewAdapter extends RecyclerView.Adapter<budgetRecycl
     public class  MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_bName;
         private TextView tv_bNote;
+        private TextView tv_bdate;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             tv_bName = (TextView)itemView.findViewById(R.id.tv_bName);
             tv_bNote = (TextView)itemView.findViewById(R.id.tv_bNote);
+         //   tv_bdate = (TextView) itemView.findViewById(R.id.tvbdate);
             itemView.setTag(this);
             itemView.setOnClickListener(itemClicklistener);
 

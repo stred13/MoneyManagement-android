@@ -34,6 +34,7 @@ import com.nhom10.moneymanagement_android.models.catexpense;
 import com.nhom10.moneymanagement_android.models.expense;
 import com.nhom10.moneymanagement_android.utils.Util;
 import com.nhom10.moneymanagement_android.viewmodels.CatExpenseViewModel;
+import com.nhom10.moneymanagement_android.viewmodels.budgetViewModel;
 import com.nhom10.moneymanagement_android.viewmodels.expenseViewModel;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -56,7 +58,8 @@ public class ExpenseFragment extends Fragment {
     List<expense> listExpense = new ArrayList<>();
     List<catexpense> catexpenseList = new ArrayList<>();
 
-    expenseViewModel eViewModel;
+
+
     CatExpenseViewModel catExpenseViewModel;
     ImageView editThuoc;
     View largestExpenseFragnemntErrorHolder;
@@ -67,7 +70,8 @@ public class ExpenseFragment extends Fragment {
     private Calendar calendar = Calendar.getInstance();
 
     private expenseViewModel expenseViewModel;
-    private int totalExpense = 0;
+    private budgetViewModel budgetViewModel;
+    private long totalExpense = 0;
 
     private TextView txtExpenseBudget;
     private TextView txtRangeTimeForm;
@@ -145,8 +149,12 @@ public class ExpenseFragment extends Fragment {
     private void setupExpense(String dateFrom, String dateTo) {
         try {
             expenseViewModel = new expenseViewModel(getActivity().getApplication());
+            budgetViewModel = new budgetViewModel(getActivity().getApplication());
+            budgetViewModel = ViewModelProviders.of(this).get(budgetViewModel.getClass());
+
+
             expenseViewModel = ViewModelProviders.of(this).get(expenseViewModel.class);
-            expenseViewModel.getAllExpenseBudgetRangeTime(dateFrom, dateTo, b.getId()).observe(this, new Observer<List<expense>>() {
+            expenseViewModel.getAllExpensebyBudget(b.getId()).observe(this, new Observer<List<expense>>() {
                 @Override
                 public void onChanged(@Nullable List<expense> expenses) {
                     listExpense = expenses;
@@ -154,6 +162,8 @@ public class ExpenseFragment extends Fragment {
                     for (expense expense : expenses) {
                         totalExpense += expense.getNmoney();
                     }
+                    //b.setBmoney(totalExpense);
+                    //budgetViewModel.updateBudget(b);
                     txtExpenseBudget.setText(Util.formatCurrency(totalExpense));
                     exRVAdapter.setExpenseBudgetList(listExpense);
                     getCategoryExpense();
@@ -196,6 +206,27 @@ public class ExpenseFragment extends Fragment {
         setHasOptionsMenu(true);
         Intent i = this.getActivity().getIntent();
         b = (budget) i.getSerializableExtra("budget");
+
+
+       /* try {
+            budgetViewModel = new budgetViewModel(getActivity().getApplication());
+            budgetViewModel = ViewModelProviders.of(this).get(budgetViewModel.getClass());
+
+            expenseViewModel = new expenseViewModel(getActivity().getApplication());
+            expenseViewModel =  ViewModelProviders.of(this).get(expenseViewModel.getClass());
+
+            expenseViewModel.getAllExpensebyBudget(b.getId())
+
+            b.setBmoney(b.getBmoney()+totalExpense);
+            budgetViewModel.updateBudget(b);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+
+
     }
 
     private View.OnClickListener onCardViewClickListener = new View.OnClickListener() {

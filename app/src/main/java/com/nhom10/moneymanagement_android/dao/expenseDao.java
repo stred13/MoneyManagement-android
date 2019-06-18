@@ -22,6 +22,8 @@ public interface expenseDao {
     @Delete
     void delete(expense exp);
 
+    @Query("Select * from expense Where idcatex IN(:id)")
+    List<expense> getListexpenseByCatId(int id);
 
     @Query("Select * from expense")
     LiveData<List<expense>> getListExpense();

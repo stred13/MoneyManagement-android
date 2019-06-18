@@ -133,6 +133,7 @@ public class infoExpense extends AppCompatActivity {
                 catExpenseViewModel = ViewModelProviders.of(this).get(CatExpenseViewModel.class);
                 catExpense = (catexpense) catExpenseViewModel.getCatExpenseById(ex.getIdcatex());
                 tvCatExpense.setText(catExpense.getName().toString());
+                imCatex.setImageResource(catExpense.getImage());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 String day = sdf.format(ex.getDcreated());
@@ -151,6 +152,7 @@ public class infoExpense extends AppCompatActivity {
         if (in != null) {
             Toast.makeText(this, "thu nhập " + in.getNmoney(), Toast.LENGTH_SHORT).show();
             kcat = 1;
+
             etNmoney.setText(String.valueOf(in.getNmoney()));
             etNote.setText(String.valueOf(in.getNote()));
             try {
@@ -159,6 +161,7 @@ public class infoExpense extends AppCompatActivity {
                 catIncomeViewModel = ViewModelProviders.of(this).get(CatIncomeViewModel.class);
                 catIncome = (catincome) catIncomeViewModel.getCatIncomeById(in.getIdcatin());
                 tvCatExpense.setText(catIncome.getName().toString());
+                imCatex.setImageResource(catIncome.getImage());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 String day = sdf.format(in.getDcreated());

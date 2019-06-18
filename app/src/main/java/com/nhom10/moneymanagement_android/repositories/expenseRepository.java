@@ -21,9 +21,15 @@ public class expenseRepository {
         //this.listExpense=exDao.getAllExpensebyBudget(infobudget.);
     }
 
+    public List<expense> getListexpenseByCatId(int id) throws ExecutionException, InterruptedException {
+        Integer in = new Integer(id);
+        return new getListexpenseByCatIdAsynctask(this.exDao).execute(in).get();
+    }
+
     public LiveData<List<expense>> getAllExpense() throws ExecutionException, InterruptedException {
         return new getAllExpenseAsynctask(this.exDao).execute().get();
     }
+
 
     public LiveData<List<expense>> getAllExpensebyBudget(int id) throws ExecutionException, InterruptedException {
         Integer in = new Integer(id);
@@ -241,6 +247,24 @@ public class expenseRepository {
         @Override
         protected void onPostExecute(LiveData<List<expense>> listLiveData) {
             super.onPostExecute(listLiveData);
+        }
+    }
+
+    private static class getListexpenseByCatIdAsynctask extends AsyncTask<Integer,Void,List<expense>>{
+        private expenseDao exDao;
+
+        public getListexpenseByCatIdAsynctask(expenseDao exDao) {
+            this.exDao = exDao;
+        }
+
+        @Override
+        protected List<expense> doInBackground(Integer... integers) {
+            return exDao.getListexpenseByCatId(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<expense> expenses) {
+            super.onPostExecute(expenses);
         }
     }
 

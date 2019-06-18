@@ -64,4 +64,8 @@ public class expenseViewModel extends AndroidViewModel {
     public LiveData<List<expense>> getAllExpenseBudgetRangeTime(String timeFrom, String timeTo, int id) throws ExecutionException, InterruptedException {
         return eRepo.getAllExpenseBudgetRangeTime(timeFrom, timeTo, id);
     }
+
+    public List<expense> getListexpenseByCatId(int  id) throws ExecutionException, InterruptedException {
+        return eRepo.getListexpenseByCatId(id);
+    }
 }

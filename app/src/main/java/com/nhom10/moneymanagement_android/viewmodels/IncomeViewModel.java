@@ -61,4 +61,8 @@ public class IncomeViewModel extends AndroidViewModel {
         return incomeRepository.getAllIncomeBudgetRangeTime(timeFrom, timeTo, id);
     }
 
+    public List<income> getListIncomeByCatId(int id) throws ExecutionException, InterruptedException {
+        return incomeRepository.getListIncomeByCatId(id);
+    }
+
 }

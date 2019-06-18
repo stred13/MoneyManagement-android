@@ -41,4 +41,8 @@ public class budgetViewModel extends AndroidViewModel {
         //this.listBudget.setValue(bRepository.getlistBudget());
         return this.listBudget;
     }
+
+    public List<budget>  getListbudgetByName(String name) throws ExecutionException, InterruptedException {
+        return this.bRepository.getListbudgetByName(name);
+    }
 }

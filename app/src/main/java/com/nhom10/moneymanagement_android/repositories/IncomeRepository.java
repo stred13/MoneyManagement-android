@@ -21,6 +21,11 @@ public class IncomeRepository {
         this.incomeDao = rdtb.icDao();
     }
 
+    public List<income> getListIncomeByCatId(int id) throws ExecutionException, InterruptedException {
+        Integer in = new Integer(id);
+        return new getListIncomeByCatIdAsynctask(this.incomeDao).execute(in).get();
+    }
+
     public void update(income in){
         new updateIncomeAsynctask(this.incomeDao).execute(in);
     }
@@ -244,6 +249,24 @@ public class IncomeRepository {
         @Override
         protected void onPostExecute(LiveData<List<income>> listLiveData) {
             super.onPostExecute(listLiveData);
+        }
+    }
+
+    private static class getListIncomeByCatIdAsynctask extends AsyncTask<Integer,Void,List<income>>{
+        private incomeDao inDao;
+
+        public getListIncomeByCatIdAsynctask(incomeDao inDao) {
+            this.inDao = inDao;
+        }
+
+        @Override
+        protected List<income> doInBackground(Integer... integers) {
+            return inDao.getAllIncomebyCatId(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<income> incomes) {
+            super.onPostExecute(incomes);
         }
     }
 }

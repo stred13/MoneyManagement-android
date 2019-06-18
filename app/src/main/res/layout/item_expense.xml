@@ -28,14 +28,13 @@
                 android:id="@+id/txtExpenseBudgeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhà hàng"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/txtExpenseBudgeDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8 tháng 4 2019"
+                android:text=""
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
@@ -51,5 +50,5 @@
         android:textSize="20sp"
         android:textColor="@color/Blue"
         android:textStyle="bold"
-        android:text="10,000,000 D"/>
+        android:text=""/>
 </LinearLayout>

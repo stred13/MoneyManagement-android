@@ -23,6 +23,9 @@ public interface budgetDao{
     @Delete
     void delete(budget b);
 
+    @Query("SELECT * FROM budget where name = :name")
+    List<budget> getBudgetByName(String name);
+
     @Query("SELECT * FROM budget")
     LiveData<List<budget>> getListBudget();
 

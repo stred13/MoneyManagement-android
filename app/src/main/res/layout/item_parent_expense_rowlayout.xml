@@ -48,14 +48,14 @@
                             android:id="@+id/txtParenExpenseBudgeName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nhà hàng"
+                            android:text=""
                             android:textColor="@android:color/black" />
 
                         <TextView
                             android:id="@+id/txtParenExpenseBudgeDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="8 giao dịch"
+                            android:text=""
                             android:textColor="@android:color/darker_gray" />
                     </LinearLayout>
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:layout_weight="1"
-                    android:text="10,000,000 D"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/Black"
                     android:textSize="20sp"

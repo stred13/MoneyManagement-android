@@ -94,9 +94,25 @@ public class ParenIncomeRecyclerViewAdapter extends RecyclerView.Adapter<ParenIn
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+            /*ChildExpenseRecyclerViewAdapter.MyViewHolder vhd = (ChildExpenseRecyclerViewAdapter.MyViewHolder) view.getTag();
+            int pos = vhd.getAdapterPosition();
+            TextView tvcat = vhd.itemView.findViewById(R.id.txtCatexpense);
+            expense e = new expense();
+
+            for(int i=0;i<expenseList.size();i++){
+                if(expenseList.get(i).getIdcatex()== Integer.parseInt(tvcat.getText().toString())){
+                    e=expenseList.get(i+pos);
+                    Log.d("i: "+(i+pos), " onClick: "+expenseList.get(i+pos).getId()+" pos: "+expenseList.get(i+pos).getNmoney());
+                    break;
+                }
+            }
+            Intent infoEx = new Intent(context.getApplicationContext(), infoExpense.class);
+            infoEx.putExtra("infoexpense",e);
+            context.startActivity(infoEx);*/
             ChildIncomeRecyclerViewAdapter.MyViewHolder vhd = (ChildIncomeRecyclerViewAdapter.MyViewHolder) view.getTag();
             int pos = vhd.getAdapterPosition();
-            TextView tvcat = (TextView) vhd.itemView.findViewById(R.id.txtCatexpense);
+            TextView tvcat =  vhd.itemView.findViewById(R.id.txtCatexpense);
             income in = new income();
 
             for (int i = 0; i < incomeList.size(); i++) {

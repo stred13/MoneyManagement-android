@@ -21,7 +21,9 @@ public class budgetRepository {
         this.lBudget = bdDao.getListBudget();
     }
 
-
+    public List<budget> getListbudgetByName(String name) throws ExecutionException, InterruptedException {
+        return new getListbudgetByNameAsynctask(this.bdDao).execute(name).get();
+    }
 
     public LiveData<List<budget>> getAllbudget() throws ExecutionException, InterruptedException {
         return new getLiveListBudgetAsynctask(this.bdDao).execute().get();
@@ -117,6 +119,24 @@ public class budgetRepository {
         @Override
         protected void onPostExecute(LiveData<List<budget>> listLiveDataData) {
             super.onPostExecute(listLiveDataData);
+        }
+    }
+
+    private static class getListbudgetByNameAsynctask extends AsyncTask<String,Void,List<budget>>{
+        private budgetDao dao;
+
+        public getListbudgetByNameAsynctask(budgetDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected List<budget> doInBackground(String... strings) {
+            return dao.getBudgetByName(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<budget> budgets) {
+            super.onPostExecute(budgets);
         }
     }
 

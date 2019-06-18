@@ -136,7 +136,7 @@ public class BudgetFragment extends Fragment {
                         }
                         recycleViewAdapter.setListbudget(listBudget);
                         txtTotal_m.setText(""+sum_m);
-                        Toast.makeText(getActivity().getApplication(), "on change: " + budgets.size(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity().getApplication(), "on change: " + budgets.size(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

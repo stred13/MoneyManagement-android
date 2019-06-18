@@ -19,6 +19,7 @@ import com.nhom10.moneymanagement_android.viewmodels.budgetViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class budget_creating extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
@@ -63,10 +64,21 @@ public class budget_creating extends AppCompatActivity {
                 String note = etNote.getText().toString();
                 //String currency = spCurrency.getSelectedItem().toString();
                 if(namev.equals("")){
-                    Toast.makeText(getApplication().getApplicationContext(), "Nhập tên ví" + namev, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication().getApplicationContext(), "Nhập tên ví", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    if(bViewModel.getListbudgetByName(namev).size()!=0){
+                        Toast.makeText(getApplication().getApplicationContext(), "Trùng tên ví " + namev, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 //insert
-                b = new budget(namev, "demo", note);
+                b = new budget(namev, note);
                 bViewModel.insertBudget(b);
 
                 finish();

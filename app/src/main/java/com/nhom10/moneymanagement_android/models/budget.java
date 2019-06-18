@@ -4,8 +4,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.nhom10.moneymanagement_android.converters.dateConverters;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity(indices = @Index("id"))
 public class budget implements Serializable {
@@ -17,9 +21,20 @@ public class budget implements Serializable {
 
     private String currency;
 
+    @TypeConverters(dateConverters.class)
+    private Date bdate;
+
     private String note;
 
     private long bmoney;
+
+    public Date getBdate() {
+        return bdate;
+    }
+
+    public void setBdate(Date bdate) {
+        this.bdate = bdate;
+    }
 
     public int getId() {
         return id;
@@ -61,9 +76,16 @@ public class budget implements Serializable {
         this.bmoney = bmoney;
     }
 
-    public budget(String name, String currency, String note) {
+   /* public budget(String name, String currency, String note) {
         this.name = name;
         //this.currency = currency;
+        this.note = note;
+    }*/
+
+    public budget(String name,  String note) {
+        this.name = name;
+        //this.currency = currency;
+        //this.bdate = bdate;
         this.note = note;
     }
 

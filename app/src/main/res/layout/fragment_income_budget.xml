@@ -110,7 +110,7 @@
                         android:id="@+id/txtExpenseBudget"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="4,000,000 đ"
+
                         android:textAlignment="center"
                         android:textColor="@color/holo_red_light"
                         android:textSize="25sp"

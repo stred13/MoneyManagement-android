@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nhom10.moneymanagement_android.models.budget;
 import com.nhom10.moneymanagement_android.viewmodels.budgetViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class budget_update extends AppCompatActivity {
 
@@ -60,6 +62,23 @@ public class budget_update extends AppCompatActivity {
             public void onClick(View v) {
                 String bname = tv_namev.getText().toString();
                 String bnote = tv_note.getText().toString();
+
+                if(bname.equals("")){
+                    Toast.makeText(getApplication().getApplicationContext(), "Nhập tên ví", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    if(bViewModel.getListbudgetByName(bname).size()!=0){
+                        Toast.makeText(getApplication().getApplicationContext(), "Trùng tên ví " + bname, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 b.setName(bname);
                 b.setNote(bnote);
                 bViewModel.updateBudget(b);

@@ -55,7 +55,8 @@
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:orientation="horizontal"
-                     android:id="@+id/llCalender">
+                     android:id="@+id/llCalender"
+                     android:visibility="gone">
                      <ImageView
                          android:layout_width="40dp"
                          android:layout_height="40dp"

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.nhom10.moneymanagement_android.adapters.SingleCatExpenseRecyclerAdapter;
@@ -30,6 +31,8 @@ public class singleCategory extends AppCompatActivity {
     SingleCatExpenseRecyclerAdapter sgCatexpenseAdapter;
     SingleCatIncomeRecyclerAdapter sgCatincomeAdapter;
 
+    Toolbar toolbar;
+
     List<catexpense> catexpenseList = new ArrayList<>();
     List<catincome> catincomeList = new ArrayList<>();
     int kcat;
@@ -38,6 +41,16 @@ public class singleCategory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_category);
+        toolbar = (Toolbar) findViewById(R.id.toolbarcat);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//turn back arrow
+        getSupportActionBar().setTitle("Danh Mục");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         kcat = (int)intent.getSerializableExtra("singlecat");

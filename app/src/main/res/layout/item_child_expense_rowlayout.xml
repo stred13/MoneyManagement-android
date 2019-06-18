@@ -26,7 +26,7 @@
                         android:id="@+id/imgChildExpenseBudgeImgage"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:text="30"
+                        android:text=""
                         android:textSize="40sp"
                         android:textColor="@color/Black"
                         android:textStyle="bold"
@@ -47,7 +47,7 @@
                             android:id="@+id/txtChildExpenseBudgeDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12/3/2019"
+                            android:text=""
                             android:textColor="@android:color/black" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                             android:id="@+id/txtParenExpenseBudgeNote"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ghi chú"
+                            android:text=""
                             android:textColor="@android:color/darker_gray" />
 
                     </LinearLayout>
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:layout_weight="1"
-                    android:text="10,000,000 D"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/Red"
                     android:textSize="20sp"

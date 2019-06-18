@@ -92,7 +92,7 @@ public class ExpenseBudgetFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_expense_budget, container, false);
 
-        Toast.makeText(getContext(),"oke",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(),"oke",Toast.LENGTH_LONG).show();
         cardViewTongQuanChiTieu = (CardView) v.findViewById(R.id.cardViewTongQuanChiTieu);
         cardViewTongQuanChiTieu.setOnClickListener(onCardViewClickListener);
         exRecyclerView = (RecyclerView) v.findViewById(R.id.ParentRV);
@@ -231,9 +231,6 @@ public class ExpenseBudgetFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuThongBao:
-                Toast.makeText(getActivity(), "thong bao", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.menuKhoangThoiGian:
                 //Toast.makeText(getApplicationContext(),"khoang thoi gian",Toast.LENGTH_SHORT).show();
                 DialogRangeTime();

@@ -206,9 +206,6 @@ public class IncomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuThongBao:
-                Toast.makeText(getActivity(), "thong bao", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.menuKhoangThoiGian:
                 DialogRangeTime();
                 break;

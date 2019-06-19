@@ -317,7 +317,7 @@ public class ExpenseBudgetFragment extends Fragment {
 
                 int intDayFrom = Integer.parseInt(dateFrom.replace("-", ""));
                 int intDayTo = Integer.parseInt(dateTo.replace("-", ""));
-                Toast.makeText(getActivity(), intDayFrom + " -- " + intDayTo, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), intDayFrom + " -- " + intDayTo, Toast.LENGTH_SHORT).show();
                 if (intDayFrom > intDayTo) {
                     txtErroRangeTimeFrom.setVisibility(View.GONE);
                     txtErroRangeTimeTo.setVisibility(View.GONE);
@@ -332,7 +332,7 @@ public class ExpenseBudgetFragment extends Fragment {
                 txtExpenseRangeTime.setText(Util.FromatStringToDateDDMM(dateFrom) + " ---> " + Util.FromatStringToDateDDMM(dateTo));
                 statisticDayFrom = dateFrom;
                 statisticDayTo = dateTo;
-                Toast.makeText(getActivity(), dateFrom, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), dateFrom, Toast.LENGTH_SHORT).show();
                 setupExpense(dateFrom, dateTo);
 
 

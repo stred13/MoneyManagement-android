@@ -1,6 +1,7 @@
 package com.nhom10.moneymanagement_android.fragments;
 
 
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,15 +92,43 @@ public class BudgetFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case R.id.popup_menu_delete:
-                        Toast.makeText(v.getContext(), "delete", Toast.LENGTH_SHORT).show();
-                        bViewModel = ViewModelProviders.of(getActivity()).get(budgetViewModel.class);
-                        bViewModel.deleteBudget(b);
+                        //Toast.makeText(v.getContext(), "delete", Toast.LENGTH_SHORT).show();
+                        removeBudget(b);
                         break;
                 }
                 return false;
             }
         });
         popupMenu.show();
+    }
+
+    private void removeBudget(final budget b){
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_remove);
+        dialog.setCanceledOnTouchOutside(false);
+        Button btnDongY = (Button) dialog.findViewById(R.id.btnDongy);
+        Button btnHuy = (Button) dialog.findViewById(R.id.btnHuy);
+        TextView txtRemoveCategory = (TextView) dialog.findViewById(R.id.txtRemoveCategory);
+        txtRemoveCategory.setText("Bạn sẽ xóa hết các giao dịch trong ví?");
+
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        btnDongY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bViewModel = ViewModelProviders.of(getActivity()).get(budgetViewModel.class);
+                bViewModel.deleteBudget(b);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
 

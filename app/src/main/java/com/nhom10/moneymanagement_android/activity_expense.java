@@ -75,7 +75,7 @@ public class activity_expense extends AppCompatActivity {
         statisticDayFrom = i.getStringExtra("dayFrom");
         statisticDayTo = i.getStringExtra("dayTo");
 
-        Toast.makeText(this,statisticDayFrom + "--" + statisticDayTo,Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,statisticDayFrom + "--" + statisticDayTo,Toast.LENGTH_SHORT).show();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Chi Tiêu");

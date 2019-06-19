@@ -123,7 +123,7 @@ public class infoExpense extends AppCompatActivity {
 
 
         if (ex != null) {
-            Toast.makeText(this, "chi tiêu " + ex.getNmoney(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "chi tiêu " + ex.getNmoney(), Toast.LENGTH_SHORT).show();
             kcat = 0;
             etNmoney.setText(String.valueOf(ex.getNmoney()));
             etNote.setText(String.valueOf(ex.getNote()));
